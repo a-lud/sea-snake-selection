@@ -1,0 +1,8 @@
+intro_text: "Simple report aggregating QC information for the Ramaciotti RNA-seq data for Hydrophis major"
+extra_fn_clean_exts:
+  - ".report"
+  - "_1"
+  - "_R1"
+  - "_R2"
+fastp:
+  fn: '*fastp.json'
