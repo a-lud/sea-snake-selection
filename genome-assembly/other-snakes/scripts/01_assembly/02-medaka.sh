@@ -16,7 +16,6 @@ for S in ${SMP}; do
         -i "${READS}/${S}.fastq.gz" \
         -d "${FASTA}" \
         -o "${OUT}" \
-        -m 'r941_prom_sup_g507' \
-        -t 30
+        -m 'r941_prom_sup_g507'
 done
 
