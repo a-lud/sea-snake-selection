@@ -1,0 +1,16 @@
+scaffold_1	chr1
+scaffold_2	chr2
+scaffold_3	chr3
+scaffold_4	chr4
+scaffold_5	chrZ
+scaffold_6	chr5
+scaffold_7	chr6
+scaffold_8	chr7
+scaffold_9	chr8
+scaffold_10	chr9
+scaffold_11	chr10
+scaffold_12	chr11
+scaffold_13	chr12
+scaffold_14	chr13
+scaffold_15	chr14
+scaffold_16	chr15
