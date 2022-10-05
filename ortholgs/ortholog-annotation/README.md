@@ -116,6 +116,21 @@ diamond blastp \
 python wei2go.py "${DMND}" "${HMM}" "${OUT}/${BN}.tsv"
 ```
 
+Which generates output that looks like the following:
+
+``` text
+Protein       GO term       Score
+FUN_024769-T1   GO:0031449  19547.370535099075
+FUN_024769-T1   GO:0000146  43267.1977203892
+FUN_024769-T1   GO:0030017  37918.819127444185
+FUN_024769-T1   GO:0046034  13584.201107180152
+FUN_024769-T1   GO:0007512  30424.928334465014
+FUN_024769-T1   GO:0002026  29128.443082433554
+FUN_024769-T1   GO:0016459  17443.413903650035
+FUN_024769-T1   GO:0060048  27056.15193980367
+FUN_024769-T1   GO:0055010  26926.056611863867
+```
+
 ## 2.3 BLAST proteins to UniProtKB (Swiss-Prot) - Gene Symbols
 
 Protein sequences were also searched against the Swiss-Prot database to
