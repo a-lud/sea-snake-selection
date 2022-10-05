@@ -12,9 +12,9 @@ Alastair Ludington
   - <a href="#22-weighted-go-term-annotations-using-wei2go"
     id="toc-22-weighted-go-term-annotations-using-wei2go">2.2 Weighted GO
     Term annotations using Wei2GO</a>
-  - <a href="#23-blast-proteins-to-uniprotkb-swiss-prot"
-    id="toc-23-blast-proteins-to-uniprotkb-swiss-prot">2.3 BLAST proteins to
-    UniProtKB (Swiss-Prot)</a>
+  - <a href="#23-blast-proteins-to-uniprotkb-swiss-prot---gene-symbols"
+    id="toc-23-blast-proteins-to-uniprotkb-swiss-prot---gene-symbols">2.3
+    BLAST proteins to UniProtKB (Swiss-Prot) - Gene Symbols</a>
   - <a
     href="#24-annotate-best-blast-hits-using-uniprotkb-and-ncbi-gff3-annotations"
     id="toc-24-annotate-best-blast-hits-using-uniprotkb-and-ncbi-gff3-annotations">2.4
@@ -90,21 +90,42 @@ The `Funannotate` GO Terms are to be used as they are identified by
 sequence-similarity based functional prediction tool. Protein sequences
 from the 11 snakes used in the ortholog analysis were searched against
 [Pfam](https://pfam.xfam.org/) using [Hmmer3](http://hmmer.org/) and
-[UniProtKB](https://www.uniprot.org/help/uniprotkb) using
-[Diamond](https://github.com/bbuchfink/diamond)
+[UniProtKB](https://www.uniprot.org/help/uniprotkb) (Swiss-Prot) using
+[Diamond](https://github.com/bbuchfink/diamond).
 
-## 2.3 BLAST proteins to UniProtKB (Swiss-Prot)
+The scripts used in the `Wei2GO` analysis include
+`02-wei2go-homology.sh` and `03-wei2go.sh`. Examples of the main CLI
+commands are below.
 
-In addition to using the `Funannotate` results to get GO information, we
-also used
-[BLAST](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-10-421)
-to search the protein sequences of the eleven snakes used in the
-orthology analysis against the
-[UniProtKB](https://www.uniprot.org/help/uniprotkb) database.
-Specifically, we used the manually curated *Swiss-Prot* database.
+``` bash
+# Diamond command to UniProtKB (Swiss-Prot)
+diamond blastp \
+        --threads "${SLURM_CPUS_PER_TASK}" \
+        --query "${FILE}" \
+        --db "${DB}" \
+        --out "${OUT}/${BN}.tab"
+
+# HMMER3 command to Pfam
+ hmmscan \
+        --cpu "${SLURM_CPUS_PER_TASK}" \
+        --tblout "${OUT}/${BN}.out" \
+        "${PF}" \
+        "${FILE}"
+        
+# Wei2GO command
+python wei2go.py "${DMND}" "${HMM}" "${OUT}/${BN}.tsv"
+```
+
+## 2.3 BLAST proteins to UniProtKB (Swiss-Prot) - Gene Symbols
+
+Protein sequences were also searched against the Swiss-Prot database to
+obtain gene symbols using
+[BLASTP](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-10-421).
+Custom fields were passed to the `BLAST` search tool including: qlen,
+slen and qcovs.
 
 The full script used for searching protein sequences is in
-`02-blast-proteins-swissprot.sh`, with the main CLI call below:
+`04-blast-proteins-swissprot.sh`, with the main CLI call below:
 
 ``` bash
 FILE=$(find "${PROT}" -type f -name '*.faa' | tr '\n' ' ' | cut -d ' ' -f "${SLURM_ARRAY_TASK_ID}")
@@ -115,7 +136,7 @@ if [[ ! -f "${OUT}/$(basename ${FILE%.*}).outfmt6" ]]; then
         -db "${DB}" \
         -out "${OUT}/$(basename ${FILE%.*}).outfmt6" \
         -evalue 1e-5 \
-        -outfmt "6 qaccver saccver pident length mismatch gapopen qstart qend sstart send evalue bitscore qcovs" \
+        -outfmt "6 qaccver saccver qlen slen length qcovs pident mismatch gapopen qstart qend sstart send evalue bitscore" \
         -max_target_seqs 100 \
         -num_threads "${SLURM_CPUS_PER_TASK}"
 fi
@@ -124,8 +145,8 @@ fi
 ## 2.4 Annotate best-BLAST-hits using UniProtKB and NCBI GFF3 annotations
 
 Using the `BLAST` results from above, the script `annotateBlast.py` was
-used to filter for high-confidence alignments, followed by GO Term and
-gene-symbol annotation.
+used to filter for high-confidence alignments, followed by gene-symbol
+annotation.
 
 The filtering criteria for high confidence `BLAST` hits was as follows:
 
@@ -135,12 +156,6 @@ The filtering criteria for high confidence `BLAST` hits was as follows:
 - After the above filters, take the top hit for each sequence (typically
   highest bitscore)
 
-The best-hit sequences were then passed to a custom tool `parseIdMap` to
-annotate each query sequence with GO Term information using the
-[idmapping_selected.tab.gz](https://www.uniprot.org/help/downloads) file
-provided by `UniProtKB` (the *README* for the file is provided
-[here](https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/README)).
-
 To obtain gene symbols, gene names were parsed from NCBI *GFF3* files
 and matched up to their respective transcript. Additionally, the
 [idmapping.dat.gz](https://www.uniprot.org/help/downloads) file was
@@ -149,13 +164,13 @@ succinct version of its parent file. The UniProtKB identifiers were then
 used to match best-BLAST-hits with their gene symbols (where possible).
 
 The full script used for annotating the best-BLAST-hits is in
-`03-annotate-best-blast.sh`, with a simplified version of the main
+`05-annotate-best-blast.sh`, with a simplified version of the main
 function call shown below:
 
 ``` bash
 "annotateBlast.py" \
     "${BLASTDIR}" \                                 # Directory that contains BLAST output in outfmt6
-    "${DB}/idmapping_selected.GO.tab.gz" \          # Filtered 'idmapping_selected.tab.z' file with only GO terms
+    "${DB}/idmapping_selected.GO.tab.gz" \
     'blast-GO-annotations.csv' \                    # Output file
     "${OUT}" \                                      # Output directory
     -g "${GFF}" \                                   # Directory containing NCBI GFF3 annotations
@@ -183,8 +198,7 @@ hydrophis_major,FUN_000021-T1,P30671,GO:0005834; ... GO:0007186,GNG7,
 To recap, at this point we have
 
 - GO Term tables built from the `Funannotate` annotation results
-- A GO Term table built from the *Swiss-Prot* best-BLAST-hits for all
-  proteins from all species of interest
+- GO Term tables from `wei2go`
 - Gene symbol annotations from `Funannotate`, UniProtKB and NCBI *GFF3*
   files
 
@@ -195,7 +209,7 @@ single-copy orthologs, we can then perform enrichment analyses using
 tools like `TopGO`.
 
 The script responsible for integrating GO Term annotations from multiple
-sources is `04-annotate-sc-orthogroups.R`, which provides more details
+sources is `06-annotate-orthogroups.R`, which provides more details
 regarding how GO Terms were assigned. The final output from the script
 looks like the following:
 
