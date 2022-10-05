@@ -1,24 +1,27 @@
 Integrate Annotations
 ================
 Alastair Ludington
-2022-10-04
+2022-10-05
 
--   <a href="#1-introduction" id="toc-1-introduction">1 Introduction</a>
--   <a href="#2-annotate-orthologs-pipeline"
-    id="toc-2-annotate-orthologs-pipeline">2 Annotate Orthologs Pipeline</a>
-    -   <a href="#21-parse-funannotate-annotationtxt-files-for-go-terms"
-        id="toc-21-parse-funannotate-annotationtxt-files-for-go-terms">2.1 Parse
-        Funannotate ‘annotation.txt’ files for GO Terms</a>
-    -   <a href="#22-blast-proteins-to-uniprotkb-swiss-prot"
-        id="toc-22-blast-proteins-to-uniprotkb-swiss-prot">2.2 BLAST proteins to
-        UniProtKB (Swiss-Prot)</a>
-    -   <a
-        href="#23-annotate-best-blast-hits-using-uniprotkb-and-ncbi-gff3-annotations"
-        id="toc-23-annotate-best-blast-hits-using-uniprotkb-and-ncbi-gff3-annotations">2.3
-        Annotate best-BLAST-hits using UniProtKB and NCBI GFF3 annotations</a>
-    -   <a href="#24-assign-go-terms-and-gene-symbols-to-each-orthogroup"
-        id="toc-24-assign-go-terms-and-gene-symbols-to-each-orthogroup">2.4
-        Assign GO Terms and gene-symbols to each orthogroup</a>
+- <a href="#1-introduction" id="toc-1-introduction">1 Introduction</a>
+- <a href="#2-annotate-orthologs-pipeline"
+  id="toc-2-annotate-orthologs-pipeline">2 Annotate Orthologs Pipeline</a>
+  - <a href="#21-parse-funannotate-annotationtxt-files-for-go-terms"
+    id="toc-21-parse-funannotate-annotationtxt-files-for-go-terms">2.1 Parse
+    Funannotate ‘annotation.txt’ files for GO Terms</a>
+  - <a href="#22-weighted-go-term-annotations-using-wei2go"
+    id="toc-22-weighted-go-term-annotations-using-wei2go">2.2 Weighted GO
+    Term annotations using Wei2GO</a>
+  - <a href="#23-blast-proteins-to-uniprotkb-swiss-prot"
+    id="toc-23-blast-proteins-to-uniprotkb-swiss-prot">2.3 BLAST proteins to
+    UniProtKB (Swiss-Prot)</a>
+  - <a
+    href="#24-annotate-best-blast-hits-using-uniprotkb-and-ncbi-gff3-annotations"
+    id="toc-24-annotate-best-blast-hits-using-uniprotkb-and-ncbi-gff3-annotations">2.4
+    Annotate best-BLAST-hits using UniProtKB and NCBI GFF3 annotations</a>
+  - <a href="#25-assign-go-terms-and-gene-symbols-to-each-orthogroup"
+    id="toc-25-assign-go-terms-and-gene-symbols-to-each-orthogroup">2.5
+    Assign GO Terms and gene-symbols to each orthogroup</a>
 
 # 1 Introduction
 
@@ -60,10 +63,10 @@ FUN_000008      FUN_000008-T1                     GO:0003777 GO:0005524 GO:00080
 
 The four snakes annotated using `Funannotate` include
 
--   *Hydrophis major*      - New to this study
--   *Aipysurus levis*       - New to this study
--   *Hydrophis curtus*     - NCBI sample without public annotation
--   *Hydrophis cyanocinctus*  - NCBI sample without public annotation
+- *Hydrophis major*      - New to this study
+- *Aipysurus levis*       - New to this study
+- *Hydrophis curtus*     - NCBI sample without public annotation
+- *Hydrophis cyanocinctus*  - NCBI sample without public annotation
 
 The full script used to build these files for each of the four snakes is
 in `01-funannotate-to-go-map.sh`, however the key code is below:
@@ -78,7 +81,19 @@ for f in ${FILES}; do
 done
 ```
 
-## 2.2 BLAST proteins to UniProtKB (Swiss-Prot)
+The `Funannotate` GO Terms are to be used as they are identified by
+[InterProScan5](https://github.com/ebi-pf-team/interproscan).
+
+## 2.2 Weighted GO Term annotations using Wei2GO
+
+[Wei2GO](https://gitlab.com/mreijnders/wei2go) is an open-source,
+sequence-similarity based functional prediction tool. Protein sequences
+from the 11 snakes used in the ortholog analysis were searched against
+[Pfam](https://pfam.xfam.org/) using [Hmmer3](http://hmmer.org/) and
+[UniProtKB](https://www.uniprot.org/help/uniprotkb) using
+[Diamond](https://github.com/bbuchfink/diamond)
+
+## 2.3 BLAST proteins to UniProtKB (Swiss-Prot)
 
 In addition to using the `Funannotate` results to get GO information, we
 also used
@@ -106,7 +121,7 @@ if [[ ! -f "${OUT}/$(basename ${FILE%.*}).outfmt6" ]]; then
 fi
 ```
 
-## 2.3 Annotate best-BLAST-hits using UniProtKB and NCBI GFF3 annotations
+## 2.4 Annotate best-BLAST-hits using UniProtKB and NCBI GFF3 annotations
 
 Using the `BLAST` results from above, the script `annotateBlast.py` was
 used to filter for high-confidence alignments, followed by GO Term and
@@ -114,11 +129,11 @@ gene-symbol annotation.
 
 The filtering criteria for high confidence `BLAST` hits was as follows:
 
--   Percentage identity between query and subject $\geq$ 80%
--   Query coverage $\geq$ 80%
--   Proportion of query length relative to subject $\geq$ 80%
--   After the above filters, take the top hit for each sequence
-    (typically highest bitscore)
+- Percentage identity between query and subject $\geq$ 80%
+- Query coverage $\geq$ 80%
+- Proportion of query length relative to subject $\geq$ 80%
+- After the above filters, take the top hit for each sequence (typically
+  highest bitscore)
 
 The best-hit sequences were then passed to a custom tool `parseIdMap` to
 annotate each query sequence with GO Term information using the
@@ -163,15 +178,15 @@ hydrophis_major,FUN_000018-T1,Q96HU8,GO:0005886; ... GO:0005525; GO:0003924; GO:
 hydrophis_major,FUN_000021-T1,P30671,GO:0005834; ... GO:0007186,GNG7,
 ```
 
-## 2.4 Assign GO Terms and gene-symbols to each orthogroup
+## 2.5 Assign GO Terms and gene-symbols to each orthogroup
 
 To recap, at this point we have
 
--   GO Term tables built from the `Funannotate` annotation results
--   A GO Term table built from the *Swiss-Prot* best-BLAST-hits for all
-    proteins from all species of interest
--   Gene symbol annotations from `Funannotate`, UniProtKB and NCBI
-    *GFF3* files
+- GO Term tables built from the `Funannotate` annotation results
+- A GO Term table built from the *Swiss-Prot* best-BLAST-hits for all
+  proteins from all species of interest
+- Gene symbol annotations from `Funannotate`, UniProtKB and NCBI *GFF3*
+  files
 
 The final step in the annotation is to assign not only GO Terms to each
 sequence, but to also annotate the orthogroups generated by
