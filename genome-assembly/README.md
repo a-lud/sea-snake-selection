@@ -1,31 +1,31 @@
 Genome Assembly
 ================
 Alastair Ludington
-2022-10-04
+2022-10-24
 
--   <a href="#1-introduction" id="toc-1-introduction">1 Introduction</a>
--   <a href="#2-assembly-hydrophis-major"
-    id="toc-2-assembly-hydrophis-major">2 Assembly: <em>Hydrophis
-    major</em></a>
-    -   <a href="#21-assembly-pipeline" id="toc-21-assembly-pipeline">2.1
-        Assembly pipeline</a>
-    -   <a href="#22-assembly-curation-and-assessment"
-        id="toc-22-assembly-curation-and-assessment">2.2 Assembly curation and
-        assessment</a>
-    -   <a href="#23-synteny-to-h-curtus-and-h-cyanocinctus"
-        id="toc-23-synteny-to-h-curtus-and-h-cyanocinctus">2.3 Synteny to <em>H.
-        curtus</em> and <em>H. cyanocinctus</em></a>
-    -   <a href="#24-create-final-assemblies"
-        id="toc-24-create-final-assemblies">2.4 Create final assemblies</a>
-    -   <a href="#25-repeat-annotation" id="toc-25-repeat-annotation">2.5 Repeat
-        Annotation</a>
--   <a href="#3-assembly-hydrophis-elegans"
-    id="toc-3-assembly-hydrophis-elegans">3 Assembly: <em>Hydrophis
-    elegans</em></a>
-    -   <a href="#31-assembly" id="toc-31-assembly">3.1 Assembly</a>
-    -   <a href="#32-polish" id="toc-32-polish">3.2 Polish</a>
-    -   <a href="#33-genome-assessment" id="toc-33-genome-assessment">3.3 Genome
-        assessment</a>
+- <a href="#1-introduction" id="toc-1-introduction">1 Introduction</a>
+- <a href="#2-assembly-hydrophis-major"
+  id="toc-2-assembly-hydrophis-major">2 Assembly: <em>Hydrophis
+  major</em></a>
+  - <a href="#21-assembly-pipeline" id="toc-21-assembly-pipeline">2.1
+    Assembly pipeline</a>
+  - <a href="#22-assembly-curation-and-assessment"
+    id="toc-22-assembly-curation-and-assessment">2.2 Assembly curation and
+    assessment</a>
+  - <a href="#23-synteny-to-h-curtus-and-h-cyanocinctus"
+    id="toc-23-synteny-to-h-curtus-and-h-cyanocinctus">2.3 Synteny to <em>H.
+    curtus</em> and <em>H. cyanocinctus</em></a>
+  - <a href="#24-create-final-assemblies"
+    id="toc-24-create-final-assemblies">2.4 Create final assemblies</a>
+  - <a href="#25-repeat-annotation" id="toc-25-repeat-annotation">2.5 Repeat
+    Annotation</a>
+- <a href="#3-assembly-hydrophis-elegans"
+  id="toc-3-assembly-hydrophis-elegans">3 Assembly: <em>Hydrophis
+  elegans</em></a>
+  - <a href="#31-assembly" id="toc-31-assembly">3.1 Assembly</a>
+  - <a href="#32-polish" id="toc-32-polish">3.2 Polish</a>
+  - <a href="#33-genome-assessment" id="toc-33-genome-assessment">3.3 Genome
+    assessment</a>
 
 # 1 Introduction
 
@@ -50,8 +50,7 @@ assembly pipeline involved the following processes.
     [HifiAdapterFilt](https://github.com/sheinasim/HiFiAdapterFilt).
 2.  Assemble Hifi reads using
     [Hifiasm](https://github.com/chhylp123/hifiasm).
-    -   Hi-C reads are used here to guide contig-to-haplotype
-        assignment.
+    - Hi-C reads are used here to guide contig-to-haplotype assignment.
 3.  Pre-process Hi-C reads using an adapted
     [Arima](https://github.com/ArimaGenomics/mapping_pipeline) mapping
     pipeline.
@@ -80,14 +79,14 @@ Breifly, the pipeline does the following:
 2.  Closes gaps in the assembly using
     [TGS-GapCloser](https://github.com/BGI-Qingdao/TGS-GapCloser).
 3.  Run a variet of genome-quality assessment tools
-    -   [MosDepth](https://github.com/brentp/mosdepth) to check average
-        coverage
-    -   [Merqury](https://github.com/marbl/merqury) for K-mer
-        completeness and genome quality
-    -   [BUSCO](https://gitlab.com/ezlab/busco) to assess final gene
-        completeness
-    -   [QUAST](https://github.com/ablab/quast) for general assembly
-        statistics
+    - [MosDepth](https://github.com/brentp/mosdepth) to check average
+      coverage
+    - [Merqury](https://github.com/marbl/merqury) for K-mer completeness
+      and genome quality
+    - [BUSCO](https://gitlab.com/ezlab/busco) to assess final gene
+      completeness
+    - [QUAST](https://github.com/ablab/quast) for general assembly
+      statistics
 
 The script that kicks off the assembly assessment pipeline is
 `02-assembly_assessment.sh`.
@@ -187,9 +186,9 @@ Following detection of the raw repeats, the rest of the pipeline was run
 in step-wise manner as to not exceed our clusters time limit. The
 relevant scripts for the annotation of repeats include:
 
--   `01-filter-p_ctg.sh`
--   `02-final-p_ctg.sh`
--   `03-anno-p_ctg.sh`
+- `01-filter-p_ctg.sh`
+- `02-final-p_ctg.sh`
+- `03-anno-p_ctg.sh`
 
 Following annotation of repeat elements, a soft-masked version of the
 genome was generated using the accessory script `make_masked.pl`.
@@ -253,6 +252,39 @@ medaka_consensus \
   -m 'r941_prom_sup_g507'
 ```
 
+The software
+[NextPolish](https://nextpolish.readthedocs.io/en/latest/index.html) was
+then used to perfrom two rounds of short-read polishing. The alignment
+pipeline recommended in the `NextPolish` documentation was manually
+implemented before running the polishing software.
+
+Two iterations of the following alignment pipeline were applied to:
+
+- Round 1: `Medaka` polished genome as the reference
+- Round 2: Round 1 NextPolish genome as the reference
+
+``` bash
+# Align, filter, sort and mark duplicates
+bwa-mem2 mem \
+    -t 30 \
+    "${ASM}" "${R1}" "${R2}" | \
+    "${NIB}/samtools" view -u --threads 4 -F 0x4 -b - | \
+    "${NIB}/samtools" fixmate -m --threads 4 - - | \
+    "${NIB}/samtools" sort -m 2g --threads 5 - | \
+    "${NIB}/samtools" markdup -O 'BAM' --threads 5 -r - "${OUT_ONE}/sr.bam"
+
+# First round of polish
+python nextpolish1.py \
+    -g "${ASM}" \
+    -t 1 \
+    -p 24 \
+    -s "${OUT_ONE}/sr.bam" > "${OUT_ONE}/${BN}.round-${ROUND}.fa"
+```
+
+**NOTE**: The `-t 1` parameter in the `nextpolish1.py` command was
+changed to `-t 2` in the second round of polishing as per the
+`read-the-docs` example.
+
 ## 3.3 Genome assessment
 
 Similar to the HiFi/Hi-C pipeline, `Merqury` and `BUSCO` were used to
@@ -261,8 +293,8 @@ assess the quality of the assembled genomes.
 ``` bash
 # BUSCO
 busco \
-    -i "hydrophis_elegans-consensus.fasta" \
-    -o 'hydrophis_elegans-medaka' \
+    -i "hydrophis_elegans-polished.fa" \
+    -o 'hydrophis_elegans-nextpolish' \
     -m 'geno' \
     -l "${DB}" \
     --cpu 50 \
@@ -283,7 +315,7 @@ meryl count \
 
 # Compare genome to reads
 merqury.sh \
-    Hydrophis_elegans-reads.meryl \
-    "${ELEG}" \
-    Hydrophis_elegans-to-reads
+    'Hydrophis_elegans-reads.meryl' \
+    'hydrophis_elegans-polished.fa' \
+    'Hydrophis_elegans-to-reads'
 ```
