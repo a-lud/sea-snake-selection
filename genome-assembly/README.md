@@ -224,7 +224,9 @@ LAI \
 # 3 Assembly: *Hydrophis elegans*
 
 This snake was assembled using a different approach to *H. major*. This
-assembly was produced using only Nanopore long-reads.
+assembly was produced using Nanopore long-reads for the primary
+assembly, with the Nanopore and short-read sequence data used for
+polishing.
 
 ## 3.1 Assembly
 
@@ -264,6 +266,9 @@ Two iterations of the following alignment pipeline were applied to:
 
 - Round 1: `Medaka` polished genome as the reference
 - Round 2: Round 1 NextPolish genome as the reference
+
+The script used for polishing with `NextPolish` is
+`03-nextpolish-hydrophis_elegans.sh`.
 
 ``` bash
 # Align, filter, sort and mark duplicates
@@ -325,4 +330,16 @@ merqury.sh \
 ## 3.4 Repeat annotation
 
 The repeat annotation of *Hydrophis elegans* was performed identically
-to *H. major* above.
+to *H. major* above. The scripts used for annotating the repeat elements
+can be found in `03_repeats` which include:
+
+- `01-{tir,helitron,ltr}.sh`
+- `02-all.sh`
+- `03-filter.sh`
+- `04-final.sh`
+- `05-anno.sh`
+- `06-lai.sh`
+
+Above, the `02-all.sh` script is simply a quick step that generates some
+intermediate files that would otherwise not be generated using the other
+commands.
