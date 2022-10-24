@@ -26,6 +26,8 @@ Alastair Ludington
   - <a href="#32-polish" id="toc-32-polish">3.2 Polish</a>
   - <a href="#33-genome-assessment" id="toc-33-genome-assessment">3.3 Genome
     assessment</a>
+  - <a href="#34-repeat-annotation" id="toc-34-repeat-annotation">3.4 Repeat
+    annotation</a>
 
 # 1 Introduction
 
@@ -319,3 +321,8 @@ merqury.sh \
     'hydrophis_elegans-polished.fa' \
     'Hydrophis_elegans-to-reads'
 ```
+
+## 3.4 Repeat annotation
+
+The repeat annotation of *Hydrophis elegans* was performed identically
+to *H. major* above.
