@@ -1,10 +1,11 @@
 Gene Annotation
 ================
 Alastair Ludington
-2022-10-31
+2022-12-14
 
 - <a href="#1-introduction" id="toc-1-introduction">1 Introduction</a>
-- <a href="#2-annotation" id="toc-2-annotation">2 Annotation</a>
+- <a href="#2-de-novo-annotation" id="toc-2-de-novo-annotation">2 De novo
+  Annotation</a>
   - <a href="#21-preparation" id="toc-21-preparation">2.1 Preparation</a>
     - <a href="#211-curated-snake-protein-evidence"
       id="toc-211-curated-snake-protein-evidence">2.1.1 Curated snake protein
@@ -24,7 +25,10 @@ Alastair Ludington
       Funannotate Update</a>
     - <a href="#224-funannotate-annotate"
       id="toc-224-funannotate-annotate">2.2.4 Funannotate Annotate</a>
-- <a href="#3-summary" id="toc-3-summary">3 Summary</a>
+- <a href="#3-lift-over-annotation" id="toc-3-lift-over-annotation">3
+  Lift-over annotation</a>
+  - <a href="#31-liftoff" id="toc-31-liftoff">3.1 Liftoff</a>
+- <a href="#4-summary" id="toc-4-summary">4 Summary</a>
 
 # 1 Introduction
 
@@ -36,10 +40,9 @@ snake can be found in their respective directories. As such, this
 *README* acts as a guide to the annotation process, showing generalised
 command calls for reader.
 
-As a reminder, the snakes that we annotated include:
+The *de novo* annotated snakes include:
 
 - *Hydrophis major* - New to this study.
-- *Hydrophis elegans* - New to this study.
 - *Hydrophis curtus* - Previously published ([Li et al.,
   2021](https://academic.oup.com/mbe/article/38/11/4867/6329831)) but no
   NCBI annotation available.
@@ -47,10 +50,19 @@ As a reminder, the snakes that we annotated include:
   2021](https://academic.oup.com/mbe/article/38/11/4867/6329831)) but no
   NCBI annotation available.
 
-# 2 Annotation
+Snakes that did not have sufficient data to be annotated *de novo*, but
+were annotated using lift-over software include:
 
-The annotation process involved three distinct approaches that were
-integrated to form a final annotation.
+- *Hydrophis elegans* - New to this study.
+- *Hydrophis ornatus* - New to this study
+- *Hydrophis curtus (AG)* - New to this study
+
+The methods for each of the annotation approaches are detailed below
+
+# 2 De novo Annotation
+
+The *de novo* annotation process involved three distinct approaches that
+were integrated to form a final annotation.
 
 1.  Homology-based annotation methods
 2.  *De novo* annotation methods
@@ -61,8 +73,6 @@ Nearly all of the annotation process was managed by the software
 This tool essentially provides a series of wrapper scripts that automate
 the use of many standard gene-annotation tools/methods that users
 typically want to run.
-
-Below I go through each step of the pipeline
 
 ## 2.1 Preparation
 
@@ -372,10 +382,47 @@ singularity exec "${CONTAINER}/funannotate-v1.8.11.sif" funannotate annotate \
     --no-progress
 ```
 
-# 3 Summary
+# 3 Lift-over annotation
 
-The examples above walk through the full annotation process for the four
-snakes in this study. The actual scripts used to annotate the snakes can
-be found in the sub-directories found in this repository. The names of
-the scripts should be intuitive enough to figure out what process they
-are responsible for.
+For lift-over methods, the software [Liftoff
+(v1.6.3)](https://github.com/agshumate/Liftoff) was used to lift-over
+the *H. major* gene annotations to the following snakes:
+
+- *Hydrophis elegans*
+- *Hydrophis ornatus*
+- *Hydrophis curtus (AG)*
+
+The *H. major* annotations were used as the refernce gene-set as they
+had the highest `BUSCO` score of closely related *Hydrophis* snakes.
+
+## 3.1 Liftoff
+
+As stated in the introduction, the software [Liftoff
+(v1.6.3)](https://github.com/agshumate/Liftoff) was used to annotate the
+three sea snakes listed above. `Liftoff` is a relatively simple tool to
+use, simply requiring a target genome that is annotated (*H. major*) and
+a subject genome to lift the annotation to. The code used to annotate
+the three genomes using `Liftoff` can be found in
+`liftoff-to-genomes.sh`. The key code is shown below:
+
+``` bash
+liftoff \
+    "${QRY_ASM}" \                # Lift annotations to
+    "${TGT_ASM}" \                # Lift annotations from
+    -g "${TGT_GFF}" \
+    -o "${OUT}/${BN}/${BN}.gff3" \
+    -u "${OUT}/${BN}/${BN}-unmapped.txt" \
+    -exclude_partial \
+    -dir "${OUT}/${BN}/intermediates" \
+    -p "${SLURM_CPUS_PER_TASK}" \
+    -polish
+```
+
+# 4 Summary
+
+This document details both the *de novo* and lift-over methods used to
+annotate the new and existing sea snakes for this study. The relevant
+scripts for each annotation approach can be found in the `scripts`
+directory. Most scripts are numbered by the order that they should be
+run, and should be intuitive enough to figure out given this document
+and their order of execution.
