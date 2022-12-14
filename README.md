@@ -6,7 +6,7 @@ methods used for that analysis, with examples. The analyses include:
 
 - [Genome assembly][asm]
 - [Genome annotation][ann]
-- Ortholog detection
+- [Ortholog detection][det]
 - [Ortholog Annotation][oann]
 - Selection
 - GO enrichment testing
@@ -17,6 +17,7 @@ Specific details about the Nextflow workflows can be found at the [wiki][wiki] p
 
 [asm]: https://github.com/a-lud/sea-snake-selection/tree/main/genome-assembly
 [ann]: https://github.com/a-lud/sea-snake-selection/tree/main/annotation
+[det]: https://github.com/a-lud/sea-snake-selection/tree/main/ortholgs/ortholog-detection
 [oann]: https://github.com/a-lud/sea-snake-selection/tree/main/ortholgs/ortholog-annotation
 [nf]: https://github.com/a-lud/nf-pipelines
 [wiki]: https://github.com/a-lud/nf-pipelines/wiki
