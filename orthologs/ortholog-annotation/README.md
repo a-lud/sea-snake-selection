@@ -382,4 +382,4 @@ OG0005084,JPH3,GO:0030314 GO:0005789 ... GO:0001047 GO:0000122
 
 For the 8,668 single-copy orthologs that were generated from the 13
 snakes, \~93% were assigned a gene symbol, while all orthogroups had at
-least one GO Term affiliated with it.
+least one affiliated GO Term.
