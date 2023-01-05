@@ -26,6 +26,7 @@ Alastair Ludington
     id="toc-31-gene-symbol-hierarchy">3.1 Gene symbol hierarchy</a>
   - <a href="#32-go-term-filtering" id="toc-32-go-term-filtering">3.2 GO
     Term filtering</a>
+  - <a href="#33-final-output" id="toc-33-final-output">3.3 Final output</a>
 
 # 1 Introduction
 
@@ -365,6 +366,8 @@ script collects the GO Terms from each source and generates a
 non-redundant set of GO Terms. These are then assigned to the
 orthogroup.
 
+## 3.3 Final output
+
 The output from all this is a single CSV file that has the following
 format.
 
@@ -376,3 +379,7 @@ OG0005082,SLC7A5,GO:0015807 GO:0005765 ... GO:0015829 GO:0042908
 OG0005083,KLHDC4,GO:0005515 GO:0006338 ... GO:0000775 GO:0008270
 OG0005084,JPH3,GO:0030314 GO:0005789 ... GO:0001047 GO:0000122
 ```
+
+For the 8,668 single-copy orthologs that were generated from the 13
+snakes, \~93% were assigned a gene symbol, while all orthogroups had at
+least one GO Term affiliated with it.
