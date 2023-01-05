@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=wei2go-output
+#SBATCH --job-name=wei2go
 #SBATCH -p batch
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH -c 1
-#SBATCH -a 1-11
+#SBATCH -a 1-13
 #SBATCH --ntasks-per-core=1
 #SBATCH --time=12:00:00
 #SBATCH --mem=4GB
@@ -17,7 +17,7 @@ OUT="${DIR}/results"
 
 mkdir -p "${OUT}"
 
-HMM=$(find "${DIR}/homology-output" -type f -name '*.out' | tr '\n' ' ' | cut -d ' ' -f "${SLURM_ARRAY_TASK_ID}")
+HMM=$(find "${OUT}" -type f -name '*.out' | tr '\n' ' ' | cut -d ' ' -f "${SLURM_ARRAY_TASK_ID}")
 
 # Conda ---
 CONDA_BASE=$(conda info --base)

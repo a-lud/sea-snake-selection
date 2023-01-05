@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
 
-DIR="/Users/alastairludington/Documents/phd/analyses/sea-snake-selection"
+DIR="$(dirname "$(pwd)")"
 OUT="${DIR}/results/go-tables-funannotate"
+mkdir -p "${OUT}"
 
 # Directory with annotations
-ANNO="/Users/alastairludington/Documents/phd/analyses/annotations/funannotate"
+ANNO="/Users/alastairludington/Documents/phd/00_papers/sea-snake-selection/annotation/funannotate"
 
 # Software
 SOFT="/Users/alastairludington/Documents/software-custom/funAnn2Go"
-
-mkdir -p "${OUT}"
 
 FILES=$(find "${ANNO}" -type f -name '*annotations.txt')
 

@@ -3,19 +3,20 @@
 #SBATCH -p batch
 #SBATCH -N 1
 #SBATCH -n 1
-#SBATCH -c 16
-#SBATCH -a 1-11
+#SBATCH -c 20
+#SBATCH -a 1-13
 #SBATCH --ntasks-per-core=1
-#SBATCH --time=08:00:00
+#SBATCH --time=10:00:00
 #SBATCH --mem=20GB
 #SBATCH -o /hpcfs/users/a1645424/analysis/wei2go/scripts/joblogs/%x_%a_%A_%j.log
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-user=alastair.ludington@adelaide.edu.au
 
-OUT='/hpcfs/users/a1645424/analysis/wei2go/homology-output'
-DB='/hpcfs/users/a1645424/analysis/wei2go/temp-db/knowledgebase'
+DIR='/hpcfs/users/a1645424/analysis/wei2go'
+PROT="${DIR}/proteins"
+OUT="${DIR}/homology-results/homology"
+DB="${DIR}/temp-db/knowledgebase"
 PF='/hpcfs/users/a1645424/database/funannotate_db/Pfam-A.hmm'
-PROT='/hpcfs/users/a1645424/analysis/orthologs/agat/cds_proteins'
 
 mkdir -p "${OUT}"
 
