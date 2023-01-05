@@ -17,7 +17,7 @@ Specific details about the Nextflow workflows can be found at the [wiki][wiki] p
 
 [asm]: https://github.com/a-lud/sea-snake-selection/tree/main/assembly
 [ann]: https://github.com/a-lud/sea-snake-selection/tree/main/annotation
-[det]: https://github.com/a-lud/sea-snake-selection/tree/main/ortholgs/ortholog-detection
+[det]: https://github.com/a-lud/sea-snake-selection/tree/main/orthologs/ortholog-detection
 [oann]: https://github.com/a-lud/sea-snake-selection/tree/main/ortholgs/ortholog-annotation
 [nf]: https://github.com/a-lud/nf-pipelines
 [wiki]: https://github.com/a-lud/nf-pipelines/wiki
