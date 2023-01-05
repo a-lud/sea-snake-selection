@@ -98,7 +98,7 @@ script.
 FILES=$(find <dir> -type f -name '*.annotations.txt')
 for f in ${FILES}; do
     BN=$(basename "${f%.annotations.txt}")
-    funAnn2Go" \
+    parseFunannotate" \
       -i "${f}" \
       -o "${BN}.tsv"
 done
