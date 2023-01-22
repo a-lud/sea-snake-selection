@@ -153,20 +153,21 @@ group who were responsible for the drop-out test above, and is called
 
 Briefly, `BUSTED` is a selection testing model that provides a gene-wide
 test for positive selection by asking whether a gene has experienced
-positive selection at at least one site on at least one branch ([Murrell
+positive selection at at-least one site on at least one branch ([Murrell
 et
 al. 2015](https://academic.oup.com/mbe/article/32/5/1365/1134918?login=true),
 [website](https://stevenweaver.github.io/hyphy-site/methods/selection-methods/)).
-By implementing a “stochastic selection” test over tests which average
-over branches, codon sites or both, is greater statistical power to
-detect transient/localised selective events ([Murrell et
+The advantage of `BUSTED` is that it models selection “stochastically”
+over branches and sites, which provides it greater power to detect
+transient/localised selective events compared to modles that average
+$\omega$ over branches, sites or both ([Murrell et
 al. 2015](https://academic.oup.com/mbe/article/32/5/1365/1134918?login=true)).
 All this is to say, `BUSTED` is a tool that is specifically designed to
 test for gene-wide positive selection over a whole phylogeny, or in
 specific branches of interest. Importantly, a significant `BUSTED`
 result does not mean that a gene has evolved under positive selection
-along the entire foreground! Merely that at some point in time at least
-one site has experienced positive selection somewhere along the
+along the entire foreground! Merely, that at some point in time, at
+least one site has experienced positive selection somewhere along the
 foreground branches.
 
 The `BUSTED-PH` method is built around the `BUSTED` model, but
@@ -205,6 +206,7 @@ From these series of tests, and following a simple decision tree, we can
 determine if:
 
 - Positive selection only occurs in *test* and selective regimes differ
+  between *test* and *background*
 - Positive selection only occurs in *test* but selective regimes are the
   same
 - Positive selection occurs in both *test* and *background* and
@@ -503,4 +505,4 @@ making inference about terrestrial PSGs shown in this plot.
 All selection intensity results were generated using the script
 `07-selection-intensity.R`.
 
-<img src="https://github.com/a-lud/sea-snake-selection/blob/main/selection/results-13/results-selection-intensification/upset.png" width="800" />
+![](https://github.com/a-lud/sea-snake-selection/blob/main/selection/results-13/results-selection-intensification/upset.png)<!-- -->
