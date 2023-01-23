@@ -1,7 +1,7 @@
 Selection Testing
 ================
 Alastair Ludington
-2023-01-23
+2023-01-24
 
 - <a href="#1-introduction" id="toc-1-introduction">1 Introduction</a>
 - <a href="#2-selection-testing-software"
@@ -427,11 +427,11 @@ bustedph.13 <- parseBustedPh(jsons = jsons.bustedph.13)
 
 The results from both `BUSTED-PH` and `codeml` were corrected for
 multiple testing using an *fdr* correction implemented in `p.adjust()`.
-Selection results were then filtered using an \$= \$ 0.01, requiring the
-gene to be **only** under positive selection in the *Hydrophis* snakes,
-with no significant signal of positive selection in the *Terrestrial*
-snakes. Finally, PSGs from both sources were intersected to find a
-final, overlapping set of PSGs.
+Selection results were then filtered using an $\alpha =$ 0.01, requiring
+the gene to be **only** under positive selection in the *Hydrophis*
+snakes, with no significant signal of positive selection in the
+*Terrestrial* snakes. Finally, PSGs from both sources were intersected
+to find a final, overlapping set of PSGs.
 
 *NOTE*: `BUSTED-PH` reports genes under positive selection in the *test*
 branches relative to the *background* branches. It also provides extra
