@@ -7,8 +7,8 @@ methods used for that analysis, with examples. The analyses include:
 - [Genome assembly][asm]
 - [Genome annotation][ann]
 - [Ortholog detection][det]
-- [Ortholog Annotation][oann]
-- [Selection][sel]
+- [Ortholog annotation][oann]
+- [Selection testing][sel]
 - GO enrichment testing
 - Gene family expansion/contraction
 
