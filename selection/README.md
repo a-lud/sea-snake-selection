@@ -445,7 +445,7 @@ selection with respect to the phenotype of interest.
 ## Step 4: Selection intensity
 
 **Scripts:**
-[07-selection-intensity.R](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/07-selection-intensity.R)  
+[06-selection-intensity.R](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/06-selection-intensity.R)  
 **Outputs:**
 [results-13/results-selection-intensification](https://github.com/a-lud/sea-snake-selection/tree/main/selection/results-13/results-selection-intensification)
 
@@ -484,8 +484,5 @@ relaxed, intensified and neutral genes in the intersection plot.
 estimated in *Hydrophis* relative to the *reference* branches -
 i.e. terrestrial snakes. This means the results need to be inverted when
 making inference about terrestrial PSGs shown in this plot.
-
-All selection intensity results were generated using the script
-`07-selection-intensity.R`.
 
 ![](https://github.com/a-lud/sea-snake-selection/blob/main/selection/results-13/results-selection-intensification/upset.png)
