@@ -521,7 +521,7 @@ table format (see below).
 ## Step 5: Selection intensity
 
 **Scripts:**
-[07-selection-intensity.R](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/07-selection-intensity.R)
+[07-selection-intensity.R](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/07-selection-intensity.R)  
 **Outputs:**
 [results-13/results-selection-intensification](https://github.com/a-lud/sea-snake-selection/tree/main/selection/results-13/results-selection-intensification)
 
