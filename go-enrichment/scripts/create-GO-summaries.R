@@ -25,5 +25,5 @@ goSummaries <- lapply(graphs, function(x){
 
 saveRDS(
   object = goSummaries,
-  file = 'selection/r-data/goSummarise.rds'
+  file = 'go-enrichment/r-data/goSummaries.rds'
 )

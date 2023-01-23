@@ -35,7 +35,7 @@ library(topGO)
 
 # ------------------------------------------------------------------------------------------------ #
 # GO summaries object: information about GO Terms and the GO DAG
-gosummaries <- read_rds(file = here('selection', 'r-data', 'goSummaries.rds'))
+gosummaries <- read_rds(file = here('go-enrichment', 'r-data', 'goSummaries.rds'))
 
 # ------------------------------------------------------------------------------------------------ #
 # Single copy orthologs - 8,668 rows x 3 columns
@@ -136,11 +136,11 @@ enriched.go.terms <- enriched.go.terms |>
 
 # ------------------------------------------------------------------------------------------------ #
 # Save enrichment results to file
-fs::dir_create(here('selection','results-13','results-enrichment'))
+fs::dir_create(here('go-enrichment','results-13','results-enrichment'), recurse = TRUE)
 
 # Delete REVIGO file if it already exists - don't want to keep appending to existing file
-if (fs::file_exists(here('selection', 'results-13', 'results-enrichment', "revigo.txt"))) {
-  fs::file_delete(here('selection', 'results-13', 'results-enrichment', "revigo.txt"))
+if (fs::file_exists(here('go-enrichment', 'results-13', 'results-enrichment', "revigo.txt"))) {
+  fs::file_delete(here('go-enrichment', 'results-13', 'results-enrichment', "revigo.txt"))
 }
 
 iwalk(
@@ -149,7 +149,7 @@ iwalk(
     # Write a CSV with all data
     write_csv(
       x = df,
-      file = here('selection', 'results-13', 'results-enrichment', glue::glue("{name}-enriched.csv")),
+      file = here('go-enrichment', 'results-13', 'results-enrichment', glue::glue("{name}-enriched.csv")),
       col_names = TRUE
     )
 
@@ -158,7 +158,7 @@ iwalk(
 
     write_lines(
       x = paste(df[['GO Term']], df[['P-value']], sep = ' '),
-      file = here('selection', 'results-13', 'results-enrichment', "revigo.txt"),
+      file = here('go-enrichment', 'results-13', 'results-enrichment', "revigo.txt"),
       append = TRUE
     )
   }
