@@ -27,9 +27,9 @@ Alastair Ludington
   - <a href="#step-1-selection-testing"
     id="toc-step-1-selection-testing">Step 1: Selection testing</a>
     - <a href="#codeml-pipeline" id="toc-codeml-pipeline">Codeml pipeline</a>
-    - <a href="#hyphy-pipeline" id="toc-hyphy-pipeline">Hyphy pipeline</a>
     - <a href="#hyphy-analyses-pipeline"
       id="toc-hyphy-analyses-pipeline">Hyphy-analyses pipeline</a>
+    - <a href="#hyphy-pipeline" id="toc-hyphy-pipeline">Hyphy pipeline</a>
   - <a href="#step-2-parse-selection-results"
     id="toc-step-2-parse-selection-results">Step 2: Parse selection
     results</a>
@@ -260,92 +260,146 @@ occurring in the PSGs of interest.
 # 4 Data processing
 
 Below I go over the scripts used to run the selection test, along with
-their downstream processing.
+their downstream processing. All scripts detailed below can be found in
+the
+[scripts](https://github.com/a-lud/sea-snake-selection/tree/main/selection/scripts)
+directory, while most data inputs and outputs can be found in any of the
+[r-data](https://github.com/a-lud/sea-snake-selection/tree/main/selection/r-data)
+or
+[results-13](https://github.com/a-lud/sea-snake-selection/tree/main/selection/results-13)
+directories.
+
+The only files I could not upload here are the raw `HyPhy` JSON outputs,
+as their cumulative size exceeded the 100Mb limit set by GitHub.
 
 ## Step 1: Selection testing
 
-The first step was to conduct the selection tests. I implemented two
-(really three) separate Nextflow pipelines to run the two separate
-selection tools:
+Selection tests were implemented using Nextflow pipelines that I wrote.
+The three pipelines are:
 
 - [CodeML](https://github.com/a-lud/nf-pipelines/wiki/CodeML-Pipeline):
   Run `codeml` using [ETE3](https://github.com/etetoolkit/ete), with the
   capability to perform drop-out analyses.
-- [HyPhy(-analyses)](https://github.com/a-lud/nf-pipelines/wiki/HyPhy):
-  Run `HyPhy`/`HyPhy-analyses` methods in parallel.
+- [HyPhy](https://github.com/a-lud/nf-pipelines/wiki/HyPhy): Run `HyPhy`
+  methods in parallel.
+- [HyPhy-analyses](https://github.com/a-lud/nf-pipelines/wiki/HyPhy-Analyses):
+  Run `HyPhy-analyses` methods in parallel.
 
 Each of these pipelines run the selection tests described above. The
 pipelines take multiple sequence alignments of single copy orthologs,
 along with a tree file. For each pipeline, the *Hydrophis* snakes were
-marked as foreground/test, as can be seen in the `trees` directory in
-this directory.
+marked as foreground/test, as can be seen in the `trees` directory.
 
 ### Codeml pipeline
 
-Below is a general overview of how the `codeml` pipeline runs. For a
-more detailed breakdown, please visit the wiki linked above.
+**Script:**
+[01-codeml.sh](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/01-codeml.sh)  
+**Outputs:**
+[results-13/paml](https://github.com/a-lud/sea-snake-selection/tree/main/selection/results-13/paml)
+
+I’ve detailed the main stages of the `codeml` pipeline that I
+implemented in Nextflow. For a more detailed overview, please see the
+wiki page linked above.
 
 1.  Run selection models in parallel - `BSA` and `BSA1`
-
     - Model `M0` is used to get initial branch lengths before running
       more complex models
-
 2.  Summarise `codeml` results for all orthologs into a single table
     using [eteTools](https://github.com/a-lud/eteTools)
-
 3.  Remove *foreground* branches from the tree and run a drop-out
     analysis using `M1a` and `M2a`
-
 4.  Collect drop-out results into a single summary table using
     [eteTools](https://github.com/a-lud/eteTools)
-
 5.  Compare LRT statistics of Branch-Site models to drop-out site models
     using [eteTools](https://github.com/a-lud/eteTools)
 
 Not mentioned above, but the pipeline will also check sequences for
 internal stop codons using `HyPhy`’s `CleanStopCodons.bf` tool.
 
-Script `01-codeml.sh` was used to run the `codeml` selection pipeline.
+The tree passed to `codeml` is shown below
 
-### Hyphy pipeline
+``` text
+# snakes-marked-13-codeml.nwk: Codeml tree using '#1' notation
+(python_bivittatus,((crotalus_tigris,protobothrops_mucrosquamatus),((pantherophis_guttatus,thamnophis_elegans),(pseudonaja_textilis,(notechis_scutatus,((hydrophis_elegans #1,hydrophis_cyanocinctus #1) #1,((hydrophis_curtus #1,hydrophis_curtus-AG #1) #1,(hydrophis_major #1,hydrophis_ornatus #1) #1) #1) #1)))));
+```
 
-The `hyphy` pipeline runs the default models provided by `HyPhy`.
-Currently I’ve only implemented the `RELAX` model. The pipeline takes
-MSA files and a species tree as input. As I was running the `RELAX`
-model, the *Hydrophis* snakes were marked in the tree to represent the
-*test* branches.
+The pipeline emits summary files for the Branch-Site models as well as
+for the drop-out Site models. These include:
 
-`HyPhy` returns a markdown formatted log file and JSON output file by
-default. As such, these are the two outputs emitted by the pipeline.
+- BEB results (`beb.csv`)
+- Branch information (`branches.csv` - if applicable)
+- LRT results between Null/Alternate models (`lrt.csv`)
+- Model information (`model-branch-site.csv` - this will take on the
+  name of whatever model was run)
 
-The script that was used to run the `hyphy` pipeline was
-`03-hyphy-relax-13.sh`.
+PAML results for this analysis can be found in the **Outputs** link
+above.
 
 ### Hyphy-analyses pipeline
 
-This pipeline is designed to run the custom workflows that accompany the
-`HyPhy` software. To run the `hyphy-analses` batch-files, the `develop`
-branch of the `HyPhy` tool needs to be installed. As such, this pipeline
-is separate to the above pipeline as it requires a different
-installation of `HyPhy` compared to above. So far, I’ve only implemented
-support for `BUSTED-PH`.
+**Script:**
+[02-hyphy-busted-ph-13.sh](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/02-hyphy-busted-ph-13.sh)  
+**Outputs:** Too large to upload to GitHub
 
-Regardless, the main inputs and outputs are the same as the above
-pipeline. The script used to run the pipeline can be found at
-`02-hyphy-busted-ph-13.sh`.
+The
+[HyPhy-analyses](https://github.com/a-lud/nf-pipelines/wiki/HyPhy-Analyses)
+pipeline runs the more custom selection pipelines in parallel. We used
+this pipeline to run `BUSTED-PH` to test whether the *Marine* phenotype
+is associated with positive selection.
+
+The codon-translated multiple sequence alignment files were provided as
+input, along with a newick tree where the *Hydrophis* sea snakes had
+been marked as *test* branches (see below).
+
+``` text
+# snakes-marked-13-hyphy.nwk: HyPhy tree using '{}' marking notation
+(python_bivittatus,((crotalus_tigris,protobothrops_mucrosquamatus),((pantherophis_guttatus,thamnophis_elegans),(pseudonaja_textilis,(notechis_scutatus,((hydrophis_elegans{Marine},hydrophis_cyanocinctus{Marine}){Marine},((hydrophis_curtus{Marine},hydrophis_curtus-AG{Marine}){Marine},(hydrophis_major{Marine},hydrophis_ornatus{Marine}){Marine}){Marine}){Marine})))));
+```
+
+The output from the pipeline was a JSON file for every ortholog tested.
+These were not processed any further by the Nextflow pipeline.
+
+### Hyphy pipeline
+
+**Script:**
+[03-hyphy-relax-13.sh](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/03-hyphy-relax-13.sh)  
+**Outputs:** Too large to upload to GitHub
+
+The `HyPhy` Nextflow pipeline simply runs selection models in parallel.
+It does not run any other downstream processing of the data, as the
+default output files from the tool are a Markdown log file and a JSON
+output file.
+
+The [HyPhy](https://github.com/a-lud/nf-pipelines/wiki/HyPhy) pipeline
+was used to run `RELAX`. This model requires a multiple sequence
+alignments and a marked tree file. As is shown below, *Hydrophis* snakes
+were marked as *test* (Marine in the tree) while all other branches were
+left as *reference*.
+
+``` text
+# snakes-marked-13-hyphy.nwk: HyPhy tree using '{}' marking notation
+(python_bivittatus,((crotalus_tigris,protobothrops_mucrosquamatus),((pantherophis_guttatus,thamnophis_elegans),(pseudonaja_textilis,(notechis_scutatus,((hydrophis_elegans{Marine},hydrophis_cyanocinctus{Marine}){Marine},((hydrophis_curtus{Marine},hydrophis_curtus-AG{Marine}){Marine},(hydrophis_major{Marine},hydrophis_ornatus{Marine}){Marine}){Marine}){Marine})))));
+```
 
 ## Step 2: Parse selection results
 
-The `codeml` Nextflow pipeline returns a set of *TSV* files by default
+**Script:**
+[04-parse-hyphy.R](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/04-parse-hyphy.R)  
+**Outputs:**
+[r-data](https://github.com/a-lud/sea-snake-selection/tree/main/selection/r-data)
+
+The `codeml` Nextflow pipeline returns a set of *CSV* files by default
 thanks to [eteTools](https://github.com/a-lud/eteTools). The `HyPhy`
 pipelines do not have an aggregation step in them, meaning they have to
-be processed externally.
+be processed externally. To help with this, I wrote some parsing
+functions in *R*, which can be found in the
+[scripts/hyphy-parsing](https://github.com/a-lud/sea-snake-selection/tree/main/selection/scripts/hyphy-parsing)
+directory. These functions help convert and aggregate the JSON outputs
+to nested lists of tibbles.
 
-To help with this, I wrote some `HyPhy` parsing functions for `R`, which
-can be found in the scripts directory at `scripts/hyphy-parsing`. These
-general purpose functions read the JSON data from a list of files and
-compile the results into a list object. Below is an example of the
-`BUSTED-PH` list object:
+Below I’ve provided an example of the list object for the `BUSTED-PH`
+results, along with the commands used to generate it. Note that the keys
+of the list correspond to the keys in the JSON files.
 
 ``` r
 # Load all JSON files
@@ -354,6 +408,7 @@ jsons.bustedph.13 <- loadJsons(dir = here('selection', 'results-13', 'hyphy', 'b
 # Parse BUSTED-PH results
 bustedph.13 <- parseBustedPh(jsons = jsons.bustedph.13)
 
+# BUSTED-PH list object: Each key matches the keys found in the BUSTED-PH JSON outputs
 # List of 3
 #  $ test results     : tibble [26,004 × 4] (S3: tbl_df/tbl/data.frame)
 #  $ branch attributes: tibble [656,644 × 4] (S3: tbl_df/tbl/data.frame)
@@ -366,64 +421,65 @@ bustedph.13 <- parseBustedPh(jsons = jsons.bustedph.13)
 #   ..$ unconstrained: tibble [52,008 × 5] (S3: tbl_df/tbl/data.frame)
 ```
 
-The list element correspond to the keys in the `BUSTED-PH` JSON file.
-The same parsing was also carried out for the `RELAX` results. The
-script responsible for parsing the `HyPhy` results is
-`04-parse-hyphy.R`.
-
 ## Step 3: Identifying candidate PSGs
 
-First, corrections for multiple testing were applied to both the
-`codeml` and `HyPhy` results, in which the *fdr* correction from
-`p.adjust()` was used. Following correction, we set our significance
-threshold at $\alpha =$ 0.01.
+**Script:**
+[05-hyphy-codeml-overlap.R](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/05-hyphy-codeml-overlap.R)  
+**Outputs:**
+[results-13/results-PSGs](https://github.com/a-lud/sea-snake-selection/tree/main/selection/results-13/results-PSGs)
 
-Orthologs were then filtered on their corrected p-values, keeping only
-genes that were reported as under positive selection in the *Hydrophis*
-snakes and not in the *background* terrestrial snakes. Finally, the
-significant genes from each dataset were joined on common ortholog
-identifies, thus forming the final significant gene-sets.
+The results from both `BUSTED-PH` and `codeml` were corrected for
+multiple testing using an *fdr* correction implemented in `p.adjust()`.
+Selection results were then filtered using an \$= \$ 0.01, requiring the
+gene to be **only** under positive selection in the *Hydrophis* snakes,
+with no significant signal of positive selection in the *Terrestrial*
+snakes. Finally, PSGs from both sources were intersected to find a
+final, overlapping set of PSGs.
 
-The script responsible for performing these actions is
-`05-hyphy-codeml-overlap.R`.
+*NOTE*: `BUSTED-PH` reports genes under positive selection in the *test*
+branches relative to the *background* branches. It also provides extra
+information regarding the potential difference in selective regime that
+the `codeml` drop-out method does not. I decided to included `BUSTED-PH`
+genes that were associated with the phenotype of interest, even if the
+selective regime of the *test* and *background* branches were not
+significantly different, as the gene itself is still under positive
+selection with respect to the phenotype of interest.
 
 ## Step 4: GO term enrichment analysis
 
-After finalising the list of PSGs, GO Term enrichment was performed. The
-GO Term annotations came from the ortholog annotation step which can be
-found
-[here](https://github.com/a-lud/sea-snake-selection/tree/main/orthologs/ortholog-annotation).
-The program
+**Script:**
+[06-topGO.R](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/06-topGO.R)  
+**Outputs:**
+[results-13/results-enrichment](https://github.com/a-lud/sea-snake-selection/tree/main/selection/results-13/results-enrichment)
+
+GO Term enrichment was performed on the *Hydrophis* PSGs. GO Term
+annotations were generated using a range of methods which are detailed
+in the [Ortholog
+Annotation](https://github.com/a-lud/sea-snake-selection/tree/main/orthologs/ortholog-annotation)
+directory. The program
 [topGO](https://bioconductor.org/packages/release/bioc/html/topGO.html)
-was used to perform the enrichment tests as it can work on non-model
-organisms as long as you have a GO-to-gene mapping file.
+was used to perform the enrichment test as it is suited to working with
+non-model organisms as long as you have the gene-to-go mapping file.
 
-When running `topGO`, we used the default `weight01` algorithm to weight
-and prune the GO-DAG before conducting a Fisher’s test statistic. The
-`weight01` method was used as it is a combination of an elminiation
-algorithm, whereby GO terms that are significantly enriched to a child
-node are removed from all ancestral nodes, and a weighting algorithm,
-whereby nodes are weighted by their enrichment score relative to
-neighbouring terms.
+When running `topGO`, we used the default `weight01` algorithm along
+with a *fisher* test. The parameters used are detailed below.
 
-The following settings were applied when running the enrichment test
-(which can be seen in the script `06-topGO.R`):
-
-- Ontologies = BP, CC, MF
-- Gene universe = 8,886 single copy orthologs that PSGs were obtained
-  from
-- Enrichment set = 1,390 PSGs as reported by both `codeml` and `HyPhy`
-- Statistic = Fisher
+- Ontologies tested = BP, CC, MF
+- Gene universe = The 8,886 single copy orthologs that PSGs were
+  obtained from
+- Enrichment set = 1,390 PSGs (overlapping genes between `codeml` and
+  `HyPhy`)
+- Statistic = Fisher test
 - Algorithm = `Weight01`
-- Node size = 10 - i.e. how many genes needed to be associated with the
-  GO Term for it to be included
+- Node size = 10 - how many genes needed to be associated with the GO
+  Term for it to be included
 
 The output from `topGO` was then filtered on a $\alpha = 0.05$, along
 with a shortest-path distance (in the GO-DAG) of $\geq$ 4. The path
 information was obtained from a GO-summaries object that essentially
 contains a range of meta-data about each GO Term, including:
-longest-path to root, shortest-path to root and wether or not the term
-is terminal. An example of the object is shown below.
+longest-path to root, shortest-path to root and whether or not the term
+is terminal. An example of the GO-summaries object is shown below
 
 ``` text
  A tibble: 43,704 × 5
@@ -464,13 +520,16 @@ table format (see below).
 
 ## Step 5: Selection intensity
 
+**Scripts:**
+[07-selection-intensity.R](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/07-selection-intensity.R)
+**Outputs:**
+[results-13/results-selection-intensification](https://github.com/a-lud/sea-snake-selection/tree/main/selection/results-13/results-selection-intensification)
+
 As described in [section 3](#RELAX-Formal-test-for-selective-regime)
 above, selection intensity was measured by running the program `RELAX`
-from the `HyPhy` package. The `RELAX` program was run by specifying the
-*Hydrophis* snakes as the *test* branches and the Terrestrial snakes as
-the *reference* branches. The program was run using my Nextflow
-implementation of the `HyPhy` software, with the submission script found
-at `03-hyphy-relax-13.sh`.
+from the `HyPhy` package. The `RELAX` program was run with the
+*Hydrophis* snakes marked as *test* and Terrestrial snakes marked as
+*reference* branches.
 
 Results were parsed using the custom parsing tools I’ve written that can
 be found in the `scripts` directory. The `RELAX` object looks similar to
@@ -505,4 +564,4 @@ making inference about terrestrial PSGs shown in this plot.
 All selection intensity results were generated using the script
 `07-selection-intensity.R`.
 
-![](https://github.com/a-lud/sea-snake-selection/blob/main/selection/results-13/results-selection-intensification/upset.png)<!-- -->
+![](https://github.com/a-lud/sea-snake-selection/blob/main/selection/results-13/results-selection-intensification/upset.png)
