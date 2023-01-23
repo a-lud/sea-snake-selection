@@ -36,11 +36,8 @@ Alastair Ludington
   - <a href="#step-3-identifying-candidate-psgs"
     id="toc-step-3-identifying-candidate-psgs">Step 3: Identifying candidate
     PSGs</a>
-  - <a href="#step-4-go-term-enrichment-analysis"
-    id="toc-step-4-go-term-enrichment-analysis">Step 4: GO term enrichment
-    analysis</a>
-  - <a href="#step-5-selection-intensity"
-    id="toc-step-5-selection-intensity">Step 5: Selection intensity</a>
+  - <a href="#step-4-selection-intensity"
+    id="toc-step-4-selection-intensity">Step 4: Selection intensity</a>
 
 # 1 Introduction
 
@@ -445,80 +442,7 @@ selective regime of the *test* and *background* branches were not
 significantly different, as the gene itself is still under positive
 selection with respect to the phenotype of interest.
 
-## Step 4: GO term enrichment analysis
-
-**Script:**
-[06-topGO.R](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/06-topGO.R)  
-**Outputs:**
-[results-13/results-enrichment](https://github.com/a-lud/sea-snake-selection/tree/main/selection/results-13/results-enrichment)
-
-GO Term enrichment was performed on the *Hydrophis* PSGs. GO Term
-annotations were generated using a range of methods which are detailed
-in the [Ortholog
-Annotation](https://github.com/a-lud/sea-snake-selection/tree/main/orthologs/ortholog-annotation)
-directory. The program
-[topGO](https://bioconductor.org/packages/release/bioc/html/topGO.html)
-was used to perform the enrichment test as it is suited to working with
-non-model organisms as long as you have the gene-to-go mapping file.
-
-When running `topGO`, we used the default `weight01` algorithm along
-with a *fisher* test. The parameters used are detailed below.
-
-- Ontologies tested = BP, CC, MF
-- Gene universe = The 8,886 single copy orthologs that PSGs were
-  obtained from
-- Enrichment set = 1,390 PSGs (overlapping genes between `codeml` and
-  `HyPhy`)
-- Statistic = Fisher test
-- Algorithm = `Weight01`
-- Node size = 10 - how many genes needed to be associated with the GO
-  Term for it to be included
-
-The output from `topGO` was then filtered on a $\alpha = 0.05$, along
-with a shortest-path distance (in the GO-DAG) of $\geq$ 4. The path
-information was obtained from a GO-summaries object that essentially
-contains a range of meta-data about each GO Term, including:
-longest-path to root, shortest-path to root and whether or not the term
-is terminal. An example of the GO-summaries object is shown below
-
-``` text
- A tibble: 43,704 × 5
-    id         shortest_path longest_path terminal_node ontology
-    <chr>              <dbl>        <dbl> <lgl>         <chr>   
-  1 GO:0000001             6            7 TRUE          BP      
-  2 GO:0000002             6            6 FALSE         BP      
-  3 GO:0000003             1            1 FALSE         BP      
-  4 GO:0000011             6            6 TRUE          BP      
-  5 GO:0000012             6            8 FALSE         BP      
-  6 GO:0000017             8            8 TRUE          BP      
-  7 GO:0000018             5            8 FALSE         BP      
-  8 GO:0000019             6            9 FALSE         BP      
-  9 GO:0000022             4            9 FALSE         BP      
- 10 GO:0000023             5            6 FALSE         BP
- ...
-```
-
-This resulted in a list of significantly enriched GO Terms reported in
-table format (see below).
-
-``` text
- A tibble: 112 × 11
-    `GO Term`  Term                                                             Definition                                                                                                          Annot…¹ Expec…² Signi…³ P-val…⁴ Path …⁵ Path …⁶ Termi…⁷ ontol…⁸
-    <chr>      <chr>                                                            <chr>                                                                                                                 <int>   <dbl>   <int> <chr>     <dbl>   <dbl> <lgl>   <chr>  
-  1 GO:0002098 tRNA wobble uridine modification                                 The process in which a uridine in position 34 of a tRNA is post-transcriptionally modified.                              24    3.85      12 0.00011       8      12 FALSE   BP     
-  2 GO:0051058 negative regulation of small GTPase mediated signal transduction Any process that stops, prevents, or reduces the frequency, rate or extent of small GTPase mediated signal transdu…     134   21.5       22 0.00028       5       8 FALSE   BP     
-  3 GO:1902857 positive regulation of non-motile cilium assembly                NA                                                                                                                       16    2.57       8 0.00166       6      10 TRUE    BP     
-  4 GO:2000467 positive regulation of glycogen (starch) synthase activity       NA                                                                                                                       13    2.09       7 0.00190       6       6 TRUE    BP     
-  5 GO:0099151 regulation of postsynaptic density assembly                      Any process that modulates the frequency, rate or extent of postsynaptic density assembly, the aggregation, arrang…      56    8.99      18 0.00210       6      10 TRUE    BP     
-  6 GO:0042304 regulation of fatty acid biosynthetic process                    Any process that modulates the frequency, rate or extent of the chemical reactions and pathways resulting in the f…     105   16.9       20 0.00218       5       9 FALSE   BP     
-  7 GO:0098883 synapse pruning                                                  A cellular process that results in the controlled breakdown of synapse. After it starts the process is continuous …      24    3.85      10 0.00247       6       6 FALSE   BP     
-  8 GO:0051261 protein depolymerization                                         The process in which protein polymers, compounds composed of a large number of component monomers, are broken down…     211   33.9       39 0.00287       6       6 FALSE   BP     
-  9 GO:0031580 membrane raft distribution                                       The process that establishes the spatial arrangement of membrane rafts within a cellular membrane.                       19    3.05       5 0.00290       5       6 FALSE   BP     
- 10 GO:0032469 endoplasmic reticulum calcium ion homeostasis                    Any process involved in the maintenance of an internal steady state of calcium ions within the endoplasmic reticul…      29    4.66      11 0.00367       8      10 FALSE   BP 
- ...
-```
-
-## Step 5: Selection intensity
+## Step 4: Selection intensity
 
 **Scripts:**
 [07-selection-intensity.R](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/07-selection-intensity.R)  
