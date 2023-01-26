@@ -1,7 +1,7 @@
 Selection Testing
 ================
 Alastair Ludington
-2023-01-24
+2023-01-27
 
 - <a href="#1-introduction" id="toc-1-introduction">1 Introduction</a>
 - <a href="#2-selection-testing-software"
@@ -94,12 +94,12 @@ documentation p.g.
 models, BSA1 is the null model where the $\omega$<sub>3</sub> rate class
 is fixed to 1, while BSA is the alternate model, where
 $\omega$<sub>3</sub> is allowed to be $\geq$ 1 in the foreground
-lineages but remains fixed ($\omega$<sub>3</sub> = 1) in the background
-lineages. That is to say: the alternate model allows for positive
-selection in the foreground species but not in the background species. A
-likelihood ratio test (LRT) is then used to compare the alternate model
-to the null model, with the null model being rejected if the
-p-value/critical value reaches significance.
+lineages but remains fixed ( $\omega$<sub>3</sub> = 1 ) in the
+background lineages. That is to say: the alternate model allows for
+positive selection in the foreground species but not in the background
+species. A likelihood ratio test (LRT) is then used to compare the
+alternate model to the null model, with the null model being rejected if
+the p-value/critical value reaches significance.
 
 The issue with the Branch-Site models is that they only test for
 positive selection in the foreground branches. That is,
