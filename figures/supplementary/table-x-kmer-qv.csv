@@ -1,0 +1,8 @@
+Sample,Assembly,Unique k-mers (assembly),Shared k-mers (assembly-reads),QV,Error rate
+Hydrophis major,Primary,32100,2166619742,61.5149,7.05515e-07
+Hydrophis major,Haplotype 1,26759,2155445340,62.2828,5.91175e-07
+Hydrophis major,Haplotype 2,22017,1876192495,62.5274,5.5881e-07
+Hydrophis major,Haplotypes 1 & 2,48776,4031637835,62.3949,5.76113e-07
+Hydrophis elegans,Contig,14688259,2014807436,34.5797,0.000348361
+Hydrophis ornatus,,,,,
+Hydrophis curtus (AG),,,,,

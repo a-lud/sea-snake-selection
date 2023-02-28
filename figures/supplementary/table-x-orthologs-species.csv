@@ -1,0 +1,14 @@
+Samples,Number of genes,Number of genes in orthogroups,Number of unassigned genes,Percentage of genes in orthogroups,Percentage of unassigned genes,Number of orthogroups containing species,Percentage of orthogroups containing species,Number of species-specific orthogroups,Number of genes in species-specific orthogroups,Percentage of genes in species-specific orthogroups
+crotalus_tigris,19835,19643,192,99.0,1.0,16804,60.2,21,96,0.5
+hydrophis_curtus-AG,27698,27189,509,98.2,1.8,23995,85.9,9,24,0.1
+hydrophis_curtus,25500,22844,2656,89.6,10.4,19711,70.6,57,132,0.5
+hydrophis_cyanocinctus,25746,22917,2829,89.0,11.0,19737,70.7,72,170,0.7
+hydrophis_elegans,28378,27785,593,97.9,2.1,24097,86.3,20,60,0.2
+hydrophis_major,30425,29513,912,97.0,3.0,23732,85.0,76,646,2.1
+hydrophis_ornatus,27686,27168,518,98.1,1.9,23979,85.9,11,32,0.1
+notechis_scutatus,19829,19342,487,97.5,2.5,16674,59.7,81,178,0.9
+pantherophis_guttatus,20054,19778,276,98.6,1.4,16986,60.8,98,232,1.2
+protobothrops_mucrosquamatus,20607,20106,501,97.6,2.4,16389,58.7,78,189,0.9
+pseudonaja_textilis,19403,19234,169,99.1,0.9,16695,59.8,101,223,1.1
+python_bivittatus,19896,19118,778,96.1,3.9,16759,60.0,27,76,0.4
+thamnophis_elegans,19034,18926,108,99.4,0.6,16064,57.5,22,106,0.6
