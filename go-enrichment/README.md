@@ -100,7 +100,7 @@ retained the hierarchy infromation. Results were parsed using the
 10 BP           1 GO:0043170 macromolecule metabolic process                  4121    252.       361              1.43  5.12e-13 7.01e-10 SMARCAL1 ...
 ```
 
-From this tibble, significantly enriched GO terms (FDR $leq$ 0.05) were
+From this tibble, significantly enriched GO terms (FDR $\leq$ 0.05) were
 extracted and written to file for use with
 [REVIGO](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0021800).
 
