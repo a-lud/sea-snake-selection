@@ -1,0 +1,22 @@
+Assembly	hydmaj_hap2_v1
+# contigs (>= 0 bp)	921
+# contigs (>= 1000 bp)	921
+# contigs (>= 5000 bp)	921
+# contigs (>= 10000 bp)	921
+# contigs (>= 25000 bp)	837
+# contigs (>= 50000 bp)	513
+Total length (>= 0 bp)	1876290115
+Total length (>= 1000 bp)	1876290115
+Total length (>= 5000 bp)	1876290115
+Total length (>= 10000 bp)	1876290115
+Total length (>= 25000 bp)	1874577900
+Total length (>= 50000 bp)	1862653992
+# contigs	921
+Largest contig	433818416
+Total length	1876290115
+GC (%)	40.60
+N50	264040294
+N75	141679618
+L50	3
+L75	5
+# N's per 100 kbp	3.52

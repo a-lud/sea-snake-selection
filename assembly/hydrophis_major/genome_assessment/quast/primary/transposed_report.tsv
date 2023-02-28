@@ -1,0 +1,3 @@
+Assembly	# contigs (>= 0 bp)	# contigs (>= 1000 bp)	# contigs (>= 5000 bp)	# contigs (>= 10000 bp)	# contigs (>= 25000 bp)	# contigs (>= 50000 bp)	Total length (>= 0 bp)	Total length (>= 1000 bp)	Total length (>= 5000 bp)	Total length (>= 10000 bp)	Total length (>= 25000 bp)	Total length (>= 50000 bp)	# contigs	Largest contig	Total length	GC (%)	N50	N75	L50	L75	# N's per 100 kbp
+hydmaj_chromosome_p_ctg	1320	1320	1320	1319	1083	560	2166703382	2166703382	2166703382	2166695555	2162054054	2143349717	1320	434526931	2166703382	40.50	268276564	106938139	3	7	2.20
+hydmaj_chromosome_p_ctg_broken	-	1797	1797	1796	1550	1000	-	2166655682	2166655682	2166647855	2161798024	2142078447	1797	156353921	2166655682	40.50	35743180	5167575	16	62	0.00

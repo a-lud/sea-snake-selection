@@ -1,0 +1,19 @@
+# BUSCO version is: 5.2.2 
+# The lineage dataset is: tetrapoda_odb10 (Creation date: 2021-02-19, number of genomes: 38, number of BUSCOs: 5310)
+# Summarized benchmarking in BUSCO notation for file /hpcfs/users/a1645424/hydmaj-genome/work-assembly-haplotypes/bd/82de18d304388fe3fdadf6865c8ff3/hydmaj-final-hap1.fa
+# BUSCO was run in mode: genome
+# Gene predictor used: metaeuk
+
+	***** Results: *****
+
+	C:95.3%[S:94.4%,D:0.9%],F:1.1%,M:3.6%,n:5310	   
+	5061	Complete BUSCOs (C)			   
+	5015	Complete and single-copy BUSCOs (S)	   
+	46	Complete and duplicated BUSCOs (D)	   
+	59	Fragmented BUSCOs (F)			   
+	190	Missing BUSCOs (M)			   
+	5310	Total BUSCO groups searched		   
+
+Dependencies and versions:
+	hmmsearch: 3.1
+	metaeuk: 5.34c21f2
