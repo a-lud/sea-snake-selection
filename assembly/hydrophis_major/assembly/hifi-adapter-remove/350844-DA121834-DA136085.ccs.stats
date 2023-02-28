@@ -1,0 +1,12 @@
+Started on Wed Mar 23 10:00:19 ACDT 2022
+Started on Wed Mar 23 10:02:18 ACDT 2022
+Started on Wed Mar 23 10:06:38 ACDT 2022
+Started on Wed Mar 23 10:14:31 ACDT 2022
+For the 350844-DA121834-DA136085.ccs dataset:
+Removing reads containing adapters a minimum of 44 bp in length and 97% match.
+
+Number of ccs reads: 4825360
+Number of adapter contaminated ccs reads: 1441 (0.0298631% of total)
+Number of ccs reads retained: 4823919 (99.9701% of total)
+
+Finished on Wed Mar 23 12:29:28 ACDT 2022

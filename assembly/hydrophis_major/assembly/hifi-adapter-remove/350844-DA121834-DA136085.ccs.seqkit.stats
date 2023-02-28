@@ -1,0 +1,2 @@
+file	format	type	num_seqs	sum_len	min_len	avg_len	max_len
+350844-DA121834-DA136085.ccs.filt.fastq.gz	FASTQ	DNA	4823919	61938420587	72	12839.9	50047
