@@ -1,0 +1,45 @@
+
+
+
+
+
+Analysis Type:	PANTHER Overrepresentation Test (Released 20221013)
+Annotation Version and Release Date:	GO Ontology database DOI:  10.5281/zenodo.6799722 Released 2022-07-01
+Analyzed List:	PSG-gene-symbols.txt (Anolis carolinensis)
+Reference List:	Anolis carolinensis (all genes in database)
+Test Type:	FISHER
+Correction:	FDR
+GO cellular component complete	Anolis carolinensis - REFLIST (18524)	PSG-gene-symbols.txt (1132)	PSG-gene-symbols.txt (expected)	PSG-gene-symbols.txt (over/under)	PSG-gene-symbols.txt (fold Enrichment)	PSG-gene-symbols.txt (raw P-value)	PSG-gene-symbols.txt (FDR)
+ribonuclease P complex (GO:0030677)	8	5	.49	+	10.23	5.48E-04	3.12E-02
+lytic vacuole membrane (GO:0098852)	100	17	6.11	+	2.78	3.81E-04	2.41E-02
+lysosomal membrane (GO:0005765)	100	17	6.11	+	2.78	3.81E-04	2.32E-02
+vacuolar membrane (GO:0005774)	131	20	8.01	+	2.50	5.51E-04	3.03E-02
+nucleolus (GO:0005730)	448	48	27.38	+	1.75	4.05E-04	2.39E-02
+nuclear protein-containing complex (GO:0140513)	835	87	51.03	+	1.70	6.04E-06	4.68E-04
+nuclear lumen (GO:0031981)	1924	200	117.58	+	1.70	8.42E-13	1.03E-10
+ribonucleoprotein complex (GO:1990904)	483	50	29.52	+	1.69	6.46E-04	3.45E-02
+organelle lumen (GO:0043233)	2127	217	129.98	+	1.67	4.56E-13	7.07E-11
+intracellular organelle lumen (GO:0070013)	2127	217	129.98	+	1.67	4.56E-13	6.48E-11
+membrane-enclosed lumen (GO:0031974)	2127	217	129.98	+	1.67	4.56E-13	5.98E-11
+nucleoplasm (GO:0005654)	1682	171	102.79	+	1.66	3.36E-10	3.58E-08
+mitochondrion (GO:0005739)	944	94	57.69	+	1.63	1.08E-05	7.98E-04
+cytosol (GO:0005829)	1812	179	110.73	+	1.62	8.93E-10	8.97E-08
+bounding membrane of organelle (GO:0098588)	743	70	45.40	+	1.54	6.94E-04	3.59E-02
+cytoplasmic vesicle (GO:0031410)	904	84	55.24	+	1.52	3.31E-04	2.26E-02
+organelle membrane (GO:0031090)	1468	136	89.71	+	1.52	4.09E-06	3.32E-04
+intracellular vesicle (GO:0097708)	908	84	55.49	+	1.51	3.47E-04	2.28E-02
+vesicle (GO:0031982)	970	89	59.28	+	1.50	3.10E-04	2.20E-02
+nucleus (GO:0005634)	4288	389	262.04	+	1.48	1.25E-16	2.13E-14
+intracellular non-membrane-bounded organelle (GO:0043232)	2478	222	151.43	+	1.47	1.83E-08	1.73E-06
+non-membrane-bounded organelle (GO:0043228)	2478	222	151.43	+	1.47	1.83E-08	1.64E-06
+intracellular membrane-bounded organelle (GO:0043231)	6992	624	427.28	+	1.46	1.76E-30	4.30E-28
+membrane-bounded organelle (GO:0043227)	7305	646	446.41	+	1.45	4.98E-31	1.42E-28
+endomembrane system (GO:0012505)	2109	185	128.88	+	1.44	1.37E-06	1.17E-04
+protein-containing complex (GO:0032991)	3443	300	210.40	+	1.43	2.32E-10	2.64E-08
+intracellular organelle (GO:0043229)	7948	691	485.70	+	1.42	1.85E-32	7.88E-30
+organelle (GO:0043226)	8177	705	499.70	+	1.41	1.89E-32	6.44E-30
+cytoplasm (GO:0005737)	6746	581	412.25	+	1.41	5.01E-23	9.50E-21
+intracellular anatomical structure (GO:0005622)	9432	786	576.39	+	1.36	1.57E-34	2.69E-31
+cellular_component (GO:0005575)	13006	972	794.80	+	1.22	3.88E-33	3.31E-30
+cellular anatomical entity (GO:0110165)	12905	960	788.62	+	1.22	1.89E-30	4.04E-28
+Unclassified (UNCLASSIFIED)	5518	160	337.20	-	.47	3.88E-33	2.21E-30
