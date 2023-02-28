@@ -1,0 +1,24 @@
+GenomeScope version 2.0
+input file = hydmaj.kmc.histo
+output directory = genomescope-hydmaj
+p = 2
+k = 31
+name prefix = hydmaj
+VERBOSE set to TRUE
+
+property                      min               max               
+Homozygous (aa)               99.5192%          99.5344%          
+Heterozygous (ab)             0.465566%         0.480818%         
+Genome Haploid Length         1,884,844,494 bp  1,887,444,477 bp  
+Genome Repeat Length          708,714,977 bp    709,692,590 bp    
+Genome Unique Length          1,176,129,516 bp  1,177,751,887 bp  
+Model Fit                     64.3824%          98.2726%          
+Read Error Rate               0.0390691%        0.0390691%        
+
+Percent Kmers Modeled (All Kmers) = 64.3824% [10, 99999]
+Percent Kmers Modeled (Full Model) = 98.2726% [10, 75]
+Percent Kmers Modeled (Unique Kmers) = 98.7524% [10, 45]
+
+Model RSSE (All Kmers) = 104053273282803376 [10, 99999]
+Model RSSE (Full Model) = 9636264110057854 [10, 75]
+Model RSSE (Unique Model) = 7150087651388110 [10, 45]
