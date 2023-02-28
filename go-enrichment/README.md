@@ -1,94 +1,128 @@
-GO Term Enrichment
+GO Term over-representation
 ================
 Alastair Ludington
-2023-01-23
+2023-02-28
 
 - <a href="#1-introduction" id="toc-1-introduction">1 Introduction</a>
-  - <a href="#go-term-enrichment-analysis"
-    id="toc-go-term-enrichment-analysis">GO Term enrichment analysis</a>
+  - <a href="#psg-gene-list" id="toc-psg-gene-list">PSG gene-list</a>
+  - <a href="#panther-over-representation-and-parsing-results"
+    id="toc-panther-over-representation-and-parsing-results">PANTHER
+    over-representation and parsing results</a>
+  - <a href="#revigo-semantic-similarity-clustering-of-go-terms"
+    id="toc-revigo-semantic-similarity-clustering-of-go-terms">REVIGO
+    semantic-similarity clustering of GO terms</a>
 
 # 1 Introduction
 
 This document details the GO Term enrichment approach used in this
-study.
+study. We utilised the online tool
+[PANTHER](https://www.nature.com/articles/s41596-019-0128-8) to perform
+our over-representation analyses on GO terms associated with our
+marine-specific positively selected genes (PSGs). We leverage
+gene-symbol mappings between our annotated orthologs to the genes found
+in *Anolis carolinensis*, using it’s well annotated gene-list as our
+gene universe. Below are the steps to replicate our enrichment approach.
 
-## GO Term enrichment analysis
+## PSG gene-list
 
 **Script:**
-[01-topGO.R](https://github.com/a-lud/sea-snake-selection/blob/main/go-enrichment/scripts/01-topGO.R)  
+[01-get-psg-symbols.R](https://github.com/a-lud/sea-snake-selection/blob/main/go-enrichment/scripts/01-get-psg-symbols.R)  
 **Outputs:**
-[results-13/results-enrichment](https://github.com/a-lud/sea-snake-selection/tree/main/go-enrichment/results-13/results-enrichment)
+[results-13/PSG-gene-symbols-for-PANTHER.txt](https://github.com/a-lud/sea-snake-selection/blob/main/go-enrichment/results-13/PSG-gene-symbols-for-PANTHER.txt)
 
-GO Term enrichment was performed on the *Hydrophis* PSGs. For
-information on the selection-testing methodologies and filtering, see
-the [Selection
-Testing](https://github.com/a-lud/sea-snake-selection/tree/main/selection)
-documentation here. GO Terms were assigned to orthologous genes by
-integrating evidence from multiple different sources, which is detailed
-in the [Ortholog
-Annotation](https://github.com/a-lud/sea-snake-selection/tree/main/orthologs/ortholog-annotation)
-section. The program
-[topGO](https://bioconductor.org/packages/release/bioc/html/topGO.html)
-was used to perform the enrichment test as it is suited to working with
-non-model organisms as long as you have the gene-to-go mapping file.
+*PANTHER* requires a list of gene identifiers to perfrom enrichment
+testing. As specified in the
+[ortholog-annotation](https://github.com/a-lud/sea-snake-selection/tree/main/orthologs/ortholog-annotation)
+repository, gene symbols were assigned to single-copy orthologs using
+multiple sources. The script `01-get-psg-symbols.R` was then used to
+extract each orthologs corresponding gene symbol.
 
-When running `topGO`, we used the default `weight01` algorithm along
-with a *fisher* test. The parameters used are detailed below.
+A few of the scripts main tasks include:
 
-- Ontologies tested = BP, CC, MF
-- Gene universe = The 8,886 single copy orthologs that PSGs were
-  obtained from
-- Enrichment set = 1,390 PSGs (overlapping genes between `codeml` and
-  `HyPhy`)
-- Statistic = Fisher test
-- Algorithm = `Weight01`
-- Node size = 10 - how many genes needed to be associated with the GO
-  Term for it to be included
+- Determining how many genes are annotated with a single symbol
+- How many genes are annotated with multiple symbols
+- How many genes are annotated with un-usable symbols/no symbol at all
+- Extract annotated genes
 
-The output from `topGO` was then filtered on a $\alpha = 0.05$, along
-with a shortest-path distance (in the GO-DAG) of $\geq$ 4. The path
-information was obtained from a GO-summaries object that essentially
-contains a range of meta-data about each GO Term, including:
-longest-path to root, shortest-path to root and whether or not the term
-is terminal. These filters were applied to not only keep significant
-terms, but to also ensure the terms we investigates further are
-specific, rather than general, higher level terms.
+Some of the NCBI annotated genes were found to have locus tags as
+annotations e.g. `CUNH6orf58`. These tags are not useful annotations,
+and needed to be filtered out. Following the filtering listed above, we
+ended up with the following counts for our 1,390 PSGs:
 
-An example of the GO-summaries object is shown below
+- 99 genes with no annotation
+- 18 genes with multiple symbols
+- 1,273 genes with a single gene annotation
 
-``` text
-A tibble: 43,704 × 5
-id         shortest_path longest_path terminal_node ontology
-<chr>              <dbl>        <dbl> <lgl>         <chr>   
-  1 GO:0000001             6            7 TRUE          BP      
-2 GO:0000002             6            6 FALSE         BP      
-3 GO:0000003             1            1 FALSE         BP      
-4 GO:0000011             6            6 TRUE          BP      
-5 GO:0000012             6            8 FALSE         BP      
-6 GO:0000017             8            8 TRUE          BP      
-7 GO:0000018             5            8 FALSE         BP      
-8 GO:0000019             6            9 FALSE         BP      
-9 GO:0000022             4            9 FALSE         BP      
-10 GO:0000023             5            6 FALSE         BP
-...
-```
+Genes with multiple annotations were used in the analysis, as one of the
+symbols was typically an older version, meaning one of them may match
+the annotation used in *A. carolinensis*.
 
-Applying the filters that we did resulted in significance tables as is
-shown below (for BP ontology).
+## PANTHER over-representation and parsing results
+
+**Script:**
+[02-parse-panther.R](https://github.com/a-lud/sea-snake-selection/blob/main/go-enrichment/scripts/02-parse-panther.R)  
+**Outputs:**
+[results-13/panther](https://github.com/a-lud/sea-snake-selection/tree/main/go-enrichment/results-13/panther)
+
+The gene list exported in the previous step was provided to the
+[PANTHER](https://www.nature.com/articles/s41596-019-0128-8) website to
+perform over-representation analysis. The steps to get to the
+over-representation page are as follows:
+
+> Go to PANTHER webpage \> Tools \> Gene List Analysis
+
+At this page we uploaded our list of gene identifiers (field 1), before
+selecting *A. carolinensis* as our organism (field 2). Finally we
+specified that we wanted to conduct a ‘*statistical* *overrepresentation
+test*’, whereby we selected each of the three ontologies (BP, MF and CC)
+(field 3). After clicking submit, we selected *A. carolinensis* as the
+reference set, specified that we wanted to run a Fisher’s Exact test and
+to calculate the FDR.
+
+Results for each of the three ontologies were downloaded in table and
+JSON format. The JSON files were used for all downstream work as they
+retained the hierarchy infromation. Results were parsed using the
+`02-parse-panther.R`, which returned a tibble object shown below:
 
 ``` text
-A tibble: 112 × 11
-`GO Term`  Term                                                             Definition                                                                                                          Annot…¹ Expec…² Signi…³ P-val…⁴ Path …⁵ Path …⁶ Termi…⁷ ontol…⁸
-<chr>      <chr>                                                            <chr>                                                                                                                 <int>   <dbl>   <int> <chr>     <dbl>   <dbl> <lgl>   <chr>  
-  1 GO:0002098 tRNA wobble uridine modification                                 The process in which a uridine in position 34 of a tRNA is post-transcriptionally modified.                              24    3.85      12 0.00011       8      12 FALSE   BP     
-2 GO:0051058 negative regulation of small GTPase mediated signal transduction Any process that stops, prevents, or reduces the frequency, rate or extent of small GTPase mediated signal transdu…     134   21.5       22 0.00028       5       8 FALSE   BP     
-3 GO:1902857 positive regulation of non-motile cilium assembly                NA                                                                                                                       16    2.57       8 0.00166       6      10 TRUE    BP     
-4 GO:2000467 positive regulation of glycogen (starch) synthase activity       NA                                                                                                                       13    2.09       7 0.00190       6       6 TRUE    BP     
-5 GO:0099151 regulation of postsynaptic density assembly                      Any process that modulates the frequency, rate or extent of postsynaptic density assembly, the aggregation, arrang…      56    8.99      18 0.00210       6      10 TRUE    BP     
-6 GO:0042304 regulation of fatty acid biosynthetic process                    Any process that modulates the frequency, rate or extent of the chemical reactions and pathways resulting in the f…     105   16.9       20 0.00218       5       9 FALSE   BP     
-7 GO:0098883 synapse pruning                                                  A cellular process that results in the controlled breakdown of synapse. After it starts the process is continuous …      24    3.85      10 0.00247       6       6 FALSE   BP     
-8 GO:0051261 protein depolymerization                                         The process in which protein polymers, compounds composed of a large number of component monomers, are broken down…     211   33.9       39 0.00287       6       6 FALSE   BP     
-9 GO:0031580 membrane raft distribution                                       The process that establishes the spatial arrangement of membrane rafts within a cellular membrane.                       19    3.05       5 0.00290       5       6 FALSE   BP     
-10 GO:0032469 endoplasmic reticulum calcium ion homeostasis                    Any process involved in the maintenance of an internal steady state of calcium ions within the endoplasmic reticul…      29    4.66      11 0.00367       8      10 FALSE   BP 
-...
+# A tibble: 170 × 11
+   Ontology level GO         label                                           Total Expected Observed `Fold enrichment` `P-value`      FDR Genes                                                                                       
+   <chr>    <int> <chr>      <chr>                                           <int>    <dbl>    <int>             <dbl>     <dbl>    <dbl> <chr>                                                                                       
+ 1 BP           0 GO:0006796 phosphate-containing compound metabolic process  1270     77.6      113              1.46  1.53e- 4 1.77e- 2 PI4K2B NPFFR1 TAMM41 ...
+ 2 BP           1 GO:0006793 phosphorus metabolic process                     1288     78.7      114              1.45  1.69e- 4 1.90e- 2 PI4K2B NPFFR1 TAMM41 ...
+ 3 BP           2 GO:0044237 cellular metabolic process                       4481    274.       412              1.50  7.25e-19 2.24e-15 PI4K2B POP5 POP1 ABAT ...
+ 4 BP           3 GO:0008152 metabolic process                                5705    349.       489              1.40  2.22e-17 5.49e-14 PI4K2B POP5 SERPINE2 ...
+ 5 BP           3 GO:0009987 cellular process                                10141    620.       777              1.25  2.03e-20 8.35e-17 POP5 POP1 ZFYVE9 ALKBH7 ...
+ 6 BP           0 GO:0050793 regulation of developmental process              1017     62.1       92              1.48  4.14e- 4 4.02e- 2 BMPR2 SERPINE2 WWC2 SRA1 ...
+ 7 BP           1 GO:0050789 regulation of biological process                 6906    422.       534              1.27  4.64e-11 3.82e- 8 SERPINE2 ZFYVE9 EMC10 BACH1 ...
+ 8 BP           2 GO:0065007 biological regulation                            7570    463.       575              1.24  7.37e-11 5.05e- 8 SERPINE2 ZFYVE9 EMC10 ABAT ...
+ 9 BP           0 GO:0044260 cellular macromolecule metabolic process         1624     99.2      148              1.49  3.04e- 6 6.47e- 4 N6AMT1 SMARCAL1 UBXN2B ...
+10 BP           1 GO:0043170 macromolecule metabolic process                  4121    252.       361              1.43  5.12e-13 7.01e-10 SMARCAL1 ...
 ```
+
+From this tibble, significantly enriched GO terms (FDR $leq$ 0.05) were
+extracted and written to file for use with
+[REVIGO](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0021800).
+
+## REVIGO semantic-similarity clustering of GO terms
+
+**Scripts:**
+[03-treemap-bp.R](https://github.com/a-lud/sea-snake-selection/blob/main/go-enrichment/scripts/03-treemap-bp.R)
+/
+[04-treemap-cc.R](https://github.com/a-lud/sea-snake-selection/blob/main/go-enrichment/scripts/04-treemap-cc.R)  
+**Outputs:**
+[results-13/revigo](https://github.com/a-lud/sea-snake-selection/tree/main/go-enrichment/results-13/revigo)
+
+We used the list of over-represented GO terms as input to *REVIGO* to
+perfrom semantic-similarity clustering. The idea is that GO terms that
+are physically close within the GO-DAG will be somewhat similar.
+Therefore, proximal GO terms can be semantically clustered with
+consideration of the DAG structure.
+
+*REVIGO* was run using the ‘Medium (0.7)’ setting, with obsolete GO
+terms being removed and the whole UniProt database being used as the
+‘species’. The ‘SimRel’ semantic-similarity measure was used to cluster
+terms. Treemap TSV files (and the corresponding R-scripts) were
+downloaded for BP and CC ontologies, along with the cytoscape network
+files. The MF ontology was too sparse to be of any biological use (only
+2 terms).
