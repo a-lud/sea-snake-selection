@@ -1,0 +1,29 @@
+# WARNING - This exported Revigo data is only useful for the specific purpose of constructing a TreeMap visualization.
+# Do not use this table as a general list of non-redundant GO categories, as it sets an extremely permissive 
+# threshold to detect redundancies (c=0.10) and fill the 'representative' column, while normally c>=0.4 is recommended.
+# To export a reduced-redundancy set of GO terms, go to the Scatterplot or Table tab, and export from there.
+TermID	Name	Frequency	Value	Uniqueness	Dispensability	Representative
+"GO:0005622"	"intracellular anatomical structure"	40.30417387187009	NaN	0.9997804619468694	0.00022436	null
+"GO:0005829"	"cytosol"	1.6735941329659796	NaN	0.81826391140239	6.395E-05	null
+"GO:0005634"	"nucleus"	12.299943073465876	NaN	0.5003923641068392	0.67197631	"cytosol"
+"GO:0005737"	"cytoplasm"	24.89336809708311	NaN	0.7748691535933283	0.19795228	"cytosol"
+"GO:0005739"	"mitochondrion"	2.7162231428197097	NaN	0.5858060856575866	0.37244178	"cytosol"
+"GO:0005774"	"vacuolar membrane"	0.3920077597838171	NaN	0.5802388784240071	0.6165566	"cytosol"
+"GO:0031090"	"organelle membrane"	4.796175425665669	NaN	0.5861764349581644	0.33892201	"cytosol"
+"GO:0031410"	"cytoplasmic vesicle"	1.3570963943208312	NaN	0.5829304334947197	0.2489647	"cytosol"
+"GO:0031982"	"vesicle"	1.4080621150467634	NaN	0.643875256005283	0.28895232	"cytosol"
+"GO:0043227"	"membrane-bounded organelle"	20.921144874581575	NaN	0.5615282139540256	0.47704514	"cytosol"
+"GO:0043228"	"non-membrane-bounded organelle"	9.559941801621372	NaN	0.6129515843068466	0.39407892	"cytosol"
+"GO:0043229"	"intracellular organelle"	26.90076394949092	NaN	0.5136999293760324	0.64856585	"cytosol"
+"GO:0043231"	"intracellular membrane-bounded organelle"	20.46505837076719	NaN	0.4641266560939096	0.59228248	"cytosol"
+"GO:0043232"	"intracellular non-membrane-bounded organelle"	9.181215622847537	NaN	0.5695932515678908	0.34397701	"cytosol"
+"GO:0098588"	"bounding membrane of organelle"	2.152727072129673	NaN	0.5742390970127849	0.35984755	"cytosol"
+"GO:0012505"	"endomembrane system"	4.686256647494504	NaN	0.9998598604926859	7.382E-05	null
+"GO:0031974"	"membrane-enclosed lumen"	2.6854766850215794	NaN	0.9998718085829473	0	null
+"GO:0032991"	"protein-containing complex"	14.83437673106848	NaN	1	-0	null
+"GO:0043226"	"organelle"	27.573029541270206	NaN	0.999799962924399	0.00011335	null
+"GO:0110165"	"cellular anatomical entity"	98.43624036635251	NaN	1	-0	null
+"GO:1990904"	"ribonucleoprotein complex"	4.374160563473086	NaN	0.9492593487131649	-0	null
+"GO:0030677"	"ribonuclease P complex"	0.04961342822621364	NaN	0.9612287685626598	0.302688	"ribonucleoprotein complex"
+"GO:0031981"	"nuclear lumen"	2.1374036443708238	NaN	0.47685430022036407	0.4800794	"ribonucleoprotein complex"
+"GO:0140513"	"nuclear protein-containing complex"	2.213174163781393	NaN	0.5430838691426836	0.46832957	"ribonucleoprotein complex"
