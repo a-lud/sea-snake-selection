@@ -23,6 +23,8 @@ parseRelax <- function(jsons) {
 
   nul <- list()
 
+  part.desc <- list()
+
   for (i in 1:length(jsons)) {
     # File name
     file.name <- sub('.fa' , '', basename(path = jsons[[i]]$input$`file name`))
@@ -30,6 +32,7 @@ parseRelax <- function(jsons) {
     test.results[[i]] <- .getTestResultsR(file.name, jsons[[i]])
     branch.attributes[[i]] <- .getBranchAttributesR(file.name, jsons[[i]]$`branch attributes`)
 
+    # General descriptive
     out.general <- .getGeneralR(file.name, jsons[[i]]$fits$`General descriptive`)
     modelStats[[length(modelStats) + 1]] <- out.general[[1]]
     general[[i]] <- out.general[[2]]
@@ -49,12 +52,17 @@ parseRelax <- function(jsons) {
     # RELAX Alt
     out.alternative <- .getAlternativeNullR(file.name, jsons[[i]]$fits$`RELAX alternative`, "RELAX alternative")
     modelStats[[length(modelStats) + 1]] <- out.alternative[[1]]
-    alternative <- out.alternative[[2]]
+    alternative[[i]] <- out.alternative[[2]]
 
     # RELAX null
     out.null <- .getAlternativeNullR(file.name, jsons[[i]]$fits$`RELAX null`, "RELAX null")
     modelStats[[length(modelStats) + 1]] <- out.null[[1]]
-    nul <- out.null[[2]]
+    nul[[i]] <- out.null[[2]]
+
+    # Relax parition descriptive
+    out.partitionedDesc <- .getAlternativeNullR(file.name, jsons[[i]]$fits$`RELAX partitioned descriptive`, "RELAX partitioned descriptive")
+    modelStats[[length(modelStats) + 1]] <- out.partitionedDesc[[1]]
+    part.desc[[i]] <- out.partitionedDesc[[2]]
   }
 
   # Return
@@ -68,11 +76,11 @@ parseRelax <- function(jsons) {
         'mg94' = list('mg94' = bind_rows(mg94), 'eqFreq' = bind_rows(mg94.eqfreq)),
         'nucGTR' = list('nucGTR' = bind_rows(nucgtr), 'eqFreq' = bind_rows(nucgtr.eqfreq)),
         'RELAX alternative' = bind_rows(alternative),
-        'RELAX null' = bind_rows(nul)
+        'RELAX null' = bind_rows(nul),
+        'RELAX partitioned descriptive' = bind_rows(part.desc)
       )
     )
   )
-
 }
 
 # getTestResultsR Parse the `test results` information from RELAX JSONs.
@@ -245,8 +253,7 @@ parseRelax <- function(jsons) {
 }
 
 
-# getUnconstrainedBPH Parses the unconstrained model information from the 'fits' key. Returns
-# general model information and rate distribution table.
+# getAlternativeNullR Parses the
 .getAlternativeNullR <- function(file, json, mdl) {
   aicc <- json[['AIC-c']]
   loglike <- json[['Log Likelihood']]

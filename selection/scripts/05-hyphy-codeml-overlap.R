@@ -26,9 +26,12 @@
 
 # ------------------------------------------------------------------------------------------------ #
 # Libraries
-library(tidyverse)
-library(here)
-library(fs)
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(here)
+  library(fs)
+
+})
 
 # Loading for the pvalue correction functions I've written
 source(here('selection', 'scripts', 'hyphy-parsing', 'general.R'))
@@ -63,6 +66,8 @@ paml.13 <- read_csv(
 # meaning if we tested e.g. 10,000 orthologs at an alpha of 0.05, we'd end up with 500 false +'ves.
 # A Benjamini & Hochberg (1995) - FDR - correction is applied to each dataset to account for
 # multiple testing.
+
+# Positively selected genes: # 1,602
 bustedph.13$`test results corrected` <- pcorrBUSTEDPH(
   bustedph.13,
   p = 0.01,
@@ -73,6 +78,13 @@ bustedph.13$`test results corrected` <- mutate(
   file = sub('.clean', '', file)
 )
 
+bustedph.13$`test results corrected` |>
+  write_csv(
+    file = here('selection','results-13','results-PSGs','PSGs-bustedph-corrected.csv'),
+    col_names = TRUE
+  )
+
+# Positively selected genes (terrestrial)
 bustedph.13.terrestrial$`test results corrected` <- pcorrBUSTEDPH(
   bustedph.13.terrestrial,
   p = 0.01,
@@ -83,6 +95,7 @@ bustedph.13.terrestrial$`test results corrected` <- mutate(
   file = sub('.clean', '', file)
 )
 
+# RELAX results
 relax.13$`test results corrected` <- pcorrRELAX(
   relax.13,
   p = 0.01,
@@ -93,11 +106,24 @@ relax.13$`test results corrected` <- mutate(
   file = sub('.clean', '', file)
 )
 
+relax.13$`test results corrected` |>
+  write_csv(
+    file = here('selection','results-13','results-PSGs','PSGs-relax-corrected.csv'),
+    col_names = TRUE
+  )
+
+# Positively selected genes (PAML): # 2,674
 paml.13 <- pcorrPAML(
   df = paml.13,
   p = 0.01,
   method = 'fdr'
 )
+
+paml.13 |>
+  write_csv(
+    file = here('selection','results-13','results-PSGs','PSGs-paml-corrected.csv'),
+    col_names = TRUE
+  )
 
 # ------------------------------------------------------------------------------------------------ #
 # Positively selected genes: Unique to Marine AND Terrestrial snakes
@@ -118,6 +144,11 @@ write_lines(
   x = psg.marine.hyphy.paml,
   file = here(outdir,'PSGs-marine.txt')
 )
+
+# Write all PSGs to supp. directory
+bustedph.13$`test results corrected` |>
+  left_join(paml.13) |>
+
 
 # Terrestrial # 488
 psg.terrestrial.hyphy.paml <- bustedph.13.terrestrial$`test results corrected` |>
@@ -181,6 +212,13 @@ paml.13$file[! paml.13$file %in% all.psg] |>
 # Write RELAX results to file after classifying if:
 #   - The orthogroups reach significance or not in the Marine clade
 #   - Whether there is a signal of intensification/relaxation of selection
+annotations <- read_csv(
+  here('orthologs','ortholog-annotation','results','ortholog-annotation','orthologs-13.csv'),
+  col_names = TRUE,
+  col_types = cols()
+) |>
+  select(orthogroup, symbol)
+
 relax.13$`test results corrected` |>
   rename(k = `relaxation or intensification parameter`) |>
   mutate(
@@ -191,7 +229,11 @@ relax.13$`test results corrected` |>
       k == 1 ~ 'Neutral'
     )
   ) |>
+  left_join(annotations, by = c('file' = 'orthogroup')) |>
+  select(orthogroup = file, symbol, lrt, pval, adj_pval, k, signif, grouping) |>
+  arrange(adj_pval) |>
   write_csv(
-    file = here(outdir,'relax-table.csv'),
-    col_names = TRUE
+    file = here(outdir,'relax-corrected.csv'),
+    col_names = TRUE,
+    na = ''
   )

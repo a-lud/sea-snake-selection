@@ -65,7 +65,7 @@ parseBustedPh <- function(jsons) {
     unconstrained[[i]] <- out.unconstrained[[2]]
 
     # Constrained output - won't be run if unconstrained shows NO signal of positive selection
-    if ('Constrained model' %in% names(jsons[[i]]$fits)) {
+    if ('Constrained model (background branches)' %in% names(jsons[[i]]$fits)) {
       out.constrained <- .getConstrainedBPH(file.name, jsons[[i]]$fits$`Constrained model`)
       modelStats[[length(modelStats) + 1]] <- out.constrained[[1]]
       constrained[[i]] <- out.constrained[[2]]

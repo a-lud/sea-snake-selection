@@ -14,8 +14,10 @@
 
 # ------------------------------------------------------------------------------------------------ #
 # Libraries
-library(tidyverse)
-library(here)
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(here)
+})
 
 # Custom tools
 source(here('selection', 'scripts', 'hyphy-parsing', 'busted-ph.R'))
