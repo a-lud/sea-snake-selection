@@ -35,6 +35,8 @@ Alastair Ludington
     - <a href="#assembly-1" id="toc-assembly-1">Assembly</a>
     - <a href="#scaffolding" id="toc-scaffolding">Scaffolding</a>
     - <a href="#polish-1" id="toc-polish-1">Polish</a>
+    - <a href="#genome-assessment-1" id="toc-genome-assessment-1">Genome
+      assessment</a>
   - <a href="#repeat-annotation-1" id="toc-repeat-annotation-1">Repeat
     annotation</a>
 
@@ -381,6 +383,10 @@ Need to get this information from Jill/Ira!
 Need to get this information from Jill/Ira!
 
 ### Polish
+
+Need to get this information from Jill/Ira!
+
+### Genome assessment
 
 Need to get this information from Jill/Ira!
 
