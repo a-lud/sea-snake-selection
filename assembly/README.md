@@ -28,15 +28,14 @@ Alastair Ludington
     elegans</a>
     - <a href="#assembly" id="toc-assembly">Assembly</a>
     - <a href="#polish" id="toc-polish">Polish</a>
-    - <a href="#301-genome-assessment" id="toc-301-genome-assessment">3.0.1
-      Genome assessment</a>
+    - <a href="#genome-assessment" id="toc-genome-assessment">Genome
+      assessment</a>
   - <a href="#h.-curtus-ag-and-h.-ornatus"
     id="toc-h.-curtus-ag-and-h.-ornatus">H. curtus (AG) and H. ornatus</a>
-    - <a href="#302-assembly" id="toc-302-assembly">3.0.2 Assembly</a>
-    - <a href="#303-scaffolding" id="toc-303-scaffolding">3.0.3
-      Scaffolding</a>
-    - <a href="#304-polish" id="toc-304-polish">3.0.4 Polish</a>
-  - <a href="#31-repeat-annotation" id="toc-31-repeat-annotation">3.1 Repeat
+    - <a href="#assembly-1" id="toc-assembly-1">Assembly</a>
+    - <a href="#scaffolding" id="toc-scaffolding">Scaffolding</a>
+    - <a href="#polish-1" id="toc-polish-1">Polish</a>
+  - <a href="#repeat-annotation-1" id="toc-repeat-annotation-1">Repeat
     annotation</a>
 
 # 1 Introduction
@@ -357,7 +356,7 @@ python nextpolish1.py \
 changed to `-t 2` in the second round of polishing as per the
 `read-the-docs` example.
 
-### 3.0.1 Genome assessment
+### Genome assessment
 
 **Scripts**:
 [other-snakes/scripts/02_assembly_assessment](https://github.com/a-lud/sea-snake-selection/tree/main/assembly/other-snakes/scripts/02_assembly_assessment)  
@@ -373,19 +372,19 @@ the link above.
 
 Need to get this information from Jill/Ira!
 
-### 3.0.2 Assembly
+### Assembly
 
 Need to get this information from Jill/Ira!
 
-### 3.0.3 Scaffolding
+### Scaffolding
 
 Need to get this information from Jill/Ira!
 
-### 3.0.4 Polish
+### Polish
 
 Need to get this information from Jill/Ira!
 
-## 3.1 Repeat annotation
+## Repeat annotation
 
 **Scripts**:
 [script10](https://github.com/a-lud/sea-snake-selection/tree/main/assembly/other-snakes/scripts/03_repeats)  
