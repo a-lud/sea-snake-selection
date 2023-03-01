@@ -352,8 +352,6 @@ parseBustedPh <- function(jsons) {
   return(bind_rows(test.results, test.results.background, test.results.shared))
 }
 
-
-
 # getBranchAttributesBPH Parses the branch-attributes key from the provided JSON. Returns the
 # data in a tibble format.
 .getBranchAttributesBPH <- function(file, json) {
