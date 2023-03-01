@@ -1,0 +1,19 @@
+# BUSCO version is: 5.3.2 
+# The lineage dataset is: tetrapoda_odb10 (Creation date: 2021-02-19, number of genomes: 38, number of BUSCOs: 5310)
+# Summarized benchmarking in BUSCO notation for file /home/a1645424/al/garvin/nextpolish/hydrophis_elegans/hydrophis_elegans.polished.fa
+# BUSCO was run in mode: genome
+# Gene predictor used: metaeuk
+
+	***** Results: *****
+
+	C:96.0%[S:95.2%,D:0.8%],F:0.8%,M:3.2%,n:5310	   
+	5093	Complete BUSCOs (C)			   
+	5053	Complete and single-copy BUSCOs (S)	   
+	40	Complete and duplicated BUSCOs (D)	   
+	43	Fragmented BUSCOs (F)			   
+	174	Missing BUSCOs (M)			   
+	5310	Total BUSCO groups searched		   
+
+Dependencies and versions:
+	hmmsearch: 3.1
+	metaeuk: 5.34c21f2
