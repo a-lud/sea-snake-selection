@@ -36,6 +36,7 @@ parseBustedPh <- function(jsons) {
   modelStats <- list()
   branch.attributes <- list()
   test.results <- list()
+  grouping <- list()
 
   # Model specific results
   constrained <- list()
@@ -58,6 +59,7 @@ parseBustedPh <- function(jsons) {
     # LRT/P-value statistics + branch atrributes
     test.results[[i]] <- .getTestResultsBPH(file.name, jsons[[i]])
     branch.attributes[[i]] <- .getBranchAttributesBPH(file.name, jsons[[i]]$`branch attributes`)
+    grouping[[i]] <- .getTested(file.name, jsons[[i]]$tested$`0`)
 
     # Unconstrained model
     out.unconstrained <- .getUnconstrainedBPH(file.name, jsons[[i]]$fits$`Unconstrained model`)
@@ -94,6 +96,7 @@ parseBustedPh <- function(jsons) {
     list(
       'test results' = bind_rows(test.results),
       'branch attributes' = bind_rows(branch.attributes),
+      'grouping' = bind_rows(grouping),
       'fits' = list(
         'general' = bind_rows(modelStats),
         'constrained' = bind_rows(constrained),

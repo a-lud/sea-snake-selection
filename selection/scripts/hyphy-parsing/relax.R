@@ -10,6 +10,7 @@ parseRelax <- function(jsons) {
   modelStats <- list()
   branch.attributes <- list()
   test.results <- list()
+  grouping <- list()
 
   general <- list()
 
@@ -31,6 +32,8 @@ parseRelax <- function(jsons) {
 
     test.results[[i]] <- .getTestResultsR(file.name, jsons[[i]])
     branch.attributes[[i]] <- .getBranchAttributesR(file.name, jsons[[i]]$`branch attributes`)
+    grouping[[i]] <- .getTested(file.name, jsons[[i]]$tested$`0`)
+
 
     # General descriptive
     out.general <- .getGeneralR(file.name, jsons[[i]]$fits$`General descriptive`)
@@ -70,6 +73,7 @@ parseRelax <- function(jsons) {
     list(
       'test results' = bind_rows(test.results),
       'branch attributes' = bind_rows(branch.attributes),
+      'grouping' = bind_rows(grouping),
       'fits' = list(
         'general' = bind_rows(modelStats),
         'General descriptive' = bind_rows(general),

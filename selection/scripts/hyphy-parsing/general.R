@@ -13,6 +13,18 @@ loadJsons <- function(dir) {
   return(j)
 }
 
+# .getTested Gets the 'tested' data from the JSON file. This field indicates which Branches are
+# 'Test' and which are 'Background'. Works with RELAX and BUSTED-PH (currently)
+.getTested <- function(file, json) {
+  df <- tibble(
+    file = file,
+    id = names(json),
+    condition = unlist(json)
+  )
+
+  return(df)
+}
+
 # pcorrBUSTEDPH Correct P-values for parsed BUSTED-PH results. Inputs are the parseed BUSTED-PH
 # list-object, a P-value threshold and method of correction.
 pcorrBUSTEDPH <- function(parsedList, p = 0.05, corrMethod = 'fdr') {
