@@ -207,9 +207,12 @@ bustedph.obj$fits$constrained |>
     Model,
     `Log likelihood`,
     `Estimated parameters`,
-    `Proportion background 0` = `proportion Background 0` ,`Omega background 0` = `omega Background 0`, `Omega test 0` = `omega Test 0`,
-    `Proportion background 1` = `proportion Background 1` ,`Omega background 1` = `omega Background 1`, `Omega test 1` = `omega Test 1`,
-    `Proportion background 2` = `proportion Background 2` ,`Omega background 2` = `omega Background 2`, `Omega test 2` = `omega Test 2`
+    `Proportion background 0` = `proportion Background 0` ,`Omega background 0` = `omega Background 0`,
+    `Proportion test 0` = `proportion Test 0`, `Omega test 0` = `omega Test 0`,
+    `Proportion background 1` = `proportion Background 1` ,`Omega background 1` = `omega Background 1`,
+    `Proportion test 1` = `proportion Test 1`, `Omega test 1` = `omega Test 1`,
+    `Proportion background 2` = `proportion Background 2` ,`Omega background 2` = `omega Background 2`,
+    `Proportion test 2` = `proportion Test 2`, `Omega test 2` = `omega Test 2`
   ) |>
   write_csv(
     file = here('figures','supplementary','table-x-selection-bustedph-constrained-model-fit.csv'),
@@ -230,9 +233,12 @@ bustedph.obj$fits$unconstrained |>
     Model,
     `Log likelihood`,
     `Estimated parameters`,
-    `Proportion background 0` = `proportion Background 0` ,`Omega background 0` = `omega Background 0`, `Omega test 0` = `omega Test 0`,
-    `Proportion background 1` = `proportion Background 1` ,`Omega background 1` = `omega Background 1`, `Omega test 1` = `omega Test 1`,
-    `Proportion background 2` = `proportion Background 2` ,`Omega background 2` = `omega Background 2`, `Omega test 2` = `omega Test 2`
+    `Proportion background 0` = `proportion Background 0` ,`Omega background 0` = `omega Background 0`,
+    `Proportion test 0` = `proportion Test 0`, `Omega test 0` = `omega Test 0`,
+    `Proportion background 1` = `proportion Background 1` ,`Omega background 1` = `omega Background 1`,
+    `Proportion test 1` = `proportion Test 1`, `Omega test 1` = `omega Test 1`,
+    `Proportion background 2` = `proportion Background 2` ,`Omega background 2` = `omega Background 2`,
+    `Proportion test 2` = `proportion Test 2`, `Omega test 2` = `omega Test 2`
   ) |>
   write_csv(
     file = here('figures','supplementary','table-x-selection-bustedph-unconstrained-model-fit.csv'),
