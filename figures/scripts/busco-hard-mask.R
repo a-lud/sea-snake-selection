@@ -22,7 +22,7 @@ suppressPackageStartupMessages({
 
 # ------------------------------------------------------------------------------------------------ #
 # Parameterise
-my_ouput <- here('figures', 'supplementary', 'figure-x-busco-proteins.png')
+my_ouput <- here('figures', 'supplementary', 'figure-x-busco-hard-mask.png')
 my_width <- 30
 my_height <- 15
 my_unit <- "cm"
@@ -34,7 +34,7 @@ my_colors <- c("#56B4E9", "#3492C7", "#F0E442", "#F04442")
 my_bar_height <- 0.75
 
 # Legend
-my_title <- expression(paste("BUSCO assessment: Protein sequences"))
+my_title <- expression(paste("BUSCO assessment: Hard masked"))
 
 # Font
 my_family <- "sans"
@@ -44,7 +44,7 @@ labsize = 1
 # ------------------------------------------------------------------------------------------------ #
 # Load files
 files <- dir_ls(
-  path = here('data', 'busco', 'proteins'),
+  path = here('data','busco','genomes','hardmasked'),
   glob = '*.txt',
   recurse = TRUE
 ) %>%
