@@ -1,7 +1,7 @@
 Ortholog Detection
 ================
 Alastair Ludington
-2022-12-14
+2023-03-15
 
 - <a href="#1-introduction" id="toc-1-introduction">1 Introduction</a>
 - <a href="#2-identifying-orthologs" id="toc-2-identifying-orthologs">2
@@ -26,6 +26,11 @@ between the snakes of interest. The methods here are encapsulated in a
 [here](https://github.com/a-lud/nf-pipelines).
 
 # 2 Identifying orthologs
+
+**Scripts:**
+[orthologs.sh](https://github.com/a-lud/sea-snake-selection/blob/main/orthologs/ortholog-detection/scripts/orthologs.sh)  
+**Outdir:**
+[results/orthologs-correct](https://github.com/a-lud/sea-snake-selection/tree/main/orthologs/ortholog-detection/results/orthologs-correct)
 
 There are many methods available for identifying orthologs. I opted to
 write a pipeline around the ortholog detection tool [OrthoFinder
