@@ -1,0 +1,81 @@
+# WARNING - This exported Revigo data is only useful for the specific purpose of constructing a TreeMap visualization.
+# Do not use this table as a general list of non-redundant GO categories, as it sets an extremely permissive 
+# threshold to detect redundancies (c=0.10) and fill the 'representative' column, while normally c>=0.4 is recommended.
+# To export a reduced-redundancy set of GO terms, go to the Scatterplot or Table tab, and export from there.
+TermID	Name	Frequency	Value	Uniqueness	Dispensability	Representative
+"GO:0000966"	"RNA 5'-end processing"	0.10864209415606056	NaN	0.9129200880431559	0.09613643	null
+"GO:0006396"	"RNA processing"	4.052084515125943	NaN	0.865524000437053	0.53423551	"RNA 5'-end processing"
+"GO:0034470"	"ncRNA processing"	2.675338577038208	NaN	0.8708308213196474	0.58894179	"RNA 5'-end processing"
+"GO:0034660"	"ncRNA metabolic process"	3.7632919362289554	NaN	0.8671887855240816	0.3429036	"RNA 5'-end processing"
+"GO:0006950"	"response to stress"	4.85393118141787	NaN	0.9760964603364924	-0	null
+"GO:0006974"	"cellular response to DNA damage stimulus"	2.553180625866618	NaN	0.9661053071896216	0.49129211	"response to stress"
+"GO:0051716"	"cellular response to stimulus"	11.92665018193055	NaN	0.9648546707342861	0.63828901	"response to stress"
+"GO:0008152"	"metabolic process"	65.58850504615819	NaN	1	-0	null
+"GO:0009056"	"catabolic process"	6.089661456369162	NaN	0.9655912512472946	0.04835157	null
+"GO:0009058"	"biosynthetic process"	28.21250331123538	NaN	0.947992829385179	0.07142613	null
+"GO:0006139"	"nucleobase-containing compound metabolic process"	24.03953065737758	NaN	0.8499403619868147	0.62483952	"biosynthetic process"
+"GO:0006807"	"nitrogen compound metabolic process"	49.550089164434496	NaN	0.9356206406555143	0.14752788	"biosynthetic process"
+"GO:0016070"	"RNA metabolic process"	13.496068550990763	NaN	0.8422281068039595	0.5909548	"biosynthetic process"
+"GO:0019438"	"aromatic compound biosynthetic process"	13.374206446172934	NaN	0.8660888128824463	0.54716201	"biosynthetic process"
+"GO:0034641"	"cellular nitrogen compound metabolic process"	30.54528505178458	NaN	0.9028620543371629	0.29997373	"biosynthetic process"
+"GO:0034654"	"nucleobase-containing compound biosynthetic process"	11.336157480410234	NaN	0.8461889276254403	0.52120986	"biosynthetic process"
+"GO:0043170"	"macromolecule metabolic process"	38.67120377521221	NaN	0.9276089031994244	0.19180088	"biosynthetic process"
+"GO:0044237"	"cellular metabolic process"	52.27297257740313	NaN	0.9297203695623862	0.23063781	"biosynthetic process"
+"GO:0044238"	"primary metabolic process"	54.341480421137625	NaN	0.9330266094944331	0.22123429	"biosynthetic process"
+"GO:0044249"	"cellular biosynthetic process"	26.205471674988644	NaN	0.8756638462300628	0.68616296	"biosynthetic process"
+"GO:0044271"	"cellular nitrogen compound biosynthetic process"	18.828945062096654	NaN	0.8544076393922122	0.61000433	"biosynthetic process"
+"GO:0071704"	"organic substance metabolic process"	59.155721653523166	NaN	0.9304857676080329	0.25577572	"biosynthetic process"
+"GO:0090304"	"nucleic acid metabolic process"	18.979959667166867	NaN	0.8393218943745426	0.56410817	"biosynthetic process"
+"GO:1901360"	"organic cyclic compound metabolic process"	27.64011374727202	NaN	0.935495977385879	0.11377484	"biosynthetic process"
+"GO:1901362"	"organic cyclic compound biosynthetic process"	14.300544593303174	NaN	0.8740345066425244	0.55842492	"biosynthetic process"
+"GO:1901564"	"organonitrogen compound metabolic process"	30.85322786488385	NaN	0.9138769214107677	0.2017223	"biosynthetic process"
+"GO:1901576"	"organic substance biosynthetic process"	27.020538351942346	NaN	0.887825377953513	0.16529832	"biosynthetic process"
+"GO:0009987"	"cellular process"	80.90928742480475	NaN	1	-0	null
+"GO:0016570"	"histone modification"	0.5007315881434488	NaN	0.9420429571701667	-0	null
+"GO:0010467"	"gene expression"	16.693722203531454	NaN	0.9101904217642662	0.29376382	"histone modification"
+"GO:0019538"	"protein metabolic process"	19.1169597977714	NaN	0.8971055732516668	0.33829603	"histone modification"
+"GO:0036211"	"protein modification process"	8.944329461413709	NaN	0.9095553259961877	0.50056465	"histone modification"
+"GO:0043412"	"macromolecule modification"	11.34052536927359	NaN	0.9179816989118454	0.15592651	"histone modification"
+"GO:0044260"	"cellular macromolecule metabolic process"	15.643185097800322	NaN	0.8951648030798529	0.31968505	"histone modification"
+"GO:0032501"	"multicellular organismal process"	2.3849736911150656	NaN	1	-0	null
+"GO:0032502"	"developmental process"	2.3294642724475	NaN	1	0	null
+"GO:0033036"	"macromolecule localization"	3.699222918000399	NaN	0.9767049939972916	-0	null
+"GO:0046907"	"intracellular transport"	2.031118183205547	NaN	0.9577417245665967	0.37826933	"macromolecule localization"
+"GO:0051641"	"cellular localization"	3.742193769854739	NaN	0.969681535366574	0.41338567	"macromolecule localization"
+"GO:0044248"	"cellular catabolic process"	4.056548803362995	NaN	0.9267646900583121	0.03414315	null
+"GO:0006725"	"cellular aromatic compound metabolic process"	26.79292613417935	NaN	0.917451611139018	0.23504502	"cellular catabolic process"
+"GO:0006793"	"phosphorus metabolic process"	13.445758050270145	NaN	0.9317043924932674	0.1534065	"cellular catabolic process"
+"GO:0006796"	"phosphate-containing compound metabolic process"	13.135671182135214	NaN	0.9320990850530311	0.11828842	"cellular catabolic process"
+"GO:0046483"	"heterocycle metabolic process"	26.784054067682934	NaN	0.9174599196096882	0.18628936	"cellular catabolic process"
+"GO:0050810"	"regulation of steroid biosynthetic process"	0.009377332179244463	NaN	0.8014798557457925	-0	null
+"GO:0006355"	"regulation of DNA-templated transcription"	9.928869561442351	NaN	0.6063483624846978	0.59882425	"regulation of steroid biosynthetic process"
+"GO:0009966"	"regulation of signal transduction"	0.9172500130720875	NaN	0.7638079949480633	0.2658838	"regulation of steroid biosynthetic process"
+"GO:0010628"	"positive regulation of gene expression"	0.22275900791482073	NaN	0.7061766869671424	0.230961	"regulation of steroid biosynthetic process"
+"GO:0010646"	"regulation of cell communication"	0.9864082534085572	NaN	0.7784045697886187	0.27220079	"regulation of steroid biosynthetic process"
+"GO:0019222"	"regulation of metabolic process"	12.985497578497595	NaN	0.6964950204587153	0.4063976	"regulation of steroid biosynthetic process"
+"GO:0023051"	"regulation of signaling"	0.9919794723849535	NaN	0.7844186673824539	0.24170876	"regulation of steroid biosynthetic process"
+"GO:0048518"	"positive regulation of biological process"	1.9716996037287677	NaN	0.7664587376728081	0.28518046	"regulation of steroid biosynthetic process"
+"GO:0048519"	"negative regulation of biological process"	2.3667974229987565	NaN	0.7611539615576555	0.30652234	"regulation of steroid biosynthetic process"
+"GO:0048523"	"negative regulation of cellular process"	1.8278052558467632	NaN	0.6731832400263456	0.29653132	"regulation of steroid biosynthetic process"
+"GO:0048583"	"regulation of response to stimulus"	1.3331568005952028	NaN	0.7770493884958573	0.2683551	"regulation of steroid biosynthetic process"
+"GO:0050790"	"regulation of catalytic activity"	0.6853995469827777	NaN	0.7831793331858075	0.22271973	"regulation of steroid biosynthetic process"
+"GO:0050793"	"regulation of developmental process"	1.1758828844673783	NaN	0.7802410220032538	0.25959592	"regulation of steroid biosynthetic process"
+"GO:0050794"	"regulation of cellular process"	20.367259674616214	NaN	0.6730280426058034	0.64719805	"regulation of steroid biosynthetic process"
+"GO:0051128"	"regulation of cellular component organization"	0.7906610148267887	NaN	0.7837282654368849	0.24869653	"regulation of steroid biosynthetic process"
+"GO:0051239"	"regulation of multicellular organismal process"	0.537170551400761	NaN	0.7982241485395318	0.16212391	"regulation of steroid biosynthetic process"
+"GO:0051246"	"regulation of protein metabolic process"	2.1160693002465862	NaN	0.6901130469209903	0.36111113	"regulation of steroid biosynthetic process"
+"GO:0065009"	"regulation of molecular function"	0.8277348843039647	NaN	0.7947837420123521	0.23256911	"regulation of steroid biosynthetic process"
+"GO:2000026"	"regulation of multicellular organismal development"	0.23866158045842426	NaN	0.7969431728644047	0.20870878	"regulation of steroid biosynthetic process"
+"GO:0050896"	"response to stimulus"	14.587937719223396	NaN	1	-0	null
+"GO:0060537"	"muscle tissue development"	0.04901409535021611	NaN	0.8599183575324801	-0	null
+"GO:0007507"	"heart development"	0.09448800680433317	NaN	0.8401201301745931	0.67042036	"muscle tissue development"
+"GO:0009888"	"tissue development"	0.43290299434072516	NaN	0.8387932248354624	0.64319727	"muscle tissue development"
+"GO:0048598"	"embryonic morphogenesis"	0.12203828298355264	NaN	0.8414794358836496	0.66197496	"muscle tissue development"
+"GO:0072359"	"circulatory system development"	0.1713415764548585	NaN	0.842702477181731	0.54304457	"muscle tissue development"
+"GO:0065007"	"biological regulation"	22.890652894010586	NaN	1	-0	null
+"GO:0071840"	"cellular component organization or biogenesis"	9.257238504316515	NaN	0.9910023152431439	0.01015617	null
+"GO:0120036"	"plasma membrane bounded cell projection organization"	0.37564841459761755	NaN	0.9594081231655366	-0	null
+"GO:0006996"	"organelle organization"	3.5258104170692315	NaN	0.9487143621468884	0.67668373	"plasma membrane bounded cell projection organization"
+"GO:0030030"	"cell projection organization"	0.6618149415904561	NaN	0.9570898898126577	0.47254878	"plasma membrane bounded cell projection organization"
+"GO:0044085"	"cellular component biogenesis"	4.795792386729822	NaN	0.9491986325254047	0.53615507	"plasma membrane bounded cell projection organization"
+"GO:0070925"	"organelle assembly"	0.6294646414244132	NaN	0.9573046971934889	0.44742566	"plasma membrane bounded cell projection organization"
