@@ -1,19 +1,19 @@
 Statistic,Value
 Number of species,13
-Number of genes,304091
-Number of genes in orthogroups,293563
-Number of unassigned genes,10528
+Number of genes,307264
+Number of genes in orthogroups,296373
+Number of unassigned genes,10891
 Percentage of genes in orthogroups,96.5
 Percentage of unassigned genes,3.5
-Number of orthogroups,27927
-Number of species-specific orthogroups,673
-Number of genes in species-specific orthogroups,2164
-Percentage of genes in species-specific orthogroups,0.7
+Number of orthogroups,28149
+Number of species-specific orthogroups,735
+Number of genes in species-specific orthogroups,2413
+Percentage of genes in species-specific orthogroups,0.8
 Mean orthogroup size,10.5
 Median orthogroup size,13.0
 G50 (assigned genes),13
 G50 (all genes),13
-O50 (assigned genes),8777
-O50 (all genes),9182
-Number of orthogroups with all species present,12893
-Number of single-copy orthogroups,8668
+O50 (assigned genes),8803
+O50 (all genes),9222
+Number of orthogroups with all species present,13058
+Number of single-copy orthogroups,8655
