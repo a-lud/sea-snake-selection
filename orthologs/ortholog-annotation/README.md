@@ -1,32 +1,31 @@
 Integrate Annotations
 ================
 Alastair Ludington
-2023-01-05
+2023-03-14
 
 - <a href="#1-introduction" id="toc-1-introduction">1 Introduction</a>
 - <a href="#2-functional-annotation-sources"
   id="toc-2-functional-annotation-sources">2 Functional annotation
   sources</a>
-  - <a href="#21-funannotate-annotations-gene-symbols-and-go-terms"
-    id="toc-21-funannotate-annotations-gene-symbols-and-go-terms">2.1
-    Funannotate annotations: Gene symbols and GO Terms</a>
-  - <a href="#22-ncbi-gff3-files-gene-symbols"
-    id="toc-22-ncbi-gff3-files-gene-symbols">2.2 NCBI GFF3 files: Gene
-    symbols</a>
-  - <a href="#23-weighted-go-term-annotation-wei2go-go-terms"
-    id="toc-23-weighted-go-term-annotation-wei2go-go-terms">2.3 Weighted GO
-    Term annotation (Wei2GO): GO Terms</a>
-  - <a href="#24-best-blast-hits-to-swissprot-go-terms-and-gene-symbols"
-    id="toc-24-best-blast-hits-to-swissprot-go-terms-and-gene-symbols">2.4
-    Best-BLAST-hits to SwissProt: GO Terms and gene symbols</a>
+  - <a href="#funannotate-annotations-gene-symbols-and-go-terms"
+    id="toc-funannotate-annotations-gene-symbols-and-go-terms">Funannotate
+    annotations: Gene symbols and GO terms</a>
+  - <a href="#ncbi-gff3-files-gene-symbols"
+    id="toc-ncbi-gff3-files-gene-symbols">NCBI GFF3 files: Gene symbols</a>
+  - <a href="#weighted-go-term-annotation-wei2go-go-terms"
+    id="toc-weighted-go-term-annotation-wei2go-go-terms">Weighted GO Term
+    annotation (Wei2GO): GO terms</a>
+  - <a href="#best-blast-hits-to-swissprot-go-terms-and-gene-symbols"
+    id="toc-best-blast-hits-to-swissprot-go-terms-and-gene-symbols">Best-BLAST-hits
+    to SwissProt: GO terms and gene symbols</a>
 - <a href="#3-annotate-orthogroups-assign-non-redundant-annotations"
   id="toc-3-annotate-orthogroups-assign-non-redundant-annotations">3
   Annotate orthogroups: Assign non-redundant annotations</a>
-  - <a href="#31-gene-symbol-hierarchy"
-    id="toc-31-gene-symbol-hierarchy">3.1 Gene symbol hierarchy</a>
-  - <a href="#32-go-term-filtering" id="toc-32-go-term-filtering">3.2 GO
-    Term filtering</a>
-  - <a href="#33-final-output" id="toc-33-final-output">3.3 Final output</a>
+  - <a href="#gene-symbol-hierarchy" id="toc-gene-symbol-hierarchy">Gene
+    symbol hierarchy</a>
+  - <a href="#go-term-filtering" id="toc-go-term-filtering">GO Term
+    filtering</a>
+- <a href="#4-final-output" id="toc-4-final-output">4 Final output</a>
 
 # 1 Introduction
 
@@ -37,11 +36,11 @@ orthologs, I integrated functional annotation data from multiple
 sources, including:
 
 - Gene symbols from NCBI annotated samples
-- Gene symbols and GO Terms from
+- Gene symbols and GO terms from
   [Funannotate](https://github.com/nextgenusfs/funannotate) annotated
   samples
-- GO Terms from [Wei2GO](https://gitlab.com/mreijnders/wei2go)
-- Gene symbols and GO Terms from
+- GO terms from [Wei2GO](https://gitlab.com/mreijnders/wei2go)
+- Gene symbols and GO terms from
   [UniProt-SwissProt](https://www.uniprot.org/help/uniprotkb) curated
   database
 
@@ -60,7 +59,12 @@ can be found in the
 [scripts](https://github.com/a-lud/sea-snake-selection/tree/main/ortholgs/ortholog-annotation/scripts)
 directory.
 
-## 2.1 Funannotate annotations: Gene symbols and GO Terms
+## Funannotate annotations: Gene symbols and GO terms
+
+**Script**:
+[01-parse-funannotate.sh](https://github.com/a-lud/sea-snake-selection/blob/main/orthologs/ortholog-annotation/scripts/01-parse-funannotate.sh)  
+**Outdir**:
+[results/funannotate-annotations](https://github.com/a-lud/sea-snake-selection/tree/main/orthologs/ortholog-annotation/results/funannotate-annotations)
 
 Part of the [Funannotate](https://github.com/nextgenusfs/funannotate)
 output is a `<species>.annotation.txt` file. This is a tab-separated
@@ -68,13 +72,13 @@ file where the rows are gene identifiers and the columns are functional
 annotation data from different sources. These files can get pretty
 large, so I wrote a tool
 [parseFunannotate.go](https://github.com/a-lud/annotateOrthologs/tree/main/parseFunannotate)
-to pull out gene symbols and GO Terms for all annotated genes as a CSV
+to pull out gene symbols and GO terms for all annotated genes as a CSV
 file.
 
 Output from the `parseFunannotate.go` tool is shown below:
 
 ``` text
-GeneID          TranscriptID    Gene symbol       GO Terms
+GeneID          TranscriptID    Gene symbol       GO terms
 FUN_000005      FUN_000005-T1                     GO:0004553 GO:0005975
 FUN_000006      FUN_000006-T1
 FUN_000006      FUN_000006-T2
@@ -83,16 +87,13 @@ FUN_000007      FUN_000007-T2   NUDT2             GO:0008796 GO:0016787
 FUN_000008      FUN_000008-T1                     GO:0003777 GO:0005524 GO:0008017 GO:0007018
 ```
 
-Four snakes were *de novo* annotated in this study, including:
+Three snakes were *de novo* annotated in this study, including:
 
-- *Aipysurus levis*       - New to this study
 - *Hydrophis curtus*     - NCBI sample without public annotation
 - *Hydrophis cyanocinctus*  - NCBI sample without public annotation
 - *Hydrophis major*      - New to this study
 
-The script used to run `parseFunannotate.go` is
-`01-parse-funannotate.sh`. Below is the main commandline call from that
-script.
+The commandline call to run `parseFunannotate` is shown below
 
 ``` bash
 FILES=$(find <dir> -type f -name '*.annotations.txt')
@@ -104,7 +105,12 @@ for f in ${FILES}; do
 done
 ```
 
-## 2.2 NCBI GFF3 files: Gene symbols
+## NCBI GFF3 files: Gene symbols
+
+**Script**:
+[02-parse-NCBI.sh](https://github.com/a-lud/sea-snake-selection/blob/main/orthologs/ortholog-annotation/scripts/02-parse-NCBI.sh)  
+**Outdir**:
+[results/ncbi-genes](https://github.com/a-lud/sea-snake-selection/tree/main/orthologs/ortholog-annotation/results/ncbi-genes)
 
 As some of the samples in this analysis had NCBI annotations, it was
 possible to assign gene symbols to orthogroups by matching the
@@ -142,14 +148,20 @@ this manner
 - *Python bivittatus*
 - *Thamnophis elegans*
 
-The script used to parse gene symbols from NCBI GFF3 files is
-`02-parse-NCBI.sh`. Below is the main commandline call.
+The commandline call is shown below
 
 ``` bash
 "${PROG}/parseNcbiGff3.py" $(pwd) '.gff3' 'ncbi-gene-symbols.csv'
 ```
 
-## 2.3 Weighted GO Term annotation (Wei2GO): GO Terms
+## Weighted GO Term annotation (Wei2GO): GO terms
+
+**Script**:
+[03-wei2go-homology.sh](https://github.com/a-lud/sea-snake-selection/blob/main/orthologs/ortholog-annotation/scripts/03-wei2go-homology.sh)
+/
+[04-wei2go.sh](https://github.com/a-lud/sea-snake-selection/blob/main/orthologs/ortholog-annotation/scripts/04-wei2go.sh)  
+**Outdir**:
+[results/wei2go](https://github.com/a-lud/sea-snake-selection/tree/main/orthologs/ortholog-annotation/results/wei2go)
 
 [Wei2GO](https://gitlab.com/mreijnders/wei2go) is an open-source,
 sequence-similarity based functional prediction tool. Protein sequences
@@ -158,13 +170,11 @@ from the 13 snakes used in the ortholog analysis were searched against
 [UniProtKB](https://www.uniprot.org/help/uniprotkb) (SwissProt) using
 [Diamond](https://github.com/bbuchfink/diamond). Using the homology
 information, `Wei2GO` then generates weighted GO Term mappings,
-resulting in a list of GO Terms for each transcript, ignoring terms that
+resulting in a list of GO terms for each transcript, ignoring terms that
 failed to meet the scoring threshold.
 
-The scripts used in the `Wei2GO` analysis include
-`03-wei2go-homology.sh` and `04-wei2go.sh`. Examples of the main CLI
-commands are below (homology searches above and the `wei2go` call
-below).
+The commandline calls for the homology detection and `wei2GO` function
+are shown below.
 
 ``` bash
 # Diamond command to UniProtKB (Swiss-Prot)
@@ -200,12 +210,21 @@ FUN_024769-T1   GO:0060048  27056.15193980367
 FUN_024769-T1   GO:0055010  26926.056611863867
 ```
 
-## 2.4 Best-BLAST-hits to SwissProt: GO Terms and gene symbols
+## Best-BLAST-hits to SwissProt: GO terms and gene symbols
+
+**Script**:
+[05-blast-proteins-swissprot.sh](https://github.com/a-lud/sea-snake-selection/blob/main/orthologs/ortholog-annotation/scripts/05-blast-proteins-swissprot.sh)
+/
+[06-best-blast.sh](https://github.com/a-lud/sea-snake-selection/blob/main/orthologs/ortholog-annotation/scripts/06-best-blast.sh)
+/
+[07-parse-idmapping.sh](https://github.com/a-lud/sea-snake-selection/blob/main/orthologs/ortholog-annotation/scripts/07-parse-idmapping.sh)  
+**Outdir**:
+[results/blast-uniprot](https://github.com/a-lud/sea-snake-selection/tree/main/orthologs/ortholog-annotation/results/blast-uniprot)
+&
+[results/idmapping](https://github.com/a-lud/sea-snake-selection/tree/main/orthologs/ortholog-annotation/results/idmapping)
 
 Protein sequences from all 13 snakes were searched against the
-UniProt-SwissProt curated database. The script
-`05-blast-proteins-swissprot.sh` was used to do this, with the main
-commandline call shown below:
+UniProt-SwissProt curated database.
 
 ``` bash
 FILE=$(find "${PROT}" -type f -name '*.faa' | tr '\n' ' ' | cut -d ' ' -f "${SLURM_ARRAY_TASK_ID}")
@@ -255,14 +274,13 @@ If all of the above requirements are met, a query hit will be considered
 a best-BLAST-hit. The minimum threshold used for each of the filters
 above was 80%.
 
-The script `06-best-blast.sh` was used to filter the `BLAST` results,
-with the main commandline call shown below.
+The `bestBlast.py` command is shown below.
 
 ``` bash
 python3 bestBlast.py $(pwd) best-hits.csv
 ```
 
-Output from `bestBlast.py` looks like the following.
+The output from `bestBlast.py` is as follows.
 
 ``` text
 python_bivittatus,rna-NC_021479.1:15192..16305,O48106
@@ -281,9 +299,6 @@ takes the UniProtKB accessions from the third column in the
 requested fields. In this case, we asked for `Gene_Names` from
 *idmapping.dat.gz* and `GO` Terms from *idmapping_selected.tab.gz*.
 
-The script used to parse this information is `07-parse-idmapping.sh`,
-with the main commandline calls shown below:
-
 ``` bash
 # Gene Names from 'idmapping.dat.gz'
 "${DIR}/scripts/parseIdMap" \
@@ -292,7 +307,7 @@ with the main commandline calls shown below:
   -i 'Gene_Name' \
   -o "${DIR}/results/idmapping.dat.csv"
 
-# GO Terms from 'idmapping_selected.tab.gz'
+# GO terms from 'idmapping_selected.tab.gz'
 "${DIR}/scripts/parseIdMap" \
   -a "${DIR}/best-hits.csv" \
   -m "${DB}/idmapping_selected.tab.gz" \
@@ -325,6 +340,11 @@ P63116,GO:0097440; GO:0016021; GO:0043025; ... GO:0042942; GO:0015804
 
 # 3 Annotate orthogroups: Assign non-redundant annotations
 
+**Script**:
+[08-annotate-orthogroups.R](https://github.com/a-lud/sea-snake-selection/blob/main/orthologs/ortholog-annotation/scripts/08-annotate-orthogroups.R)  
+**Outdir**:
+[results/ortholog-annotation](https://github.com/a-lud/sea-snake-selection/tree/main/orthologs/ortholog-annotation/results/ortholog-annotation)
+
 To recap what we have generated so far:
 
 - Gene symbol table generated from NCBI annotation files
@@ -338,13 +358,11 @@ Using these tables, it is possible to match the annotations back with
 their transcripts. In the case of the best-BLAST-hits, we simply need to
 use the raw BLAST tables as an intermediate step to match up the
 UniProtKB accessions, which are found in the parsed idmapping outputs,
-back to their respective transcripts.
+back to their respective transcripts. For each annotation source,
+annotations are matched to their respective transcript by joining on
+sample and transcript-identifier.
 
-The script `08-annotate-orthogroups.R` handles all of this. For each
-annotation source, annotations are matched to their respective
-transcript by joining on sample and transcript-identifier.
-
-## 3.1 Gene symbol hierarchy
+## Gene symbol hierarchy
 
 The hierarchy for assigning gene symbols is as follows:
 
@@ -357,16 +375,16 @@ identified via Funannotate are used. If Funannotate failed to assign a
 gene symbol, best-BLAST-hits are relied upon. If none of the annotation
 methods could assign a gene symbol, no symbol is set.
 
-## 3.2 GO Term filtering
+## GO Term filtering
 
-GO Terms are obtained from `Wei2GO`, `Funannotate` (which uses
+GO terms are obtained from `Wei2GO`, `Funannotate` (which uses
 [InterProScan](https://github.com/ebi-pf-team/interproscan)) and the
 UniProt *idmapping* files. For each gene, the `08-annotate-orthologs.R`
-script collects the GO Terms from each source and generates a
-non-redundant set of GO Terms. These are then assigned to the
+script collects the GO terms from each source and generates a
+non-redundant set of GO terms. These are then assigned to the
 orthogroup.
 
-## 3.3 Final output
+# 4 Final output
 
 The output from all this is a single CSV file that has the following
 format.
@@ -380,6 +398,5 @@ OG0005083,KLHDC4,GO:0005515 GO:0006338 ... GO:0000775 GO:0008270
 OG0005084,JPH3,GO:0030314 GO:0005789 ... GO:0001047 GO:0000122
 ```
 
-For the 8,668 single-copy orthologs that were generated from the 13
-snakes, \~93% were assigned a gene symbol, while all orthogroups had at
-least one affiliated GO Term.
+<!-- For the 8,668 single-copy orthologs that were generated from the 13 snakes, ~93\% were assigned a -->
+<!-- gene symbol, while all orthogroups had at least one affiliated GO Term. -->
