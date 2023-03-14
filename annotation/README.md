@@ -246,7 +246,9 @@ snakes.
 
 ### Funannotate Train
 
-**Script:** $$01-train.sh$$$$script01$$ /
+**Script:**
+[01-train.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/scripts/hydrophis_major/01-train.sh)
+/
 [01-train-no-mask](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/scripts/hydrophis_major/01-train-no-mask.sh)  
 **Outdir:** Too large to upload
 
