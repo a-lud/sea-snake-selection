@@ -12,7 +12,7 @@ library(magrittr)
 # ------------------------------------------------------------------------------------------------ #
 # Per species summary
 per.species <- read_lines(
-  file = here('orthologs', 'ortholog-detection', 'results', 'orthologs-13', 'Comparative_Genomics_Statistics' ,'Statistics_PerSpecies.tsv'),
+  file = here('orthologs', 'ortholog-detection', 'results', 'orthologs-correct', 'Comparative_Genomics_Statistics' ,'Statistics_PerSpecies.tsv'),
 )
 
 # Per species summary
@@ -33,14 +33,14 @@ df.per.species |>
   ) |>
   pivot_wider(names_from = Measure, values_from = Values) |>
   write_csv(
-    file = here('figures/supplementary/table-x-orthologs-species.csv'),
+    file = here('figures','supplementary','table-x-orthologs-species.csv'),
     col_names = TRUE
   )
 
 # ------------------------------------------------------------------------------------------------ #
 # Overall summary
 overall <- read_lines(
-  file = here('orthologs', 'ortholog-detection', 'results', 'orthologs-13', 'Comparative_Genomics_Statistics' ,'Statistics_Overall.tsv')
+  file = here('orthologs', 'ortholog-detection', 'results', 'orthologs-correct', 'Comparative_Genomics_Statistics' ,'Statistics_Overall.tsv')
 )
 
 overall |>
@@ -50,6 +50,6 @@ overall |>
   as_tibble() |>
   rename(Statistic= V1, Value = V2) |>
   write_csv(
-    file = here('figures/supplementary/table-x-orthologs-statistics.csv'),
+    file = here('figures','supplementary','table-x-orthologs-statistics.csv'),
     col_names = TRUE
   )

@@ -5,20 +5,22 @@
 
 # ------------------------------------------------------------------------------------------------ #
 # Libraries
-library(tidyverse)
-library(ggvenn)
-library(here)
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(ggvenn)
+  library(here)
+})
 
 # ------------------------------------------------------------------------------------------------ #
 # Read in PAML/BUSTED-PH PSGs
 paml <- read_csv(
-  file = here('figures','supplementary','table-x-selection-paml.csv'),
+  file = here('figures','supplementary','table-x-selection-paml-LRT-dropout.csv'),
   col_names = TRUE,
   col_types = cols()
 )
 
 bustedph <- read_csv(
-  file = here('figures','supplementary','table-x-selection-bustedph.csv'),
+  file = here('figures','supplementary','table-x-selection-bustedph-LRT.csv'),
   col_names = TRUE,
   col_types = cols()
 )

@@ -17,7 +17,7 @@ options(scipen = 999)
 
 # ------------------------------------------------------------------------------------------------ #
 # Import PAML and BUSTED-PH results
-marine.psg <- read_lines(here('selection/results-13/results-PSGs/PSGs-marine.txt'))
+marine.psg <- read_lines(here('selection','results','results-PSGs','PSGs-marine.txt'))
 paml <- read_csv(
   file = here('figures','supplementary','table-x-selection-paml-branch-site-alternate-model-fit.csv'),
   col_names = TRUE,
@@ -73,7 +73,6 @@ busted <- read_csv(
 
 # ------------------------------------------------------------------------------------------------ #
 # Plot: BUSTED-PH proportion of sites and avg. omega in each rate category.
-
 busted.prop <- busted |>
   filter(measure == 'Proportion') |>
   ggplot(

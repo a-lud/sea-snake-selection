@@ -7,7 +7,10 @@
 
 # ------------------------------------------------------------------------------------------------ #
 # Libraries
-library(tidyverse)
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(here)
+})
 
 lvls <- c(
   "Hydrophis curtus", "Hydrophis curtus-AG", "Hydrophis cyanocinctus",
@@ -19,7 +22,7 @@ lvls <- c(
 # ------------------------------------------------------------------------------------------------ #
 # Read MSA summary files with gap statistics before/after filtering
 csvs <- fs::dir_ls(
-  path = 'orthologs/ortholog-detection/results/orthologs-13/msa-summary',
+  path = here('orthologs', 'ortholog-detection', 'results', 'orthologs-correct', 'msa-summary'),
   glob = '*.csv',
   recurse = TRUE
 ) %>%
@@ -32,10 +35,10 @@ csvs <- fs::dir_ls(
   ungroup() |>
   mutate(
     prop = ngaps/seq_len,
-    id = factor(id, levels = c('pre-trimming', 'post-trimming')),
     sample = sub('_', ' ', str_to_title(sample)),
     sample = sub('-Ag', '-AG', sample),
-    id = str_to_title(id),
+    id = str_to_sentence(id),
+    id = factor(id, levels = c('Pre-trimming', 'Post-trimming')),
     sample = factor(sample, levels = lvls)
   )
 
@@ -53,7 +56,7 @@ csvs <- fs::dir_ls(
 # or misclassification.
 options(scipen = 999)
 png(
-  filename = 'figures/supplementary/figure-x-msa-gaps.png',
+  filename = here('figures','supplementary','figure-x-msa-gaps.png'),
   width = 1000,
   height = 1000,
   units = 'px'
@@ -69,7 +72,7 @@ csvs |>
   # geom_violin(alpha = 0.6, position = 'dodge') +
   geom_boxplot(alpha = 0.5) +
   scale_fill_manual(values = c('red', 'black')) +
-  scale_y_log10() +
+  scale_y_log10(breaks = c(0.001, 0.01, 0.1, 1, 10)) +
   labs(
     y = 'Gaps as a proportion of sequence length'
   ) +
@@ -84,6 +87,7 @@ csvs |>
 
     # Legend
     legend.text = element_text(size = 14),
-    legend.title = element_blank()
+    legend.title = element_blank(),
+    legend.position = 'bottom'
   )
 invisible(dev.off())

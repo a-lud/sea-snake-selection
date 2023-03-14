@@ -55,7 +55,7 @@ parseMrnaStats <- function(lines) {
 # ------------------------------------------------------------------------------------------------ #
 # Read AGAT statistics
 ann.stats <- fs::dir_ls(
-  path = here('annotation', 'statistics'),
+  path = here('data','gff3','statistics'),
   glob = '*.statistics'
 ) %>%
   map(read_lines) %>%
@@ -122,7 +122,8 @@ ann.df <- ann.stats %>%
 # ------------------------------------------------------------------------------------------------ #
 # Read in GFF3 files
 gff <- fs::dir_ls(
-  path = here('data', 'gff3')
+  path = here('data', 'gff3'),
+  glob = '*.gff3'
 ) |>
   vroom::vroom(delim = '\t', id = 'sample', col_names = FALSE, col_types = cols(), comment = '#') |>
   filter(X3 == 'gene') |>
@@ -185,7 +186,8 @@ gene.info <- tmp |>
 
 # Read in GFF3s
 gffs <-fs::dir_ls(
-  path = here('data', 'gff3')
+  path = here('data', 'gff3'),
+  glob = '*.gff3'
 ) %>%
   extract(str_detect(., 'hydrophis')) |>
   read_tsv(col_names = FALSE, col_types = cols(), id = 'Sample', comment = '#') |>

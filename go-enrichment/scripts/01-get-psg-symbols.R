@@ -16,14 +16,14 @@ suppressPackageStartupMessages({
 # ------------------------------------------------------------------------------------------------ #
 # PSGs
 orthogroups <- read_csv(
-  file = here('orthologs','ortholog-annotation','results','ortholog-annotation','orthologs-13.csv'),
+  file = here('orthologs','ortholog-annotation','results','ortholog-annotation','orthologs.csv'),
   col_names = TRUE,
   col_types = cols()
 )
 
-psgs <- read_lines(file = here('selection','results-13','results-PSGs','PSGs-marine.txt'))
+psgs <- read_lines(file = here('selection','results','results-PSGs','PSGs-marine.txt'))
 
-# 99 PSGs with no gene symbol (83 with NA, 16 with locus tags (CUNH.../C...H...ORF...))
+# 99 PSGs with no gene symbol (85 with NA, 16 with locus tags (CUNH.../C...H...ORF...))
 orthogroups |>
   filter(orthogroup %in% psgs, is.na(symbol)) |>
   nrow()
@@ -49,7 +49,7 @@ ids.multiple <- orthogroups |>
   str_split(' ') |>
   unlist()
 
-# 1,273 genes with a single symbol
+# 1,279 genes with a single symbol
 ids.genes <- orthogroups |>
   filter(orthogroup %in% psgs, !is.na(symbol), !str_detect(symbol, ' ')) |>
   pull(symbol)
@@ -57,5 +57,5 @@ ids.genes <- orthogroups |>
 # ------------------------------------------------------------------------------------------------ #
 # Write gene symbols to file for use in PANTHER
 c(ids.genes, ids.multiple) |>
-  write_lines(file = here('go-enrichment','results-13','PSG-gene-symbols-for-PANTHER.txt'))
+  write_lines(file = here('go-enrichment','results','PSG-gene-symbols-for-PANTHER.txt'))
 

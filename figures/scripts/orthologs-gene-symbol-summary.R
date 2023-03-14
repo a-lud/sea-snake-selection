@@ -5,13 +5,21 @@
 
 # ------------------------------------------------------------------------------------------------ #
 # Libraries
-library(tidyverse)
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(here)
+})
+
 
 # ------------------------------------------------------------------------------------------------ #
 # Annotation file
-anno <- read_csv(file = 'orthologs/ortholog-annotation/results/ortholog-annotation/orthologs-13.csv')
+anno <- read_csv(
+  file = here('orthologs','ortholog-annotation','results','ortholog-annotation','orthologs.csv'),
+  col_names = TRUE,
+  col_types = cols()
+)
 
-# 7820 orthologs with one gene symbol assigned
+# 7812 orthologs with one gene symbol assigned
 orth.single.name <- anno %>%
   filter(!is.na(symbol)) |>
   filter(!str_detect(symbol, ' ')) |>
@@ -31,7 +39,7 @@ orth.single.name.cleaned <- anno %>%
   filter(symbol != '') |>
   nrow()
 
-# 111 genes with two annotations
+# 109 genes with two annotations
 ortho.two.name <- anno %>%
   filter(!is.na(symbol)) %>%
   filter(str_detect(symbol, ' ')) |>
@@ -50,15 +58,15 @@ orth.no.name.after.cleaning <- anno %>%
   filter(symbol == '') |>
   nrow()
 
-# 620 orthologs with no annotation
+# 617 orthologs with no annotation
 orth.no.name <- anno %>%
   filter(is.na(symbol)) |>
   nrow()
 
 # ------------------------------------------------------------------------------------------------ #
 # Totals
-orth.single.name + orth.single.name.cleaned + ortho.two.name # 7953 = some form of annotation
-orth.single.name + orth.single.name.cleaned # 7842 = Single gene symbol assigned
-ortho.two.name # 111 = orthoglogs with two symbols assigned
-orth.no.name.after.cleaning + orth.no.name # 715 = orthologs with no gene symbol
-orth.single.name + orth.single.name.cleaned + ortho.two.name + orth.no.name.after.cleaning + orth.no.name # 8668 = Total number of orthologs
+orth.single.name + orth.single.name.cleaned + ortho.two.name # 7943 = some form of annotation
+orth.single.name + orth.single.name.cleaned # 7834 = Single gene symbol assigned
+ortho.two.name # 109 = orthoglogs with two symbols assigned
+orth.no.name.after.cleaning + orth.no.name # 712 = orthologs with no gene symbol
+orth.single.name + orth.single.name.cleaned + ortho.two.name + orth.no.name.after.cleaning + orth.no.name # 8655 = Total number of orthologs

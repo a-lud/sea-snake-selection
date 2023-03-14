@@ -84,13 +84,13 @@ parsePanther <- function(path) {
 
 # ------------------------------------------------------------------------------------------------ #
 # Parse results
-sig.panther <- parsePanther(here('go-enrichment', 'results-13', 'panther'))
+sig.panther <- parsePanther(here('go-enrichment', 'results', 'panther'))
 
 # ------------------------------------------------------------------------------------------------ #
 # Export GO terms for REVIGO and a table for supp. material
 sig.panther |>
   pull(GO) |>
-  write_lines(file = here('go-enrichment', 'results-13', 'panther', 'enriched-GO-terms-for-REVIGO.txt'))
+  write_lines(file = here('go-enrichment', 'results', 'panther', 'enriched-GO-terms-for-REVIGO.txt'))
 
 # Write to supplementary table
 sig.panther |>

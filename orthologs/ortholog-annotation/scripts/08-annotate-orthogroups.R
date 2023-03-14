@@ -24,14 +24,14 @@ suppressPackageStartupMessages({
 # ------------------------------------------------------------------------------------------------ #
 # Ortholog data
 orthogroups <- read_tsv(
-  file = here('orthologs','ortholog-detection','results','orthologs-13','Orthogroups','Orthogroups.tsv'),
+  file = here('orthologs','ortholog-detection','results','orthologs-correct','Orthogroups','Orthogroups.tsv'),
   col_names = TRUE,
   col_types = cols()
 )
 
 # Single copy orthologs
 orthogroups.single.copy <- read_tsv(
-  file = here('orthologs','ortholog-detection','results','orthologs-13','Orthogroups','Orthogroups_SingleCopyOrthologues.txt'),
+  file = here('orthologs','ortholog-detection','results','orthologs-correct','Orthogroups','Orthogroups_SingleCopyOrthologues.txt'),
   col_names = 'Orthogroup',
   col_types = cols()
 )
@@ -92,12 +92,12 @@ funannotate.symbol.go <- dir_ls(
   )
 
 # Wei2GO: GO Terms
-# A tibble: 249,321 × 3
-#     sample          transcriptID       GO_wei2go
-#     <chr>           <chr>              <list>
-#   1 crotalus_tigris rna-XM_039344534.1 <chr [16]>
-#   2 crotalus_tigris rna-XM_039344533.1 <chr [5]>
-#   3 crotalus_tigris rna-XM_039344537.1 <chr [11]>
+# A tibble: 255,466 × 3
+# sample          transcriptID       GO_wei2go
+# <chr>           <chr>              <list>
+# 1 crotalus_tigris rna-XM_039344534.1 <chr [16]>
+# 2 crotalus_tigris rna-XM_039344533.1 <chr [5]>
+# 3 crotalus_tigris rna-XM_039344537.1 <chr [11]>
 wei2go.go <- dir_ls(
   path = here('orthologs','ortholog-annotation','results','wei2go'),
   glob = "*.tsv"
@@ -151,7 +151,7 @@ idmapping.go <- read_csv(
   rename(GO_blast = GO) |>
   mutate(GO_blast = str_split(GO_blast, '; '))
 
-# A tibble: 56,471 × 4
+# A tibble: 57,564 × 4
 #     sample            transcriptID                 symbol_blast GO_blast
 #     <chr>             <chr>                        <chr>        <list>
 #   1 python_bivittatus rna-NC_021479.1:15192..16305 MT-CYB       <chr [5]>
@@ -165,12 +165,12 @@ blast.symbols.go <- reduce(
 
 # ------------------------------------------------------------------------------------------------ #
 # Join all annotation information into non-redundant dataset
-# A tibble: 8,668 × 3
-#     orthogroup symbol  GO
-#     <chr>      <chr>   <chr>
-#   1 OG0005080  BANP    GO:0006325 GO:0003677 ... GO:0045893
-#   2 OG0005081  CA5A    GO:0004089 GO:0005739 ... GO:2001225
-#   3 OG0005082  SLC7A5  GO:0015807 GO:0005765 ... GO:0005886
+# A tibble: 8,655 × 3
+# orthogroup symbol GO
+# <chr>      <chr>  <chr>
+# 1 OG0005294  CALU GO:0016020 GO:0005794 GO:0042470 ... GO:0055091 ...
+# 2 OG0005295  IRF5 GO:0003700 GO:0045944 GO:0042802 ... GO:0048468 ...
+# 3 OG0005298  SEMA6A GO:0016021 GO:0005886 ... GO:0050919 GO:0038 ...
 annotation <- reduce(
   .x = list(single.copy.orthologs, ncbi.symbol, funannotate.symbol.go, wei2go.go, blast.symbols.go),
   .f = left_join
@@ -208,7 +208,6 @@ annotation <- reduce(
     # If all annotation sources are NA
     if (all(is.na(all.symbol)) || all(is_empty(all.symbol))) {
       symbol <- NA_character_
-
     } else if (!is.na(symbol.ncbi) || !is_empty(symbol.ncbi)) {
       symbol <- symbol.ncbi
     } else if (!is.na(symbol.fun) | !is_empty(symbol.fun)) {
@@ -232,6 +231,6 @@ dir_create(path = here('orthologs','ortholog-annotation','results','ortholog-ann
 
 write_csv(
   x = annotation,
-  file = here('orthologs','ortholog-annotation','results','ortholog-annotation', 'orthologs-13.csv'),
+  file = here('orthologs','ortholog-annotation','results','ortholog-annotation', 'orthologs.csv'),
   col_names = TRUE
 )

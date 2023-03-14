@@ -17,11 +17,11 @@ suppressPackageStartupMessages({
 # Import RELAX data
 
 # All relax data
-relax <- read_rds(here('selection','r-data','relax-13.rds'))
+relax <- read_rds(here('selection','r-data','relax.rds'))
 
 # Significant relax results
 relax.sig <- read_csv(
-  file = here('selection','results-13','results-PSGs','relax-corrected.csv'),
+  file = here('selection','results','results-PSGs','relax-corrected.csv'),
   col_names = TRUE,
   col_types = cols()
 ) |>

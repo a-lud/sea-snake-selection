@@ -17,42 +17,37 @@ suppressPackageStartupMessages({
 })
 
 # ------------------------------------------------------------------------------------------------ #
-# Output directory
-outdir <- here('selection','results-13','results-selection-intensification')
-fs::dir_create(path = outdir)
-
-# ------------------------------------------------------------------------------------------------ #
 # Import PSGs + insignificant orthogroups + RELAX results
 
 # PSGs/insignificant genes
-psg.marine <- read_lines(here('selection','results-13','results-PSGs','PSGs-marine.txt'))
-psg.terrestrial <- read_lines(here('selection','results-13','results-PSGs','PSGs-terrestrial.txt'))
-psg.shared <- read_lines(here('selection','results-13','results-PSGs','PSGs-shared.txt'))
-neutral.genes <- read_lines(here('selection','results-13','results-PSGs','neutral-genes.txt'))
+psg.marine <- read_lines(here('selection','results','results-PSGs','PSGs-marine.txt'))
+psg.terrestrial <- read_lines(here('selection','results','results-PSGs','PSGs-terrestrial.txt'))
+psg.shared <- read_lines(here('selection','results','results-PSGs','PSGs-shared.txt'))
+neutral.genes <- read_lines(here('selection','results','results-PSGs','neutral-genes.txt'))
 
 # Relaxation results: signif (relaxation/intensification) or insignif
 relax <- read_csv(
-  file = here('selection','results-13','results-PSGs','relax-table.csv'),
+  file = here('selection','results','results-PSGs','relax-corrected.csv'),
   col_names = TRUE,
   col_types = cols()
 )
 
-# Significant + intensification (K > 1) # 1681 at p-adj <= 0.01
+# Significant + intensification (K > 1) # 1663 at p-adj <= 0.01
 relax.sig.intense <- relax |>
   filter(signif == 'Significant', grouping == 'Intensification') |>
   pull(orthogroup)
 
-# Significant + relaxation (K < 1) # 446 at p-adj <= 0.01
+# Significant + relaxation (K < 1) # 443 at p-adj <= 0.01
 relax.sig.relax <- relax |>
   filter(signif == 'Significant', grouping == 'Relaxation') |>
   pull(orthogroup)
 
-# Inisignificant # 6536 at p-adj >= 0.01
+# Inisignificant # 6546 at p-adj >= 0.01
 relax.insignif <- relax |>
   filter(signif == 'Insignificant') |>
   pull(orthogroup)
 
-# Number of orthogroups accounted for = 8663
+# Number of orthogroups accounted for = 8652
 sum(unlist(map(list(relax.sig.intense, relax.sig.relax, relax.insignif), length)))
 
 # ------------------------------------------------------------------------------------------------ #

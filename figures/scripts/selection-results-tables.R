@@ -34,34 +34,34 @@ suppressPackageStartupMessages({
 #       -
 
 annotation <- read_csv(
-  file = here('orthologs','ortholog-annotation','results','ortholog-annotation','orthologs-13.csv'),
+  file = here('orthologs','ortholog-annotation','results','ortholog-annotation','orthologs.csv'),
   col_names = TRUE,
   col_types = cols()
 ) |>
   select(file = orthogroup, symbol)
 
 paml.bs <- read_csv(
-  file = here('selection','results-13','paml','ete-standard-summary','model-branch-site.csv'),
+  file = here('selection','results','paml','ete-standard-summary','model-branch-site.csv'),
   col_names = TRUE,
   col_types = cols()
 )
 
 paml.s <- read_csv(
-  file = here('selection','results-13','paml','ete-dropout-summary','model-site.csv'),
+  file = here('selection','results','paml','ete-dropout-summary','model-site.csv'),
   col_names = TRUE,
   col_types = cols()
 )
 
 paml.lrt <- read_csv(
-  file = here('selection','results-13','results-PSGs','PSGs-paml-corrected.csv'),
+  file = here('selection','results','results-PSGs','PSGs-paml-corrected.csv'),
   col_names = TRUE,
   col_types = cols()
 )
 
-bustedph.obj <- read_rds(here('selection','r-data','busted-ph-13.rds'))
+bustedph.obj <- read_rds(here('selection','r-data','busted-ph.rds'))
 
 busted.lrt <- read_csv(
-  file = here('selection','results-13','results-PSGs','PSGs-bustedph-corrected.csv'),
+  file = here('selection','results','results-PSGs','PSGs-bustedph-corrected.csv'),
   col_names = TRUE,
   col_types = cols()
 )
@@ -70,10 +70,10 @@ busted.lrt <- read_csv(
 busted.general <- bustedph.obj$fits$general |>
   mutate(file = sub('.clean', '', file))
 
-relax <- read_rds(here('selection','r-data','relax-13.rds'))
+relax <- read_rds(here('selection','r-data','relax.rds'))
 
 relax.lrt <- read_csv(
-  file = here('selection','results-13','results-PSGs','relax-corrected.csv'),
+  file = here('selection','results','results-PSGs','relax-corrected.csv'),
   col_names = TRUE,
   col_types = cols()
 )
@@ -182,7 +182,8 @@ paml.lrt |>
     `Site (null/alt)`,
     `LRT (S)` = lrt_y,
     `P-value (S)` = pval_y,
-    `Adj. P-value (S)` = pval_y_adj
+    `Adj. P-value (S)` = pval_y_adj,
+    Signal = signal
   ) |>
   write_csv(
     file = here('figures','supplementary','table-x-selection-paml-LRT-dropout.csv'),
@@ -270,7 +271,7 @@ bustedph.obj$fits$shared |>
 
 # LRT statistics between the three models above for each gene
 read_csv(
-  file = here('selection','results-13','results-PSGs','PSGs-bustedph-corrected.csv'),
+  file = here('selection','results','results-PSGs','PSGs-bustedph-corrected.csv'),
   col_names = TRUE,
   col_types = cols()
 ) |>
