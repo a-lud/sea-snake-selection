@@ -1,7 +1,7 @@
 Selection Testing
 ================
 Alastair Ludington
-2023-01-27
+2023-03-15
 
 - <a href="#1-introduction" id="toc-1-introduction">1 Introduction</a>
 - <a href="#2-selection-testing-software"
@@ -263,7 +263,7 @@ the
 directory, while most data inputs and outputs can be found in any of the
 [r-data](https://github.com/a-lud/sea-snake-selection/tree/main/selection/r-data)
 or
-[results-13](https://github.com/a-lud/sea-snake-selection/tree/main/selection/results-13)
+[results](https://github.com/a-lud/sea-snake-selection/tree/main/selection/results)
 directories.
 
 The only files I could not upload here are the raw `HyPhy` JSON outputs,
@@ -292,7 +292,7 @@ marked as foreground/test, as can be seen in the `trees` directory.
 **Script:**
 [01-codeml.sh](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/01-codeml.sh)  
 **Outputs:**
-[results-13/paml](https://github.com/a-lud/sea-snake-selection/tree/main/selection/results-13/paml)
+[results/paml](https://github.com/a-lud/sea-snake-selection/tree/main/selection/results/paml)
 
 I’ve detailed the main stages of the `codeml` pipeline that I
 implemented in Nextflow. For a more detailed overview, please see the
@@ -335,14 +335,17 @@ above.
 ### Hyphy-analyses pipeline
 
 **Script:**
-[02-hyphy-busted-ph-13.sh](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/02-hyphy-busted-ph-13.sh)  
+[02-hyphy-bustedph.sh](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/02-hyphy-bustedph.sh)
+/
+[03-hyphy-bustedph-terrestrial](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/03-hyphy-bustedph-terrestrial.sh)  
 **Outputs:** Too large to upload to GitHub
 
 The
 [HyPhy-analyses](https://github.com/a-lud/nf-pipelines/wiki/HyPhy-Analyses)
 pipeline runs the more custom selection pipelines in parallel. We used
 this pipeline to run `BUSTED-PH` to test whether the *Marine* phenotype
-is associated with positive selection.
+is associated with positive selection (I also ran this tool with
+terrestrial snakes marked as *test*).
 
 The codon-translated multiple sequence alignment files were provided as
 input, along with a newick tree where the *Hydrophis* sea snakes had
@@ -359,7 +362,7 @@ These were not processed any further by the Nextflow pipeline.
 ### Hyphy pipeline
 
 **Script:**
-[03-hyphy-relax-13.sh](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/03-hyphy-relax-13.sh)  
+[04-hyphy-relax.sh](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/04-hyphy-relax.sh)  
 **Outputs:** Too large to upload to GitHub
 
 The `HyPhy` Nextflow pipeline simply runs selection models in parallel.
@@ -381,7 +384,7 @@ left as *reference*.
 ## Step 2: Parse selection results
 
 **Script:**
-[04-parse-hyphy.R](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/04-parse-hyphy.R)  
+[05-parse-hyphy.R](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/05-parse-hyphy.R)  
 **Outputs:**
 [r-data](https://github.com/a-lud/sea-snake-selection/tree/main/selection/r-data)
 
@@ -400,7 +403,7 @@ of the list correspond to the keys in the JSON files.
 
 ``` r
 # Load all JSON files
-jsons.bustedph.13 <- loadJsons(dir = here('selection', 'results-13', 'hyphy', 'busted-ph-13'))
+jsons.bustedph.13 <- loadJsons(dir = here('selection', 'results', 'hyphy', 'busted-ph'))
 
 # Parse BUSTED-PH results
 bustedph.13 <- parseBustedPh(jsons = jsons.bustedph.13)
@@ -421,9 +424,9 @@ bustedph.13 <- parseBustedPh(jsons = jsons.bustedph.13)
 ## Step 3: Identifying candidate PSGs
 
 **Script:**
-[05-hyphy-codeml-overlap.R](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/05-hyphy-codeml-overlap.R)  
+[06-psgs.R](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/06-psg.R)  
 **Outputs:**
-[results-13/results-PSGs](https://github.com/a-lud/sea-snake-selection/tree/main/selection/results-13/results-PSGs)
+[results/results-PSGs](https://github.com/a-lud/sea-snake-selection/tree/main/selection/results/results-PSGs)
 
 The results from both `BUSTED-PH` and `codeml` were corrected for
 multiple testing using an *fdr* correction implemented in `p.adjust()`.
@@ -445,9 +448,9 @@ selection with respect to the phenotype of interest.
 ## Step 4: Selection intensity
 
 **Scripts:**
-[06-selection-intensity.R](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/06-selection-intensity.R)  
+[07-selection-intensity.R](https://github.com/a-lud/sea-snake-selection/blob/main/selection/scripts/07-selection-intensity.R)  
 **Outputs:**
-[results-13/results-selection-intensification](https://github.com/a-lud/sea-snake-selection/tree/main/selection/results-13/results-selection-intensification)
+[results/results-selection-intensification](https://github.com/a-lud/sea-snake-selection/tree/main/selection/results/results-selection-intensification)
 
 As described in [section 3](#RELAX-Formal-test-for-selective-regime)
 above, selection intensity was measured by running the program `RELAX`
@@ -485,4 +488,4 @@ estimated in *Hydrophis* relative to the *reference* branches -
 i.e. terrestrial snakes. This means the results need to be inverted when
 making inference about terrestrial PSGs shown in this plot.
 
-![](https://github.com/a-lud/sea-snake-selection/blob/main/selection/results-13/results-selection-intensification/upset.png)
+![](https://github.com/a-lud/sea-snake-selection/blob/main/figures/manuscript/figure-x-upset.png)
