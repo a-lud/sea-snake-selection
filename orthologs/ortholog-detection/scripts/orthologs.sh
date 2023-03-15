@@ -14,7 +14,7 @@ nextflow run ${PIPE}/main.nf \
     -N 'alastair.ludington@adelaide.edu.au' \
     -resume \
     --outdir "${DIR}/results" \
-    --out_prefix "orthologs" \
+    --out_prefix "orthologs-13-correct" \
     --gffs "${GFF}" \
     --genomes "${ASM}" \
     --search_prog 'mmseqs'
