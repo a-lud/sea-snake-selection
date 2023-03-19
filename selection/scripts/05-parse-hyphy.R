@@ -28,19 +28,19 @@ source(here('selection', 'scripts', 'hyphy-parsing', 'relax.R'))
 fs::dir_create(path = here('selection', 'r-data'))
 
 ## BUSTED-PH 13-sample results: Marine PSGs
-jsons.bustedph.13 <- loadJsons(dir = here('selection', 'results', 'busted-ph'))
-bustedph.13 <- parseBustedPh(jsons = jsons.bustedph.13)
-write_rds(x = bustedph.13, file = here('selection', 'r-data', 'busted-ph.rds'),compress = 'gz')
-rm(jsons.bustedph.13);rm(bustedph.13);gc()
+jsons.bustedph <- loadJsons(dir = here('selection', 'results', 'bustedph'))
+bustedph <- parseBustedPh(jsons = jsons.bustedph)
+write_rds(x = bustedph, file = here('selection', 'r-data', 'busted-ph.rds'),compress = 'gz')
+rm(jsons.bustedph);rm(bustedph);gc()
 
 ## RELAX 13-sample results: Marine PSGs
-jsons.relax.13 <- loadJsons(dir = here('selection', 'results', 'relax'))
-relax.13 <- parseRelax(jsons = jsons.relax.13)
-write_rds(x = relax.13, file = here('selection', 'r-data', 'relax.rds'), compress = 'gz')
-rm(jsons.relax.13);rm(relax.13);gc()
+jsons.relax <- loadJsons(dir = here('selection', 'results', 'relax'))
+relax <- parseRelax(jsons = jsons.relax)
+write_rds(x = relax, file = here('selection', 'r-data', 'relax.rds'), compress = 'gz')
+rm(jsons.relax);rm(relax);gc()
 
 ## BUSTED-PH 13-sample results: Terrestrial PSGs
-jsons.bustedph.13 <- loadJsons(dir = here('selection', 'results','busted-ph-terrestrial'))
-bustedph.13 <- parseBustedPh(jsons = jsons.bustedph.13)
-write_rds(x = bustedph.13, file = here('selection', 'r-data', 'busted-ph-terrestrial.rds'),compress = 'gz')
-rm(jsons.bustedph.13);rm(bustedph.13);gc()
+jsons.bustedph <- loadJsons(dir = here('selection', 'results','bustedph-terrestrial'))
+bustedph <- parseBustedPh(jsons = jsons.bustedph)
+write_rds(x = bustedph, file = here('selection', 'r-data', 'busted-ph-terrestrial.rds'),compress = 'gz')
+rm(jsons.bustedph);rm(bustedph);gc()

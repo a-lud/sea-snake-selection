@@ -9,10 +9,12 @@
 # along with an adjusted pvalue threshold of p <= 0.01.
 # ------------------------------------------------------------------------------------------------ #
 # Libraries
-library(ComplexUpset)
-library(tidyverse)
-library(here)
-library(patchwork)
+suppressPackageStartupMessages({
+  library(ComplexUpset)
+  library(tidyverse)
+  library(here)
+  library(patchwork)
+})
 
 # ------------------------------------------------------------------------------------------------ #
 # Output directory
@@ -35,22 +37,22 @@ relax <- read_csv(
   col_types = cols()
 )
 
-# Significant + intensification (K > 1) # 1663 at p-adj <= 0.01
+# Significant + intensification (K > 1) # 1677 at p-adj <= 0.01
 relax.sig.intense <- relax |>
   filter(signif == 'Significant', grouping == 'Intensification') |>
   pull(orthogroup)
 
-# Significant + relaxation (K < 1) # 443 at p-adj <= 0.01
+# Significant + relaxation (K < 1) # 442 at p-adj <= 0.01
 relax.sig.relax <- relax |>
   filter(signif == 'Significant', grouping == 'Relaxation') |>
   pull(orthogroup)
 
-# Inisignificant # 6546 at p-adj >= 0.01
+# Inisignificant # 6532 at p-adj >= 0.01
 relax.insignif <- relax |>
   filter(signif == 'Insignificant') |>
   pull(orthogroup)
 
-# Number of orthogroups accounted for = 8652 (3 are known to have failed)
+# Number of orthogroups accounted for = 8651 (3 are known to have failed)
 sum(unlist(map(list(relax.sig.intense, relax.sig.relax, relax.insignif), length)))
 
 # ------------------------------------------------------------------------------------------------ #
