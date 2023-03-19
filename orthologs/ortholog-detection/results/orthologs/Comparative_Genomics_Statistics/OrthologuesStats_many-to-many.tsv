@@ -1,0 +1,14 @@
+	crotalus_tigris	hydrophis_curtus-AG	hydrophis_curtus	hydrophis_cyanocinctus	hydrophis_elegans	hydrophis_major	hydrophis_ornatus	notechis_scutatus	pantherophis_guttatus	protobothrops_mucrosquamatus	pseudonaja_textilis	python_bivittatus	thamnophis_elegans
+crotalus_tigris	0.0	282.0	447.0	437.0	297.0	360.0	290.0	352.0	481.0	421.0	311.0	466.0	621.0
+hydrophis_curtus-AG	216.0	0.0	82.0	119.0	225.0	216.0	185.0	79.0	205.0	216.0	101.0	167.0	220.0
+hydrophis_curtus	398.0	76.0	0.0	269.0	72.0	172.0	69.0	274.0	495.0	620.0	275.0	451.0	504.0
+hydrophis_cyanocinctus	386.0	119.0	279.0	0.0	125.0	168.0	104.0	270.0	464.0	553.0	257.0	526.0	445.0
+hydrophis_elegans	250.0	223.0	79.0	176.0	0.0	261.0	192.0	91.0	233.0	244.0	127.0	191.0	260.0
+hydrophis_major	367.0	312.0	179.0	273.0	414.0	0.0	325.0	149.0	460.0	367.0	167.0	258.0	368.0
+hydrophis_ornatus	214.0	185.0	71.0	120.0	181.0	195.0	0.0	76.0	192.0	210.0	95.0	176.0	206.0
+notechis_scutatus	319.0	83.0	259.0	281.0	97.0	135.0	92.0	0.0	468.0	561.0	332.0	400.0	311.0
+pantherophis_guttatus	447.0	212.0	378.0	387.0	214.0	278.0	201.0	395.0	0.0	495.0	319.0	465.0	439.0
+protobothrops_mucrosquamatus	394.0	270.0	656.0	619.0	295.0	426.0	281.0	566.0	489.0	0.0	454.0	625.0	562.0
+pseudonaja_textilis	305.0	97.0	262.0	256.0	113.0	123.0	104.0	307.0	357.0	453.0	0.0	267.0	348.0
+python_bivittatus	377.0	167.0	379.0	409.0	189.0	253.0	180.0	374.0	416.0	507.0	256.0	0.0	373.0
+thamnophis_elegans	573.0	311.0	514.0	452.0	318.0	429.0	299.0	365.0	520.0	571.0	395.0	519.0	0.0
