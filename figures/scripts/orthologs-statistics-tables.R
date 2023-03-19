@@ -5,14 +5,16 @@
 
 # ------------------------------------------------------------------------------------------------ #
 # Libraries
-library(tidyverse)
-library(here)
-library(magrittr)
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(here)
+  library(magrittr)
+})
 
 # ------------------------------------------------------------------------------------------------ #
 # Per species summary
 per.species <- read_lines(
-  file = here('orthologs', 'ortholog-detection', 'results', 'orthologs-correct', 'Comparative_Genomics_Statistics' ,'Statistics_PerSpecies.tsv'),
+  file = here('orthologs', 'ortholog-detection', 'results', 'orthologs', 'Comparative_Genomics_Statistics' ,'Statistics_PerSpecies.tsv'),
 )
 
 # Per species summary

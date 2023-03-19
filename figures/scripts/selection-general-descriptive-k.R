@@ -5,7 +5,6 @@
 # This model fits a K-parameter to each branch independently, modelling selection intensity to a
 # specific region of the tree.
 
-
 # ------------------------------------------------------------------------------------------------ #
 # Libraries
 suppressPackageStartupMessages({

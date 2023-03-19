@@ -10,7 +10,6 @@ suppressPackageStartupMessages({
   library(here)
 })
 
-
 # ------------------------------------------------------------------------------------------------ #
 # Annotation file
 anno <- read_csv(
@@ -39,7 +38,7 @@ orth.single.name.cleaned <- anno %>%
   filter(symbol != '') |>
   nrow()
 
-# 109 genes with two annotations
+# 108 genes with two annotations
 ortho.two.name <- anno %>%
   filter(!is.na(symbol)) %>%
   filter(str_detect(symbol, ' ')) |>
@@ -65,8 +64,8 @@ orth.no.name <- anno %>%
 
 # ------------------------------------------------------------------------------------------------ #
 # Totals
-orth.single.name + orth.single.name.cleaned + ortho.two.name # 7943 = some form of annotation
+orth.single.name + orth.single.name.cleaned + ortho.two.name # 7942 = some form of annotation
 orth.single.name + orth.single.name.cleaned # 7834 = Single gene symbol assigned
-ortho.two.name # 109 = orthoglogs with two symbols assigned
+ortho.two.name # 108 = orthoglogs with two symbols assigned
 orth.no.name.after.cleaning + orth.no.name # 712 = orthologs with no gene symbol
-orth.single.name + orth.single.name.cleaned + ortho.two.name + orth.no.name.after.cleaning + orth.no.name # 8655 = Total number of orthologs
+orth.single.name + orth.single.name.cleaned + ortho.two.name + orth.no.name.after.cleaning + orth.no.name # 8654 = Total number of orthologs

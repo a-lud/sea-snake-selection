@@ -1,9 +1,5 @@
 # ------------------------------------------------------------------------------------------------ #
 # Plot: Omega distribution
-#
-# TODO:
-#     - Make colour palettes different betweeen PAML and BUSTED
-#     - Figure out if there are more clear ways of presenting this information?
 
 # ------------------------------------------------------------------------------------------------ #
 # Libraries
