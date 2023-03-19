@@ -24,14 +24,14 @@ suppressPackageStartupMessages({
 # ------------------------------------------------------------------------------------------------ #
 # Ortholog data
 orthogroups <- read_tsv(
-  file = here('orthologs','ortholog-detection','results','orthologs-correct','Orthogroups','Orthogroups.tsv'),
+  file = here('orthologs','ortholog-detection','results','orthologs','Orthogroups','Orthogroups.tsv'),
   col_names = TRUE,
   col_types = cols()
 )
 
 # Single copy orthologs
 orthogroups.single.copy <- read_tsv(
-  file = here('orthologs','ortholog-detection','results','orthologs-correct','Orthogroups','Orthogroups_SingleCopyOrthologues.txt'),
+  file = here('orthologs','ortholog-detection','results','orthologs','Orthogroups','Orthogroups_SingleCopyOrthologues.txt'),
   col_names = 'Orthogroup',
   col_types = cols()
 )
@@ -165,7 +165,7 @@ blast.symbols.go <- reduce(
 
 # ------------------------------------------------------------------------------------------------ #
 # Join all annotation information into non-redundant dataset
-# A tibble: 8,655 × 3
+# A tibble: 8,654 × 3
 # orthogroup symbol GO
 # <chr>      <chr>  <chr>
 # 1 OG0005294  CALU GO:0016020 GO:0005794 GO:0042470 ... GO:0055091 ...
