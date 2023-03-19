@@ -23,7 +23,7 @@ orthogroups <- read_csv(
 
 psgs <- read_lines(file = here('selection','results','results-PSGs','PSGs-marine.txt'))
 
-# 99 PSGs with no gene symbol (85 with NA, 16 with locus tags (CUNH.../C...H...ORF...))
+# 100 PSGs with no gene symbol (84 with NA, 16 with locus tags (CUNH.../C...H...ORF...))
 orthogroups |>
   filter(orthogroup %in% psgs, is.na(symbol)) |>
   nrow()
@@ -49,7 +49,7 @@ ids.multiple <- orthogroups |>
   str_split(' ') |>
   unlist()
 
-# 1,279 genes with a single symbol
+# 1,284 genes with a single symbol
 ids.genes <- orthogroups |>
   filter(orthogroup %in% psgs, !is.na(symbol), !str_detect(symbol, ' ')) |>
   pull(symbol)

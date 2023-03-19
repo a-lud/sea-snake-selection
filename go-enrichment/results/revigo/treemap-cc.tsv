@@ -3,28 +3,25 @@
 # threshold to detect redundancies (c=0.10) and fill the 'representative' column, while normally c>=0.4 is recommended.
 # To export a reduced-redundancy set of GO terms, go to the Scatterplot or Table tab, and export from there.
 TermID	Name	Frequency	Value	Uniqueness	Dispensability	Representative
-"GO:0005622"	"intracellular anatomical structure"	40.30417387187009	NaN	0.999787543443363	0.00022436	null
-"GO:0005829"	"cytosol"	1.6735941329659796	NaN	0.8238421279312795	6.395E-05	null
-"GO:0005634"	"nucleus"	12.299943073465876	NaN	0.5138357730510958	0.67197631	"cytosol"
-"GO:0005737"	"cytoplasm"	24.89336809708311	NaN	0.7816839018572768	0.19795228	"cytosol"
-"GO:0005739"	"mitochondrion"	2.7162231428197097	NaN	0.5974487607813295	0.37244178	"cytosol"
-"GO:0005774"	"vacuolar membrane"	0.3920077597838171	NaN	0.5920073237567381	0.6165566	"cytosol"
-"GO:0031090"	"organelle membrane"	4.796175425665669	NaN	0.5978107049789235	0.33892201	"cytosol"
-"GO:0031410"	"cytoplasmic vesicle"	1.3570963943208312	NaN	0.5946382089175225	0.2489647	"cytosol"
-"GO:0031982"	"vesicle"	1.4080621150467634	NaN	0.6541444674130564	0.28895232	"cytosol"
-"GO:0043227"	"membrane-bounded organelle"	20.921144874581575	NaN	0.5737112427819975	0.47704514	"cytosol"
-"GO:0043228"	"non-membrane-bounded organelle"	9.559941801621372	NaN	0.6239658279001296	0.39407892	"cytosol"
-"GO:0043229"	"intracellular organelle"	26.90076394949092	NaN	0.5268820543720989	0.64856585	"cytosol"
-"GO:0043231"	"intracellular membrane-bounded organelle"	20.46505837076719	NaN	0.478241514577086	0.59228248	"cytosol"
-"GO:0043232"	"intracellular non-membrane-bounded organelle"	9.181215622847537	NaN	0.5815991338132559	0.34397701	"cytosol"
-"GO:0098588"	"bounding membrane of organelle"	2.152727072129673	NaN	0.5861418590383475	0.35984755	"cytosol"
-"GO:0012505"	"endomembrane system"	4.686256647494504	NaN	0.9998643809686726	7.382E-05	null
-"GO:0031974"	"membrane-enclosed lumen"	2.6854766850215794	NaN	0.9998759436616914	0	null
+"GO:0005622"	"intracellular anatomical structure"	40.30417387187009	NaN	0.9997709039972241	0.00022436	null
+"GO:0005829"	"cytosol"	1.6735941329659796	NaN	0.834545597771892	6.395E-05	null
+"GO:0005737"	"cytoplasm"	24.89336809708311	NaN	0.7718643786459374	0.19795228	"cytosol"
+"GO:0012505"	"endomembrane system"	4.686256647494504	NaN	0.9998562057153999	7.382E-05	null
+"GO:0031974"	"membrane-enclosed lumen"	2.6854766850215794	NaN	0.9998688696344877	0	null
+"GO:0031982"	"vesicle"	1.4080621150467634	NaN	0.6581982227502585	6.255E-05	null
+"GO:0005634"	"nucleus"	12.299943073465876	NaN	0.5096757237421312	0.67197631	"vesicle"
+"GO:0005739"	"mitochondrion"	2.7162231428197097	NaN	0.5960539541067195	0.37244178	"vesicle"
+"GO:0031090"	"organelle membrane"	4.796175425665669	NaN	0.600046906901302	0.33892201	"vesicle"
+"GO:0031410"	"cytoplasmic vesicle"	1.3570963943208312	NaN	0.5879561217192439	0.28895232	"vesicle"
+"GO:0043227"	"membrane-bounded organelle"	20.921144874581575	NaN	0.565748169317886	0.47704514	"vesicle"
+"GO:0043228"	"non-membrane-bounded organelle"	9.559941801621372	NaN	0.6187300280398375	0.39407892	"vesicle"
+"GO:0043229"	"intracellular organelle"	26.90076394949092	NaN	0.5128333969480695	0.64856585	"vesicle"
+"GO:0043231"	"intracellular membrane-bounded organelle"	20.46505837076719	NaN	0.4718389799943612	0.59228248	"vesicle"
+"GO:0043232"	"intracellular non-membrane-bounded organelle"	9.181215622847537	NaN	0.56940043469553	0.34397701	"vesicle"
 "GO:0032991"	"protein-containing complex"	14.83437673106848	NaN	1	-0	null
-"GO:0043226"	"organelle"	27.573029541270206	NaN	0.9998064154209675	0.00011335	null
+"GO:0043226"	"organelle"	27.573029541270206	NaN	0.9997919769694065	0.00011335	null
 "GO:0110165"	"cellular anatomical entity"	98.43624036635251	NaN	1	-0	null
-"GO:0140535"	"intracellular protein-containing complex"	2.6624264188153304	NaN	0.9236129380644335	-0	null
-"GO:0030677"	"ribonuclease P complex"	0.04961342822621364	NaN	0.9442429441166983	0.28931168	"intracellular protein-containing complex"
-"GO:0031981"	"nuclear lumen"	2.1374036443708238	NaN	0.49074053369465404	0.4800794	"intracellular protein-containing complex"
-"GO:0140513"	"nuclear protein-containing complex"	2.213174163781393	NaN	0.5348423264892925	0.43706361	"intracellular protein-containing complex"
-"GO:1990904"	"ribonucleoprotein complex"	4.374160563473086	NaN	0.9208470530880016	0.48114187	"intracellular protein-containing complex"
+"GO:0140535"	"intracellular protein-containing complex"	2.6624264188153304	NaN	0.944905481746662	-0	null
+"GO:0030677"	"ribonuclease P complex"	0.04961342822621364	NaN	0.956337968909809	0.28931168	"intracellular protein-containing complex"
+"GO:0031981"	"nuclear lumen"	2.1374036443708238	NaN	0.46864611569666365	0.4800794	"intracellular protein-containing complex"
+"GO:0140513"	"nuclear protein-containing complex"	2.213174163781393	NaN	0.5468201614054395	0.43706361	"intracellular protein-containing complex"

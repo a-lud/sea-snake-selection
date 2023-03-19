@@ -11,6 +11,14 @@ suppressPackageStartupMessages({
 })
 
 # ------------------------------------------------------------------------------------------------ #
+# GO database
+go <- as.list(GO.db::GOTERM)
+go <- tibble(
+  GO = names(go),
+  Description = unlist(map(go, AnnotationDbi::Definition))
+)
+
+# ------------------------------------------------------------------------------------------------ #
 # PANTHER JSON parser
 parsePanther <- function(path) {
   # Read JSON files
@@ -76,8 +84,9 @@ parsePanther <- function(path) {
     }) |>
     list_rbind(names_to = 'Ontology') |>
     filter(label != 'UNCLASSIFIED') |>
+    left_join(go) |>
     select(
-      Ontology, level, GO, label, everything()
+      Ontology, level, GO, label, Description, everything()
     ) |>
     mutate(Ontology = str_remove(Ontology, 'overrepresentation-panther-'))
 }
@@ -98,4 +107,5 @@ sig.panther |>
     file = here('figures', 'supplementary', 'table-x-enrichment-panther.csv'),
     col_names = TRUE
   )
+
 
