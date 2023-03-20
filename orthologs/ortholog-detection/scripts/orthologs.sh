@@ -5,6 +5,7 @@ PIPE='/home/a1645424/al/tools_AL/nf-pipelines'
 DIR='/home/a1645424/al/analyses/orthologs'
 ASM="${DIR}/genomes"
 GFF="${DIR}/gff3"
+TREE="${DIR}/tree"
 
 nextflow run ${PIPE}/main.nf \
     --pipeline 'orthofinder' \
@@ -14,7 +15,8 @@ nextflow run ${PIPE}/main.nf \
     -N 'alastair.ludington@adelaide.edu.au' \
     -resume \
     --outdir "${DIR}/results" \
-    --out_prefix "orthologs-13-correct" \
+    --out_prefix "orthologs" \
     --gffs "${GFF}" \
     --genomes "${ASM}" \
-    --search_prog 'mmseqs'
+    --search_prog 'mmseqs' \
+    --tree "${TREE}/species.nwk"
