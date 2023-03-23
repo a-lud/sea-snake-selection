@@ -16,12 +16,13 @@
 suppressPackageStartupMessages({
   library(tidyverse)
   library(here)
+
+  # Custom tools
+  source(here('selection', 'scripts', 'hyphy-parsing', 'busted-ph.R'))
+  source(here('selection', 'scripts', 'hyphy-parsing', 'general.R'))
+  source(here('selection', 'scripts', 'hyphy-parsing', 'relax.R'))
 })
 
-# Custom tools
-source(here('selection', 'scripts', 'hyphy-parsing', 'busted-ph.R'))
-source(here('selection', 'scripts', 'hyphy-parsing', 'general.R'))
-source(here('selection', 'scripts', 'hyphy-parsing', 'relax.R'))
 
 # ------------------------------------------------------------------------------------------------ #
 # HyPhy data - This will take a while

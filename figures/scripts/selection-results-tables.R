@@ -53,7 +53,7 @@ paml.s <- read_csv(
 )
 
 paml.lrt <- read_csv(
-  file = here('selection','results','results-PSGs','PSGs-paml-corrected.csv'),
+  file = here('selection','results','results-tables','paml-corrected.csv'),
   col_names = TRUE,
   col_types = cols()
 )
@@ -61,7 +61,7 @@ paml.lrt <- read_csv(
 bustedph.obj <- read_rds(here('selection','r-data','busted-ph.rds'))
 
 busted.lrt <- read_csv(
-  file = here('selection','results','results-PSGs','PSGs-bustedph-corrected.csv'),
+  file = here('selection','results','results-tables','bustedph-corrected.csv'),
   col_names = TRUE,
   col_types = cols()
 )
@@ -73,7 +73,7 @@ busted.general <- bustedph.obj$fits$general |>
 relax <- read_rds(here('selection','r-data','relax.rds'))
 
 relax.lrt <- read_csv(
-  file = here('selection','results','results-PSGs','relax-corrected.csv'),
+  file = here('selection','results','results-tables','relax-corrected.csv'),
   col_names = TRUE,
   col_types = cols()
 )
@@ -97,9 +97,9 @@ paml.bs |>
   iwalk(\(df, nm) {
     # File name
     name = ifelse(
-     nm == 'bsA',
-     'table-x-selection-paml-branch-site-alternate-model-fit.csv',
-     'table-x-selection-paml-branch-site-null-model-fit.csv'
+      nm == 'bsA',
+      'table-x-selection-paml-branch-site-alternate-model-fit.csv',
+      'table-x-selection-paml-branch-site-null-model-fit.csv'
     )
 
     write_csv(
@@ -153,7 +153,6 @@ paml.s |>
 
 # Drop-out LRT results - Branch-Site and Site models (drop-out) are in the same table
 paml.lrt |>
-  left_join(annotation) |>
   unite(
     col = 'Branch-Site (null/alt)',
     sep = '/',
@@ -173,7 +172,7 @@ paml.lrt |>
     )
   ) |>
   select(
-    Orthogroup = file,
+    Orthogroup = orthogroup,
     Gene = symbol,
     `Branch-Site (null/alt)`,
     `LRT (BS)` = lrt_x,
@@ -270,14 +269,9 @@ bustedph.obj$fits$shared |>
   )
 
 # LRT statistics between the three models above for each gene
-read_csv(
-  file = here('selection','results','results-PSGs','PSGs-bustedph-corrected.csv'),
-  col_names = TRUE,
-  col_types = cols()
-) |>
-  left_join(annotation) |>
+busted.lrt |>
   select(
-    Orthogroup = file,
+    Orthogroup = orthogroup,
     Gene = symbol,
     `LRT P-value (Test)` = `test results`,
     `LRT Adj. p-value (Test)` = adj_test,
@@ -296,7 +290,6 @@ read_csv(
 # Marine specific PSGs
 busted.lrt |>
   left_join(paml.lrt) |>
-  left_join(annotation) |>
   filter(
     str_detect(result, pattern = 'Selection associated with trait'),
     signal == 'PS_fg'
@@ -314,7 +307,7 @@ busted.lrt |>
     c(null_y, alt_y)
   ) |>
   select(
-    Orthogroups = file,
+    Orthogroups = orthogroup,
     Gene = symbol,
     `LRT P-value (Test)` = `test results`,
     `LRT Adj. p-value (Test)` = adj_test,

@@ -43,13 +43,6 @@ csvs <- fs::dir_ls(
   )
 
 # ------------------------------------------------------------------------------------------------ #
-# Identify poorly aligned orthogroups - gap proportion can be high when only a portion of a gene
-# has been annotated.
-# csvs |>
-#   filter(prop > 0.5 & prop < 0.6) |>
-#   pull(file)
-
-# ------------------------------------------------------------------------------------------------ #
 # Box-plot of gap-number across all orthologs per sample. Values higher than 1 indicate alignments
 # where the number of gaps in the alignment is greater than the length of the gene-fragment that
 # could be found for a sample. The smaller gene fragments are likely partial gene annotations

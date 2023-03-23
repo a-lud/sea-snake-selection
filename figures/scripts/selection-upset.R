@@ -26,7 +26,7 @@ neutral.genes <- read_lines(here('selection','results','results-PSGs','neutral-g
 
 # Relaxation results: signif (relaxation/intensification) or insignif
 relax <- read_csv(
-  file = here('selection','results','results-PSGs','relax-corrected.csv'),
+  file = here('selection','results','results-tables','relax-corrected.csv'),
   col_names = TRUE,
   col_types = cols()
 )

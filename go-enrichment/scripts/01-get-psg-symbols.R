@@ -58,4 +58,3 @@ ids.genes <- orthogroups |>
 # Write gene symbols to file for use in PANTHER
 c(ids.genes, ids.multiple) |>
   write_lines(file = here('go-enrichment','results','PSG-gene-symbols-for-PANTHER.txt'))
-

@@ -42,7 +42,7 @@ df.per.species |>
 # ------------------------------------------------------------------------------------------------ #
 # Overall summary
 overall <- read_lines(
-  file = here('orthologs', 'ortholog-detection', 'results', 'orthologs-correct', 'Comparative_Genomics_Statistics' ,'Statistics_Overall.tsv')
+  file = here('orthologs', 'ortholog-detection', 'results', 'orthologs', 'Comparative_Genomics_Statistics' ,'Statistics_Overall.tsv')
 )
 
 overall |>

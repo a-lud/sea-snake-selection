@@ -18,14 +18,6 @@ suppressPackageStartupMessages({
 # All relax data
 relax <- read_rds(here('selection','r-data','relax.rds'))
 
-# Significant relax results
-relax.sig <- read_csv(
-  file = here('selection','results','results-PSGs','relax-corrected.csv'),
-  col_names = TRUE,
-  col_types = cols()
-) |>
-  pull(orthogroup)
-
 lvls <- relax$grouping |>
   mutate(
     condition = factor(condition, levels = c('Test', 'Reference')),
