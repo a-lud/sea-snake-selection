@@ -126,7 +126,12 @@ Running `MCscan` involves the following steps:
 The initial alignments were used to identify which sequences needed
 manual orientation due to opposite chromosomal strands being assembled.
 
-![](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/results/mcscan-results-initial/karyotype.png)
+![Figure
+1](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/results/mcscan-results-initial/karyotype.png)
+
+In the figure above, we can see a number of aligned chromosomes have
+‘bowtie’ shapes. This is where the whole chromosome is inverted in the
+pairwise alignment.
 
 ## Oritent inverted chromosomes
 
@@ -178,4 +183,9 @@ With chromosome orientations corrected and gene annotations lifted over,
 we re-ran the `MCscan` alignment pipeline with the updated data to
 generate the final figure.
 
-![](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/results/mcscan-results-oriented/karyotype.png)
+![Figure
+2](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/results/mcscan-results-oriented/karyotype.png)
+
+In the figure above, we can see that the ‘bowtie’ alignments from the
+first figure are no more. This is thanks to getting the chromosome
+sequences into the correct orientation.
