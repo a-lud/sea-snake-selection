@@ -10,7 +10,7 @@ methods used for that analysis, with examples. The analyses include:
 - [Ortholog detection][det]
 - [Ortholog annotation][oann]
 - [Selection testing][sel]
-- [GO enrichment testing][go]
+- [GO over-representation][go]
 
 A few of the analyses listed above make use of Nextflow workflows that can be found [here][nf].
 Specific details about the Nextflow workflows can be found at the [wiki][wiki] page.
