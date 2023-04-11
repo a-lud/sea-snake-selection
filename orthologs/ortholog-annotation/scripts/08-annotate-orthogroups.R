@@ -225,6 +225,72 @@ annotation <- reduce(
   }) |>
   list_rbind()
 
+
+# ------------------------------------------------------------------------------------------------ #
+# All orthogroups
+all.orthogroups <- orthogroups |> pivot_longer(
+  names_to = 'sample',
+  values_to = 'transcriptID', 2:14
+) %>%
+  rename(orthogroup = Orthogroup) |>
+  filter(!is.na(transcriptID)) |>
+  mutate(transcriptID = str_split(transcriptID, ', ')) |>
+  unnest(cols = transcriptID)
+
+annotation.all <- reduce(
+  .x = list(all.orthogroups, ncbi.symbol, funannotate.symbol.go, wei2go.go, blast.symbols.go),
+  .f = left_join
+) |>
+  group_by(orthogroup) |>
+  nest() |>
+  ungroup() |>
+  pmap(.progress = TRUE, \(orthogroup, data) {
+    # 1. Unique GO Terms: Wei2GO/Funannotate/Best-BLAST
+    go.wei2go <- data$GO_wei2go |> unlist() |> unique()
+    go.fun <- data$GO_funannotate |> unlist() |> unique()
+    go.blast <- data$GO_blast |> unlist() |> unique()
+    go <- c(go.wei2go, go.fun, go.blast) |> unique()
+
+    # 2. Gene symbols: NCBI/Funannotate/Best-BLAST
+    symbol.ncbi <- data$symbol_ncbi |>
+      unique()
+    symbol.ncbi <- symbol.ncbi[!is.na(symbol.ncbi)]
+    symbol.ncbi <- ifelse(length(symbol.ncbi) > 1, paste0(symbol.ncbi, collapse = ' '), symbol.ncbi)
+
+    symbol.fun <- data$symbol_funannotate |>
+      unique()
+    symbol.fun <- symbol.fun[!is.na(symbol.fun)]
+    symbol.fun <- ifelse(length(symbol.fun) > 1, paste0(symbol.fun, collapse = ' '), symbol.fun)
+
+    symbol.blast <- data$symbol_blast |>
+      unique()
+    symbol.blast <- symbol.blast[!is.na(symbol.blast)]
+    symbol.blast <- ifelse(length(symbol.blast) > 1, paste0(symbol.blast, collapse = ' '), symbol.blast)
+
+    all.symbol <- c(symbol.ncbi, symbol.fun, symbol.blast)
+
+    # Annotation hierarchy: NCBI > Funannotate > BLAST
+
+    # If all annotation sources are NA
+    if (all(is.na(all.symbol)) || all(is_empty(all.symbol))) {
+      symbol <- NA_character_
+    } else if (!is.na(symbol.ncbi) || !is_empty(symbol.ncbi)) {
+      symbol <- symbol.ncbi
+    } else if (!is.na(symbol.fun) | !is_empty(symbol.fun)) {
+      symbol <- symbol.fun
+    } else {
+      symbol <- symbol.blast
+    }
+
+    # 3. Return tibble of ogid, gene-symbol, GO Terms
+    tibble(
+      'orthogroup' = orthogroup,
+      'symbol' = symbol,
+      'GO' = paste0(go, collapse = ' ')
+    )
+  }) |>
+  list_rbind()
+
 # ------------------------------------------------------------------------------------------------ #
 # Write annotated orthogroups to file
 dir_create(path = here('orthologs','ortholog-annotation','results','ortholog-annotation'))
@@ -234,3 +300,10 @@ write_csv(
   file = here('orthologs','ortholog-annotation','results','ortholog-annotation', 'orthologs.csv'),
   col_names = TRUE
 )
+
+write_csv(
+  x = annotation.all,
+  file = here('orthologs','ortholog-annotation','results','ortholog-annotation', 'orthologs.all.csv'),
+  col_names = TRUE
+)
+
