@@ -1,0 +1,15 @@
+# WARNING - This exported Revigo data is only useful for the specific purpose of constructing a TreeMap visualization.
+# Do not use this table as a general list of non-redundant GO categories, as it sets an extremely permissive 
+# threshold to detect redundancies (c=0.10) and fill the 'representative' column, while normally c>=0.4 is recommended.
+# To export a reduced-redundancy set of GO terms, go to the Scatterplot or Table tab, and export from there.
+TermID	Name	Frequency	Value	Uniqueness	Dispensability	Representative
+"GO:0005829"	"cytosol"	1.6735941329659796	-9.340349161269312	0.8556199690879193	0	null
+"GO:0005654"	"nucleoplasm"	1.1935686041353335	-8.994881555077603	0.702896521477985	0.12736284	"cytosol"
+"GO:0005739"	"mitochondrion"	2.7162231428197097	-1.5813886860909112	0.6833581764841161	0.37244178	"cytosol"
+"GO:0005856"	"cytoskeleton"	2.411145188711844	-1.5871490558490966	0.7575088747704088	0.23543973	"cytosol"
+"GO:0031090"	"organelle membrane"	4.796175425665669	-2.1822919427077396	0.7176160356118169	0.33141923	"cytosol"
+"GO:0140513"	"nuclear protein-containing complex"	2.213174163781393	-4.02304430262082	0.49096367021945464	0.44612909	"cytosol"
+"GO:0009897"	"external side of plasma membrane"	0.050705222454031626	-2.8083757827214804	0.9922561419872095	4.221E-05	null
+"GO:0019814"	"immunoglobulin complex"	0.0056926534124124364	-2.9876213790094117	0.8430472501604779	-0	null
+"GO:0140535"	"intracellular protein-containing complex"	2.6624264188153304	-2.1802090561904377	0.7567711813954763	0.24256547	"immunoglobulin complex"
+"GO:1902494"	"catalytic complex"	5.012071030217034	-2.1947786753939895	0.7466262348898731	0.49103725	"immunoglobulin complex"

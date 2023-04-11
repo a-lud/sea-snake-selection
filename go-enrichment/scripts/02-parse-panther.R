@@ -1,7 +1,12 @@
 # ------------------------------------------------------------------------------------------------ #
 # Process PANTHER
 #
-# Parses the PANTHER JSON files to obtain a hierarchical table of significant GO terms.
+# Parses the PANTHER JSON files to obtain a hierarchical table of significant GO terms. Two JSON
+# files were generated for each ontology: All results (significant and insignificant) and significant
+# only.
+#
+# The significant set is used for the REVIGO analysis/summary tables, while the full dataset is used
+# to get GO term mappings to the provided gene list.
 
 # ------------------------------------------------------------------------------------------------ #
 # Libraries
@@ -11,7 +16,7 @@ suppressPackageStartupMessages({
 })
 
 # ------------------------------------------------------------------------------------------------ #
-# GO database
+# GO database - Used for GO term descriptions
 go <- as.list(GO.db::GOTERM)
 go <- tibble(
   GO = names(go),
@@ -20,13 +25,20 @@ go <- tibble(
 
 # ------------------------------------------------------------------------------------------------ #
 # PANTHER JSON parser
-parsePanther <- function(path) {
+parsePanther <- function(path, glob, exclude=NULL, go_df) {
   # Read JSON files
   jsons <- fs::dir_ls(
     path = path,
-    glob = '*.json'
+    glob = glob,
+    recurse = FALSE
   ) %>%
-    set_names(sub('*\\..*', '\\1', basename(.))) |>
+    set_names(sub('*\\..*', '\\1', basename(.)))
+
+  if(!is.null(exclude)) {
+    jsons <- jsons[!str_detect(names(jsons), exclude)]
+  }
+
+  jsons <- jsons |>
     map(jsonlite::read_json)
 
   jsons |>
@@ -57,7 +69,7 @@ parsePanther <- function(path) {
                 'Fold enrichment' = iter2$input_list$fold_enrichment,
                 'FDR' = iter2$input_list$fdr,
                 'P-value' = iter2$input_list$pValue,
-                'Direction' = iter2$plus_minus,
+                'Direction' = iter2$input_list$plus_minus,
                 'Genes' = paste(unlist(iter2$input_list$mapped_id_list$mapped_id), collapse = ' ')
               )
             }) |>
@@ -75,7 +87,7 @@ parsePanther <- function(path) {
             'Fold enrichment' = result$input_list$fold_enrichment,
             'P-value' = result$input_list$pValue,
             'FDR' = result$input_list$fdr,
-            'Direction' = result$plus_minus,
+            'Direction' = result$input_list$plus_minus,
             'Genes' = paste(unlist(result$input_list$mapped_id_list$mapped_id), collapse = ' ')
           )
         }
@@ -84,7 +96,7 @@ parsePanther <- function(path) {
     }) |>
     list_rbind(names_to = 'Ontology') |>
     filter(label != 'UNCLASSIFIED') |>
-    left_join(go) |>
+    left_join(go_df) |>
     select(
       Ontology, level, GO, label, Description, everything()
     ) |>
@@ -93,22 +105,37 @@ parsePanther <- function(path) {
 
 # ------------------------------------------------------------------------------------------------ #
 # Parse results
-sig.panther <- parsePanther(here('go-enrichment', 'results', 'panther'))
+panther.human.all <- parsePanther(here('go-enrichment', 'results', 'panther'), glob = '*.json', exclude = "sig", go_df = go) |>
+  mutate(Ontology = str_extract(Ontology, 'BP|CC|MF'))
+panther.human.sig <- parsePanther(here('go-enrichment', 'results', 'panther'), glob = '*-sig.json', go_df = go) |>
+  mutate(Ontology = str_extract(Ontology, 'BP|CC|MF'))
 
 # ------------------------------------------------------------------------------------------------ #
-# Export GO terms for REVIGO and a table for supp. material
-sig.panther |>
+# Export GO terms for REVIGO - top level (most specific) only
+panther.human.sig |>
+  filter(level == 0) |>
   select(GO, FDR) |>
   write_tsv(
-    file = here('go-enrichment', 'results', 'enriched-GO-terms-for-REVIGO.txt'),
+    file = here('go-enrichment', 'results', 'enriched-GO-terms-REVIGO.txt'),
     col_names = FALSE
   )
 
-# Write to supplementary table
-sig.panther |>
+# ------------------------------------------------------------------------------------------------ #
+# Supplementary files
+panther.human.sig |>
   write_csv(
     file = here('figures', 'supplementary', 'table-x-enrichment-panther.csv'),
     col_names = TRUE
   )
 
-
+# ------------------------------------------------------------------------------------------------ #
+# GO Terms - Gene mapping
+panther.human.all |>
+  select(GO, Genes) |>
+  mutate(Genes = str_split(Genes, ' ')) |>
+  unnest(cols = Genes) |>
+  arrange(GO) |>
+  write_csv(
+    file = here('go-enrichment', 'results', 'genes-annotated-GO.csv'),
+    col_names = TRUE
+  )

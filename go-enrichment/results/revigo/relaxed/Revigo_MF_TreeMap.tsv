@@ -1,0 +1,86 @@
+# WARNING - This exported Revigo data is only useful for the specific purpose of constructing a TreeMap visualization.
+# Do not use this table as a general list of non-redundant GO categories, as it sets an extremely permissive 
+# threshold to detect redundancies (c=0.10) and fill the 'representative' column, while normally c>=0.4 is recommended.
+# To export a reduced-redundancy set of GO terms, go to the Scatterplot or Table tab, and export from there.
+TermID	Name	Frequency	Value	Uniqueness	Dispensability	Representative
+"GO:0003682"	"chromatin binding"	0.167564558880372	2	0.9535940567692793	0.04106292	null
+"GO:0003824"	"catalytic activity"	62.911524512916806	8	1	-0	null
+"GO:0005198"	"structural molecule activity"	3.1283830918306608	4	1	-0	null
+"GO:0005200"	"structural constituent of cytoskeleton"	0.12482098119041957	1	0.990813275718704	0.0083369	null
+"GO:0005488"	"binding"	56.54086933524549	26	1	-0	null
+"GO:0005515"	"protein binding"	5.069467063710899	20	0.9310135707677684	0.07243535	null
+"GO:0036094"	"small molecule binding"	21.596796922287407	6	0.9114569149125651	0.20184516	"protein binding"
+"GO:0043167"	"ion binding"	34.834301371097595	9	0.9018790075982844	0.25064445	"protein binding"
+"GO:0097159"	"organic cyclic compound binding"	39.78015604249595	12	0.8988170229100189	0.26868474	"protein binding"
+"GO:0097367"	"carbohydrate derivative binding"	16.65150006114038	5	0.9158513055577225	0.18251555	"protein binding"
+"GO:1901363"	"heterocyclic compound binding"	39.7408987788768	12	0.8988404749424099	0.12692666	"protein binding"
+"GO:0005543"	"phospholipid binding"	0.41142334144965476	1	0.9396163633589268	0.04738744	null
+"GO:0008186"	"ATP-dependent activity, acting on RNA"	0.3352603672316446	1	0.9803252848917734	-0	null
+"GO:0008289"	"lipid binding"	0.8552024118402772	1	0.9451452873826764	0.05586886	null
+"GO:0016491"	"oxidoreductase activity"	11.718748461920264	1	0.9718188489795565	0.0932198	null
+"GO:0016757"	"glycosyltransferase activity"	2.398966891664718	1	0.907572843570305	0.05056076	null
+"GO:0008168"	"methyltransferase activity"	2.7115211004305637	1	0.8628598252846152	0.34049712	"glycosyltransferase activity"
+"GO:0008455"	"alpha-1,6-mannosylglycoprotein 2-beta-N-acetylglucosaminyltransferase activity"	0.0037214693728265906	1	0.9165383712458824	0.48934504	"glycosyltransferase activity"
+"GO:0016741"	"transferase activity, transferring one-carbon groups"	2.9508681824376395	1	0.9053870273252113	0.34457955	"glycosyltransferase activity"
+"GO:0016746"	"acyltransferase activity"	2.924139774561534	1	0.9054852168921451	0.33475497	"glycosyltransferase activity"
+"GO:0016747"	"acyltransferase activity, transferring groups other than amino-acyl groups"	2.2551284090136012	1	0.8889235961681847	0.32319341	"glycosyltransferase activity"
+"GO:0016758"	"hexosyltransferase activity"	0.9270970438900418	1	0.9015799517989612	0.2890372	"glycosyltransferase activity"
+"GO:0016772"	"transferase activity, transferring phosphorus-containing groups"	8.400359886049209	1	0.892632083126275	0.40518421	"glycosyltransferase activity"
+"GO:0016787"	"hydrolase activity"	21.35859827315071	4	0.9688123757196796	0.09164907	null
+"GO:0016740"	"transferase activity"	21.329034329830357	3	0.9688199673166051	0.11129384	"hydrolase activity"
+"GO:0017111"	"ribonucleoside triphosphate phosphatase activity"	4.647037907253437	3	0.9230207570922612	-0	null
+"GO:0008233"	"peptidase activity"	4.315214635541	1	0.9084414668574751	0.39085863	"ribonucleoside triphosphate phosphatase activity"
+"GO:0016817"	"hydrolase activity, acting on acid anhydrides"	5.14006560723552	3	0.9467692756026447	0.40218347	"ribonucleoside triphosphate phosphatase activity"
+"GO:0030145"	"manganese ion binding"	0.24534080784486836	1	0.9257511720787173	0.04240241	null
+"GO:0005509"	"calcium ion binding"	1.4154161691035683	1	0.9164628637304225	0.27131265	"manganese ion binding"
+"GO:0008198"	"ferrous iron binding"	0.04418458750588162	1	0.9360317168489658	0.38328264	"manganese ion binding"
+"GO:0046872"	"metal ion binding"	18.212007051596572	5	0.8788473031986586	0.46402099	"manganese ion binding"
+"GO:0030234"	"enzyme regulator activity"	1.4554226484524484	4	0.8717151190188284	-0	null
+"GO:0042802"	"identical protein binding"	0.34201971498302397	6	0.825327802417298	0	null
+"GO:0001098"	"basal transcription machinery binding"	0.028617853384278545	1	0.8538950174871569	0.40916039	"identical protein binding"
+"GO:0001099"	"basal RNA polymerase II transcription machinery binding"	0.028601447200415974	1	0.8403632598982187	0.40914344	"identical protein binding"
+"GO:0002039"	"p53 binding"	0.01660305806892216	1	0.8589427038196193	0.3936706	"identical protein binding"
+"GO:0005516"	"calmodulin binding"	0.15554156047308434	1	0.8355581470320423	0.46619731	"identical protein binding"
+"GO:0008134"	"transcription factor binding"	0.11250267147360563	1	0.8394200316358479	0.45408486	"identical protein binding"
+"GO:0019904"	"protein domain specific binding"	0.10822886057740579	1	0.839869468413668	0.45267872	"identical protein binding"
+"GO:0042393"	"histone binding"	0.0857578574136373	2	0.8425172645772382	0.44440933	"identical protein binding"
+"GO:0045296"	"cadherin binding"	0.019310078406246423	3	0.8575781467846759	0.397849	"identical protein binding"
+"GO:0046982"	"protein heterodimerization activity"	0.29632849292576285	1	0.8245154254466465	0.49232799	"identical protein binding"
+"GO:0050839"	"cell adhesion molecule binding"	0.05317791062654779	3	0.847685241380753	0.42834132	"identical protein binding"
+"GO:0051117"	"ATPase binding"	0.011902686392295482	1	0.8618579948083982	0.38476611	"identical protein binding"
+"GO:0070577"	"lysine-acetylated histone binding"	0.01051362949193111	1	0.8450094995306605	0.38154834	"identical protein binding"
+"GO:0140030"	"modification-dependent protein binding"	0.05788101666715156	2	0.8467940164399919	0.43110546	"identical protein binding"
+"GO:0140296"	"general transcription initiation factor binding"	0.04138186442935902	1	0.8400227898987028	0.42036485	"identical protein binding"
+"GO:0043021"	"ribonucleoprotein complex binding"	0.2887761796210259	1	0.9362602810090555	0.04300211	null
+"GO:0043565"	"sequence-specific DNA binding"	1.6417148662119456	3	0.8738446101263972	0.0546138	null
+"GO:0000166"	"nucleotide binding"	19.582511292376353	6	0.8193490990507997	0.47379891	"sequence-specific DNA binding"
+"GO:0000976"	"transcription cis-regulatory region binding"	0.37757738414117015	3	0.8536240309179018	0.38826209	"sequence-specific DNA binding"
+"GO:0001067"	"transcription regulatory region nucleic acid binding"	0.37777425834752104	3	0.9010802816465396	0.26610895	"sequence-specific DNA binding"
+"GO:0003676"	"nucleic acid binding"	19.973473388185404	9	0.8702815893548951	0.20055606	"sequence-specific DNA binding"
+"GO:0003690"	"double-stranded DNA binding"	0.6622410803406449	3	0.885416277647176	0.41216406	"sequence-specific DNA binding"
+"GO:0003723"	"RNA binding"	5.183093558779092	6	0.8665080122715825	0.36469189	"sequence-specific DNA binding"
+"GO:0003727"	"single-stranded RNA binding"	0.03736781811098324	1	0.9101789691044648	0.35750126	"sequence-specific DNA binding"
+"GO:0003729"	"mRNA binding"	0.29432967285850625	2	0.8937372966961404	0.41161134	"sequence-specific DNA binding"
+"GO:0005525"	"GTP binding"	1.9556198507824765	2	0.8475405931453301	0.13825759	"sequence-specific DNA binding"
+"GO:0005539"	"glycosaminoglycan binding"	0.12669675487870688	1	0.9346917538199289	0.28176899	"sequence-specific DNA binding"
+"GO:0019001"	"guanyl nucleotide binding"	2.0152098449353124	2	0.8702009725414857	0.37353343	"sequence-specific DNA binding"
+"GO:0030515"	"snoRNA binding"	0.04065725797542879	2	0.9096103276744778	0.21633301	"sequence-specific DNA binding"
+"GO:0034511"	"U3 snoRNA binding"	0.008514809424674507	1	0.9190734207436063	0.32672243	"sequence-specific DNA binding"
+"GO:0043168"	"anion binding"	19.57866404226058	4	0.8905010484585153	0.41336322	"sequence-specific DNA binding"
+"GO:0043169"	"cation binding"	18.37332632315326	5	0.8918350730327073	0.24418153	"sequence-specific DNA binding"
+"GO:0050661"	"NADP binding"	0.6326251841047266	1	0.886034800385355	0.3254339	"sequence-specific DNA binding"
+"GO:0051287"	"NAD binding"	0.9459067336884798	1	0.8806196851618397	0.34066453	"sequence-specific DNA binding"
+"GO:0062153"	"C5-methylcytidine-containing RNA binding"	0.00030351440145756913	1	0.9337456643932733	0.27361776	"sequence-specific DNA binding"
+"GO:1901265"	"nucleoside phosphate binding"	19.58251402674033	6	0.8707807521017159	0.34311224	"sequence-specific DNA binding"
+"GO:0044877"	"protein-containing complex binding"	0.697481563277448	3	0.9463783260842298	0.04656487	null
+"GO:0051536"	"iron-sulfur cluster binding"	2.105216903969356	1	0.9294250509071005	0.06218348	null
+"GO:0051540"	"metal cluster binding"	2.1063461962918963	1	0.9388670689368553	0.0641906	null
+"GO:0060090"	"molecular adaptor activity"	0.2018999673407567	3	1	-0	null
+"GO:0098772"	"molecular function regulator activity"	1.9790396782462971	4	1	-0	null
+"GO:0140096"	"catalytic activity, acting on a protein"	11.001027136484357	4	0.9721037352904327	0.06515511	null
+"GO:0140098"	"catalytic activity, acting on RNA"	3.5099280381025966	1	0.9622363261212996	0.05355854	null
+"GO:0140103"	"catalytic activity, acting on a glycoprotein"	0.03812250256866152	1	0.9545120260832127	0.03141983	null
+"GO:0140110"	"transcription regulator activity"	4.900179855524957	3	0.942440411474401	-0	null
+"GO:0003714"	"transcription corepressor activity"	0.09927928728037316	1	0.9483574326315233	0.49548437	"transcription regulator activity"
+"GO:0140640"	"catalytic activity, acting on a nucleic acid"	6.523746748020923	1	0.9742567751726433	0.06963197	null
+"GO:0140657"	"ATP-dependent activity"	6.044727194693497	1	1	-0	null

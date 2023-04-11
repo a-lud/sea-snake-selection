@@ -1,0 +1,76 @@
+# WARNING - This exported Revigo data is only useful for the specific purpose of constructing a TreeMap visualization.
+# Do not use this table as a general list of non-redundant GO categories, as it sets an extremely permissive 
+# threshold to detect redundancies (c=0.10) and fill the 'representative' column, while normally c>=0.4 is recommended.
+# To export a reduced-redundancy set of GO terms, go to the Scatterplot or Table tab, and export from there.
+TermID	Name	Frequency	Value	Uniqueness	Dispensability	Representative
+"GO:0005576"	"extracellular region"	2.9954121657290007	7	0.9999006163547065	6.918E-05	null
+"GO:0005615"	"extracellular space"	0.6728478820341237	6	0.9731275453081567	5.719E-05	null
+"GO:0043083"	"synaptic cleft"	0.0027390627118942744	1	0.9795301456431039	0.43890746	"extracellular space"
+"GO:0005622"	"intracellular anatomical structure"	40.30417387187009	24	0.9998536227911593	0.00012419	null
+"GO:0009986"	"cell surface"	0.20735279357580616	1	0.9999241140870512	5.032E-05	null
+"GO:0012505"	"endomembrane system"	4.686256647494504	5	0.9998950296972884	7.504E-05	null
+"GO:0016020"	"membrane"	61.75528715720534	12	0.9998407807002326	0.00035445	null
+"GO:0019867"	"outer membrane"	1.1923235756299269	1	0.9887195933162569	0.03869214	null
+"GO:0030054"	"cell junction"	0.9837065992640158	3	0.9999120836261064	5.983E-05	null
+"GO:0030496"	"midbody"	0.05904499801178525	3	0.999931578560385	4.46E-05	null
+"GO:0031974"	"membrane-enclosed lumen"	2.6854766850215794	13	0.9999018829290521	6.814E-05	null
+"GO:0031975"	"envelope"	2.863799244708246	4	0.9999011416839974	6.981E-05	null
+"GO:0032153"	"cell division site"	0.13904861434073632	2	0.9999266666591062	4.835E-05	null
+"GO:0032991"	"protein-containing complex"	14.83437673106848	12	1	-0	null
+"GO:0036477"	"somatodendritic compartment"	0.14299056613170028	1	0.9999264939262579	4.848E-05	null
+"GO:0042995"	"cell projection"	1.3209599208085252	6	0.99990933237224	6.205E-05	null
+"GO:0043226"	"organelle"	27.573029541270206	23	0.9998635168031814	0.00022436	null
+"GO:0045121"	"membrane raft"	0.09556838807500205	1	0.9710902084356017	0.0305897	null
+"GO:0045177"	"apical part of cell"	0.0909024043224325	2	0.9999291925770755	4.641E-05	null
+"GO:0045202"	"synapse"	0.5985560734022837	3	0.9684669808395968	5.643E-05	null
+"GO:0070013"	"intracellular organelle lumen"	2.685415391310544	13	0.6905745564223937	0	null
+"GO:0000313"	"organellar ribosome"	0.09329668990975266	1	0.7380394072094648	0.3960347	"intracellular organelle lumen"
+"GO:0000785"	"chromatin"	0.7112100834284024	5	0.6692722046298825	0.48620406	"intracellular organelle lumen"
+"GO:0005694"	"chromosome"	1.8774723392974666	8	0.6747877386339223	0.25282697	"intracellular organelle lumen"
+"GO:0005737"	"cytoplasm"	24.89336809708311	19	0.8356678097484429	0.21664356	"intracellular organelle lumen"
+"GO:0005739"	"mitochondrion"	2.7162231428197097	3	0.7117184095650206	0.37244178	"intracellular organelle lumen"
+"GO:0005794"	"Golgi apparatus"	1.6851786443516696	3	0.6855709087344606	0.34747316	"intracellular organelle lumen"
+"GO:0005801"	"cis-Golgi network"	0.029738942422986366	1	0.7665325147267829	0.4780674	"intracellular organelle lumen"
+"GO:0005829"	"cytosol"	1.6735941329659796	11	0.8394740864820432	0.14076232	"intracellular organelle lumen"
+"GO:0016528"	"sarcoplasm"	0.03973364817869568	1	0.8817931136534584	0.17522289	"intracellular organelle lumen"
+"GO:0031090"	"organelle membrane"	4.796175425665669	5	0.7131799493111255	0.33892201	"intracellular organelle lumen"
+"GO:0031105"	"septin complex"	0.006232804240911866	2	0.6917628152478765	0.31757325	"intracellular organelle lumen"
+"GO:0031967"	"organelle envelope"	1.9019859928546858	4	0.6732586622537943	0.35348115	"intracellular organelle lumen"
+"GO:0031982"	"vesicle"	1.4080621150467634	5	0.7510000827728793	0.23681865	"intracellular organelle lumen"
+"GO:0031984"	"organelle subcompartment"	1.6874580042307983	1	0.7345845972728374	0.34753913	"intracellular organelle lumen"
+"GO:0043229"	"intracellular organelle"	26.90076394949092	23	0.6877758436370454	0.42897527	"intracellular organelle lumen"
+"GO:0044232"	"organelle membrane contact site"	0.03286109082885187	1	0.8441744605508796	0.1603544	"intracellular organelle lumen"
+"GO:0044284"	"mitochondrial crista junction"	0.0026394604314617554	1	0.7580721660673466	0.47588548	"intracellular organelle lumen"
+"GO:0048471"	"perinuclear region of cytoplasm"	0.14867172697329356	1	0.8697409744898638	0.19703269	"intracellular organelle lumen"
+"GO:0097038"	"perinuclear endoplasmic reticulum"	0.0037235929454003283	1	0.7934469534273099	0.40851512	"intracellular organelle lumen"
+"GO:0098588"	"bounding membrane of organelle"	2.152727072129673	2	0.6894221562970604	0.35984755	"intracellular organelle lumen"
+"GO:0099568"	"cytoplasmic region"	0.09365679046208562	4	0.8742380674236371	0.18880296	"intracellular organelle lumen"
+"GO:0140275"	"MIB complex"	5.363199715597181E-05	1	0.7642154453425735	0.37512156	"intracellular organelle lumen"
+"GO:0071944"	"cell periphery"	15.414586830586483	5	0.9998760374261954	0.00017741	null
+"GO:0098590"	"plasma membrane region"	0.6102401870684061	3	0.9508259239641957	5.655E-05	null
+"GO:0005886"	"plasma membrane"	14.240532611702042	3	0.9361063002722468	0.48400319	"plasma membrane region"
+"GO:0005938"	"cell cortex"	0.242703941415471	2	0.8324976164281053	0.284461	"plasma membrane region"
+"GO:0030312"	"external encapsulating structure"	1.0188240648303581	2	0.9580943721944883	0.32659337	"plasma membrane region"
+"GO:0031012"	"extracellular matrix"	0.2118846973354858	2	0.9497203148637376	0.28102906	"plasma membrane region"
+"GO:0032154"	"cleavage furrow"	0.02311539077422385	2	0.9475515754506072	0.24815631	"plasma membrane region"
+"GO:0042383"	"sarcolemma"	0.04298604572051141	1	0.9595685811634	0.26013584	"plasma membrane region"
+"GO:0098857"	"membrane microdomain"	0.09559903493051974	1	0.9909311682064869	0.03059051	null
+"GO:0099080"	"supramolecular complex"	1.254670772323744	4	0.9999098260897783	6.165E-05	null
+"GO:0099512"	"supramolecular fiber"	0.9761406568080839	2	0.9202806068876914	5.977E-05	null
+"GO:0110165"	"cellular anatomical entity"	98.43624036635251	27	1	-0	null
+"GO:0120025"	"plasma membrane bounded cell projection"	0.8076135983162617	5	0.903471276866965	5.843E-05	null
+"GO:1990904"	"ribonucleoprotein complex"	4.374160563473086	4	0.8636893503704691	-0	null
+"GO:0005681"	"spliceosomal complex"	0.3788487661959054	2	0.6691424917328791	0.37337264	"ribonucleoprotein complex"
+"GO:0005732"	"sno(s)RNA-containing ribonucleoprotein complex"	0.0742918086318401	1	0.8816282519762407	0.46829439	"ribonucleoprotein complex"
+"GO:0031428"	"box C/D RNP complex"	0.022950663925816222	1	0.8904379594470067	0.42887703	"ribonucleoprotein complex"
+"GO:0032040"	"small-subunit processome"	0.09726162684235487	1	0.8794050191986365	0.47837809	"ribonucleoprotein complex"
+"GO:0032993"	"protein-DNA complex"	0.45433580219293573	2	0.888579942404419	0.38133196	"ribonucleoprotein complex"
+"GO:0044530"	"supraspliceosomal complex"	0.00038691655091093943	1	0.782599150459375	0.41316669	"ribonucleoprotein complex"
+"GO:0044815"	"DNA packaging complex"	0.34535175311506133	2	0.8909998516066064	0.36944389	"ribonucleoprotein complex"
+"GO:0070761"	"pre-snoRNP complex"	0.001574482202221744	1	0.9063332117668518	0.22908062	"ribonucleoprotein complex"
+"GO:0098796"	"membrane protein complex"	3.370437736699073	1	0.8573242605893153	0.49854414	"ribonucleoprotein complex"
+"GO:0098798"	"mitochondrial protein-containing complex"	0.4665217581181605	2	0.6541530174071373	0.3825198	"ribonucleoprotein complex"
+"GO:0140513"	"nuclear protein-containing complex"	2.213174163781393	4	0.6451423917386298	0.46832957	"ribonucleoprotein complex"
+"GO:0140535"	"intracellular protein-containing complex"	2.6624264188153304	1	0.870013071484827	0.48114187	"ribonucleoprotein complex"
+"GO:1990229"	"iron-sulfur cluster assembly complex"	0.0011032867986371343	1	0.8536535993996203	0.22347913	"ribonucleoprotein complex"
+"GO:1990234"	"transferase complex"	1.8524300274825676	2	0.8523265584402414	0.45662289	"ribonucleoprotein complex"
