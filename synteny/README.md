@@ -19,10 +19,9 @@ Alastair Ludington
     alignment</a>
   - <a href="#oritent-inverted-chromosomes"
     id="toc-oritent-inverted-chromosomes">Oritent inverted chromosomes</a>
-  - <a href="#31-lift-over-gene-annotations"
-    id="toc-31-lift-over-gene-annotations">3.1 Lift-over gene
-    annotations</a>
-  - <a href="#32-final-alignments" id="toc-32-final-alignments">3.2 Final
+  - <a href="#lift-over-gene-annotations"
+    id="toc-lift-over-gene-annotations">Lift-over gene annotations</a>
+  - <a href="#final-alignments" id="toc-final-alignments">Final
     alignments</a>
 
 # 1 Introduction
@@ -157,7 +156,7 @@ and were corrected. The correction pipeline involved:
 - Merging the reversed sequences with the rest of the chromosome
   sequences that did not need to be reverse-complemented
 
-## 3.1 Lift-over gene annotations
+## Lift-over gene annotations
 
 **Script:**
 [06-liftoff.sh](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/scripts/06-liftoff.sh)  
@@ -172,7 +171,7 @@ To do this, we used the tool
 [Liftoff](https://github.com/agshumate/Liftoff) to lift the original
 annotations over to the new assemblies.
 
-## 3.2 Final alignments
+## Final alignments
 
 **Script:**
 [07-mcscan-oriented.sh](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/scripts/07-mcscan-oriented.sh)  
