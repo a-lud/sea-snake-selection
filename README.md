@@ -1,10 +1,10 @@
 # Sea snake selection
 
 This repository contains the code relating to the assembly, annotation and
-genomic investigation into the *Hydrophis* snakes *H. major*, *H. ornatus*,
-*H. curtus (West).* and *H. elegans*. The repository is organised into sub-directories,
-each of which contains the code used in the analyses, along with a description of the
-overall approach.
+genomic investigation into the newly sampled *Hydrophis* snakes *H. major*, *H. ornatus*,
+*H. curtus (West)* and *H. elegans* (along with already existing *Hydrophis* and terrestrial
+samples). The repository is organised into sub-directories, each of which contains the code
+used in the analyses, along with a summary of the overall approach.
 
 The approximate order of the analyses are below:
 
@@ -23,18 +23,17 @@ Additional directories include the following;
 - [figures][fig]
 - [tables][tab]
 
-These directories relate to extraneous data that are not specific to any one
-analysis, along with the directories that house the figures and tables that
+The `data` directory contains data that are not specific to any one analysis,
+while the `figure` and `tables` directories contain the figures and tables that
 are found in the manuscript.
 
-A few of the analyses listed above make use of Nextflow workflows that can be found [here][nf].
+A few of the analyses listed above make use of custom Nextflow workflows that can be found [here][nf].
 Specific details about the Nextflow workflows can be found at the [wiki][wiki] page.
 
 I've tried to be as detailed as possible, however this is a large project and it's difficult to
 include everything. Many auxilliary files from analyses are included in this directory, however
-some files are too large and could not be uploaded (though they will be available via NCBI or
-the final FigShare repository). Additionally, some scripts have been edited down to include the
-main function calls, rather than including additional information that is not relevant.
+some files are too large and could not be uploaded. Additionally, some scripts have been edited
+down to include their main function calls rather than include additional information that is not relevant.
 
 [asm]: https://github.com/a-lud/sea-snake-selection/tree/main/assembly
 [ann]: https://github.com/a-lud/sea-snake-selection/tree/main/annotation
