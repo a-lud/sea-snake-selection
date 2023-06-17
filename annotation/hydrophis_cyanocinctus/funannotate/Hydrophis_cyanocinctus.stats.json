@@ -1,0 +1,120 @@
+{
+    "format": "annotation",
+    "command": "/venv/bin/funannotate annotate -i /g/data/xl04/al4518/annotation/hydrophis_cyanocinctus/annotation-funannotate --cpus 30 --eggnog /g/data/xl04/al4518/annotation/hydrophis_cyanocinctus/annotation-funannotate/emapper-annotation/Hydrophis_cyanocinctus-emapper.emapper.annotations --iprscan /g/data/xl04/al4518/annotation/hydrophis_cyanocinctus/annotation-funannotate/interpro-annotation/Hydrophis_cyanocinctus.xml --busco_db tetrapoda --database /home/566/al4518/al/database/funannotate_db --tmpdir /g/data/xl04/al4518/annotation/scripts --no-progress",
+    "organism": "Hydrophis_cyanocinctus",
+    "software": {
+        "name": "funannotate",
+        "version": "1.8.11",
+        "date": "2022-09-09",
+        "resources": {
+            "merops": {
+                "type": "diamond",
+                "version": "12.0",
+                "date": "2017-10-04",
+                "num-records": "5009"
+            },
+            "uniprot": {
+                "type": "diamond",
+                "version": "2021_03",
+                "date": "2021-06-02",
+                "num-records": "565254"
+            },
+            "dbCAN": {
+                "type": "hmmer3",
+                "version": "10.0",
+                "date": "2021-10-03",
+                "num-records": "641"
+            },
+            "pfam": {
+                "type": "hmmer3",
+                "version": "34.0",
+                "date": "2021-03",
+                "num-records": "19179"
+            },
+            "repeats": {
+                "type": "diamond",
+                "version": "1.0",
+                "date": "2021-11-05",
+                "num-records": "11950"
+            },
+            "go": {
+                "type": "text",
+                "version": "2021-10-26",
+                "date": "2021-10-26",
+                "num-records": "47226"
+            },
+            "mibig": {
+                "type": "diamond",
+                "version": "1.4",
+                "date": "2021-11-05",
+                "num-records": "31023"
+            },
+            "interpro": {
+                "type": "xml",
+                "version": "86.0",
+                "date": "2021-06-03",
+                "num-records": "38913"
+            },
+            "busco_outgroups": {
+                "type": "outgroups",
+                "version": "1.0",
+                "date": "2021-11-05",
+                "num-records": "8"
+            },
+            "gene2product": {
+                "type": "text",
+                "version": "1.72",
+                "date": "2021-10-18",
+                "num-records": "34111"
+            }
+        }
+    },
+    "assembly": {
+        "num_contigs": 1163,
+        "length": 1980712740,
+        "mean_length": 1703106.4,
+        "N50": 264245889,
+        "L50": 3,
+        "N90": 23262781,
+        "L90": 12,
+        "GC_content": 40.54
+    },
+    "annotation": {
+        "genes": 28120,
+        "common_name": 10960,
+        "mRNA": 30750,
+        "tRNA": 431,
+        "ncRNA": 0,
+        "rRNA": 0,
+        "avg_gene_length": 26139.59,
+        "transcript-level": {
+            "CDS_transcripts": 30750,
+            "CDS_five_utr": 0,
+            "CDS_three_utr": 3445,
+            "CDS_no_utr": 15811,
+            "CDS_five_three_utr": 11494,
+            "CDS_complete": 27623,
+            "CDS_no-start": 1176,
+            "CDS_no-stop": 1411,
+            "CDS_no-start_no-stop": 540,
+            "total_exons": 273083,
+            "total_cds_exons": 232954,
+            "multiple_exon_transcript": 25655,
+            "single_exon_transcript": 5095,
+            "avg_exon_length": 214.51,
+            "avg_protein_length": 427.34,
+            "functional": {
+                "go_terms": 17336,
+                "interproscan": 23057,
+                "eggnog": 15128,
+                "pfam": 19678,
+                "cazyme": 308,
+                "merops": 1072,
+                "busco": 5249,
+                "secretion": 0
+            },
+            "pct_exon_overlap_protein_evidence": 8.82,
+            "pct_exon_overlap_transcript_evidence": 25.34
+        }
+    }
+}
