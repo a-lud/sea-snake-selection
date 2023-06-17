@@ -1,0 +1,24 @@
+GenomeScope version 2.0
+input file = SRR16961054.kmc.histo
+output directory = ../genomescope-SRR16961054
+p = 2
+k = 31
+name prefix = hydrophis_ornatus
+VERBOSE set to TRUE
+
+property                      min               max               
+Homozygous (aa)               99.8278%          99.8514%          
+Heterozygous (ab)             0.148586%         0.172181%         
+Genome Haploid Length         1,945,511,351 bp  1,948,550,837 bp  
+Genome Repeat Length          699,015,127 bp    700,107,204 bp    
+Genome Unique Length          1,246,496,223 bp  1,248,443,633 bp  
+Model Fit                     66.0679%          98.5512%          
+Read Error Rate               0.0581387%        0.0581387%        
+
+Percent Kmers Modeled (All Kmers) = 66.0679% [15, 99999]
+Percent Kmers Modeled (Full Model) = 98.5512% [15, 115]
+Percent Kmers Modeled (Unique Kmers) = 99.0289% [15, 69]
+
+Model RSSE (All Kmers) = 184110145593073472 [15, 99999]
+Model RSSE (Full Model) = 14416814652209264 [15, 115]
+Model RSSE (Unique Model) = 11204979727969836 [15, 69]
