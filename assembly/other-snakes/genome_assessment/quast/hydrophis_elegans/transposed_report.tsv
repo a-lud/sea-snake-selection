@@ -1,3 +1,0 @@
-Assembly	# contigs (>= 0 bp)	# contigs (>= 1000 bp)	# contigs (>= 5000 bp)	# contigs (>= 10000 bp)	# contigs (>= 25000 bp)	# contigs (>= 50000 bp)	Total length (>= 0 bp)	Total length (>= 1000 bp)	Total length (>= 5000 bp)	Total length (>= 10000 bp)	Total length (>= 25000 bp)	Total length (>= 50000 bp)	# contigs	Largest contig	Total length	GC (%)	N50	N90	auN	L50	L90	# N's per 100 kbp
-hydrophis_elegans	3126	3084	2625	1902	1009	770	2014974070	2014944335	2013464762	2008109333	1994524400	1986225633	3126	65472633	2014974070	40.54	17918926	1567654	21745570.3	34	161	0.25
-hydrophis_elegans_broken	-	3085	2626	1903	1010	771	-	2014944235	2013464662	2008109233	1994524300	1986225533	3127	65472633	2014973970	40.54	17470302	1567654	21633107.9	34	162	0.25

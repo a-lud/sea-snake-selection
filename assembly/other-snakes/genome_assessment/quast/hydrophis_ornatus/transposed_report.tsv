@@ -1,3 +1,0 @@
-Assembly	# contigs (>= 0 bp)	# contigs (>= 1000 bp)	# contigs (>= 5000 bp)	# contigs (>= 10000 bp)	# contigs (>= 25000 bp)	# contigs (>= 50000 bp)	Total length (>= 0 bp)	Total length (>= 1000 bp)	Total length (>= 5000 bp)	Total length (>= 10000 bp)	Total length (>= 25000 bp)	Total length (>= 50000 bp)	# contigs	Largest contig	Total length	GC (%)	N50	N90	auN	L50	L90	# N's per 100 kbp
-hydrophis_ornatus	548	534	370	243	161	115	1926185883	1926175669	1925746926	1924857190	1923567264	1921938533	548	440412367	1926185883	40.43	270037255	29596013	263600660.3	3	9	43.96
-hydrophis_ornatus_broken	-	956	792	665	543	453	-	1925327878	1924896645	1924006909	1921934422	1918792923	977	50706196	1925339083	40.43	17311133	3166728	18867313.4	37	132	0.00
