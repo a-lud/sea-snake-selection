@@ -1,0 +1,17 @@
+# BUSCO version is: 5.3.2 
+# The lineage dataset is: tetrapoda_odb10 (Creation date: 2021-02-19, number of genomes: 38, number of BUSCOs: 5310)
+# Summarized benchmarking in BUSCO notation for file /home/a1645424/al/analyses/orthologs/results/orthologs_17/agat/cds_proteins/thamnophis_elegans.faa
+# BUSCO was run in mode: proteins
+
+	***** Results: *****
+
+	C:95.8%[S:93.4%,D:2.4%],F:1.2%,M:3.0%,n:5310	   
+	5087	Complete BUSCOs (C)			   
+	4958	Complete and single-copy BUSCOs (S)	   
+	129	Complete and duplicated BUSCOs (D)	   
+	63	Fragmented BUSCOs (F)			   
+	160	Missing BUSCOs (M)			   
+	5310	Total BUSCO groups searched		   
+
+Dependencies and versions:
+	hmmsearch: 3.1

@@ -1,0 +1,17 @@
+# BUSCO version is: 5.3.2 
+# The lineage dataset is: tetrapoda_odb10 (Creation date: 2021-02-19, number of genomes: 38, number of BUSCOs: 5310)
+# Summarized benchmarking in BUSCO notation for file /home/a1645424/al/analyses/orthologs/results/orthologs_17/agat/cds_proteins/hydrophis_ornatus.faa
+# BUSCO was run in mode: proteins
+
+	***** Results: *****
+
+	C:91.9%[S:90.9%,D:1.0%],F:2.7%,M:5.4%,n:5310	   
+	4877	Complete BUSCOs (C)			   
+	4825	Complete and single-copy BUSCOs (S)	   
+	52	Complete and duplicated BUSCOs (D)	   
+	146	Fragmented BUSCOs (F)			   
+	287	Missing BUSCOs (M)			   
+	5310	Total BUSCO groups searched		   
+
+Dependencies and versions:
+	hmmsearch: 3.1

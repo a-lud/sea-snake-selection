@@ -1,0 +1,17 @@
+# BUSCO version is: 5.3.2 
+# The lineage dataset is: tetrapoda_odb10 (Creation date: 2021-02-19, number of genomes: 38, number of BUSCOs: 5310)
+# Summarized benchmarking in BUSCO notation for file /home/a1645424/al/analyses/orthologs/results/orthologs_17/agat/cds_proteins/protobothrops_mucrosquamatus.faa
+# BUSCO was run in mode: proteins
+
+	***** Results: *****
+
+	C:93.7%[S:92.1%,D:1.6%],F:3.6%,M:2.7%,n:5310	   
+	4977	Complete BUSCOs (C)			   
+	4892	Complete and single-copy BUSCOs (S)	   
+	85	Complete and duplicated BUSCOs (D)	   
+	190	Fragmented BUSCOs (F)			   
+	143	Missing BUSCOs (M)			   
+	5310	Total BUSCO groups searched		   
+
+Dependencies and versions:
+	hmmsearch: 3.1

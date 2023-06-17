@@ -1,0 +1,2 @@
+file	format	type	num_seqs	sum_len	min_len	avg_len	max_len	Q1	Q2	Q3	sum_gap	N50	Q20(%)	Q30(%)	GC(%)
+PUXP22259_pass.fastq.gz	FASTQ	DNA	1550761	52423090258	18	33804.8	626009	5187.0	18475.0	46553.0	0	70482	66.54	23.96	40.30

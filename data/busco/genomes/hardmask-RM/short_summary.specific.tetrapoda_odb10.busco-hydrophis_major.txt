@@ -1,0 +1,19 @@
+# BUSCO version is: 5.3.2 
+# The lineage dataset is: tetrapoda_odb10 (Creation date: 2021-02-19, number of genomes: 38, number of BUSCOs: 5310)
+# Summarized benchmarking in BUSCO notation for file /home/a1645424/al/analyses/repeat-sea-snakes/results/hydrophis_major/hydrophis_major.fa.hardMasked
+# BUSCO was run in mode: genome
+# Gene predictor used: metaeuk
+
+	***** Results: *****
+
+	C:94.7%[S:93.8%,D:0.9%],F:1.2%,M:4.1%,n:5310	   
+	5026	Complete BUSCOs (C)			   
+	4979	Complete and single-copy BUSCOs (S)	   
+	47	Complete and duplicated BUSCOs (D)	   
+	64	Fragmented BUSCOs (F)			   
+	220	Missing BUSCOs (M)			   
+	5310	Total BUSCO groups searched		   
+
+Dependencies and versions:
+	hmmsearch: 3.1
+	metaeuk: 5.34c21f2

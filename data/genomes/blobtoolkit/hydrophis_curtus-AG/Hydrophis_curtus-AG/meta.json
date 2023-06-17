@@ -1,0 +1,92 @@
+{
+ "id": "Hydrophis_curtus-AG",
+ "assembly": {
+  "file": "files/hydrophis_curtus-AG.fa",
+  "scaffold-count": 808,
+  "span": 1925096533
+ },
+ "fields": [
+  {
+   "id": "identifiers",
+   "type": "identifier"
+  },
+  {
+   "id": "gc",
+   "preload": true,
+   "scale": "scaleLinear",
+   "name": "GC",
+   "datatype": "float",
+   "range": [
+    0.0083,
+    0.6342
+   ],
+   "type": "variable"
+  },
+  {
+   "preload": true,
+   "scale": "scaleLog",
+   "id": "length",
+   "name": "Length",
+   "clamp": false,
+   "datatype": "integer",
+   "range": [
+    507,
+    440267436
+   ],
+   "type": "variable"
+  },
+  {
+   "scale": "scaleLinear",
+   "id": "ncount",
+   "name": "N count",
+   "datatype": "integer",
+   "range": [
+    0,
+    298500
+   ],
+   "type": "variable"
+  },
+  {
+   "datatype": "mixed",
+   "type": "array",
+   "id": "busco",
+   "name": "Busco",
+   "children": [
+    {
+     "version": "5.3.2",
+     "set": "tetrapoda_odb10",
+     "count": 5310,
+     "file": "../../../busco/genomes/standard/hydrophis_curtus-AG/full_table.tsv",
+     "id": "tetrapoda_odb10_busco",
+     "type": "multiarray",
+     "category_slot": 1,
+     "headers": [
+      "Busco id",
+      "Status"
+     ]
+    }
+   ]
+  }
+ ],
+ "links": {},
+ "name": "Hydrophis_curtus-AG",
+ "plot": {
+  "x": "gc",
+  "z": "length"
+ },
+ "record_type": "record",
+ "records": 808,
+ "taxon": {
+  "taxid": 355685,
+  "superkingdom": "Eukaryota",
+  "kingdom": "Metazoa",
+  "phylum": "Chordata",
+  "class": "Lepidosauria",
+  "order": "Squamata",
+  "family": "Hydrophiidae",
+  "genus": "Hydrophis",
+  "species": "Hydrophis curtus"
+ },
+ "version": 1,
+ "revision": 0
+}

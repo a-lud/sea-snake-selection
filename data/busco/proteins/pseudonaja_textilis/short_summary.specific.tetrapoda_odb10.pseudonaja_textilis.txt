@@ -1,0 +1,17 @@
+# BUSCO version is: 5.3.2 
+# The lineage dataset is: tetrapoda_odb10 (Creation date: 2021-02-19, number of genomes: 38, number of BUSCOs: 5310)
+# Summarized benchmarking in BUSCO notation for file /home/a1645424/al/analyses/orthologs/results/orthologs_17/agat/cds_proteins/pseudonaja_textilis.faa
+# BUSCO was run in mode: proteins
+
+	***** Results: *****
+
+	C:95.6%[S:93.4%,D:2.2%],F:1.8%,M:2.6%,n:5310	   
+	5076	Complete BUSCOs (C)			   
+	4958	Complete and single-copy BUSCOs (S)	   
+	118	Complete and duplicated BUSCOs (D)	   
+	95	Fragmented BUSCOs (F)			   
+	139	Missing BUSCOs (M)			   
+	5310	Total BUSCO groups searched		   
+
+Dependencies and versions:
+	hmmsearch: 3.1

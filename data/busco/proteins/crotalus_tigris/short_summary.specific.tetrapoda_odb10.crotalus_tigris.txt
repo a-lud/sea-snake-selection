@@ -1,0 +1,17 @@
+# BUSCO version is: 5.3.2 
+# The lineage dataset is: tetrapoda_odb10 (Creation date: 2021-02-19, number of genomes: 38, number of BUSCOs: 5310)
+# Summarized benchmarking in BUSCO notation for file /home/a1645424/al/analyses/orthologs/results/orthologs_17/agat/cds_proteins/crotalus_tigris.faa
+# BUSCO was run in mode: proteins
+
+	***** Results: *****
+
+	C:97.5%[S:95.9%,D:1.6%],F:0.8%,M:1.7%,n:5310	   
+	5178	Complete BUSCOs (C)			   
+	5093	Complete and single-copy BUSCOs (S)	   
+	85	Complete and duplicated BUSCOs (D)	   
+	45	Fragmented BUSCOs (F)			   
+	87	Missing BUSCOs (M)			   
+	5310	Total BUSCO groups searched		   
+
+Dependencies and versions:
+	hmmsearch: 3.1

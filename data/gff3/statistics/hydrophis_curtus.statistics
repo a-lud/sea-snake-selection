@@ -1,0 +1,242 @@
+--------------------------------------------------------------------------------
+
+Compute mrna with isoforms if any
+
+Number of gene                               26730
+Number of mrna                               30164
+Number of mrnas with utr both sides          12133
+Number of mrnas with at least one utr        15473
+Number of cds                                30164
+Number of exon                               241845
+Number of five_prime_utr                     13635
+Number of three_prime_utr                    13971
+Number of exon in cds                        234694
+Number of exon in five_prime_utr             19177
+Number of exon in three_prime_utr            15482
+Number of intron in cds                      204530
+Number of intron in exon                     211681
+Number of intron in five_prime_utr           5542
+Number of intron in three_prime_utr          1511
+Number gene overlapping                      705
+Number of single exon gene                   4666
+Number of single exon mrna                   4670
+mean mrnas per gene                          1.1
+mean cdss per mrna                           1.0
+mean exons per mrna                          8.0
+mean five_prime_utrs per mrna                0.5
+mean three_prime_utrs per mrna               0.5
+mean exons per cds                           7.8
+mean exons per five_prime_utr                1.4
+mean exons per three_prime_utr               1.1
+mean introns in cdss per mrna                6.8
+mean introns in exons per mrna               7.0
+mean introns in five_prime_utrs per mrna     0.2
+mean introns in three_prime_utrs per mrna    0.1
+Total gene length                            755952801
+Total mrna length                            955575534
+Total cds length                             39947218
+Total exon length                            116854487
+Total five_prime_utr length                  42509257
+Total three_prime_utr length                 34398012
+Total intron length per cds                  780862966
+Total intron length per exon                 838721047
+Total intron length per five_prime_utr       50614956
+Total intron length per three_prime_utr      6403019
+mean gene length                             28281
+mean mrna length                             31679
+mean cds length                              1324
+mean exon length                             483
+mean five_prime_utr length                   3117
+mean three_prime_utr length                  2462
+mean cds piece length                        170
+mean five_prime_utr piece length             2216
+mean three_prime_utr piece length            2221
+mean intron in cds length                    3817
+mean intron in exon length                   3962
+mean intron in five_prime_utr length         9132
+mean intron in three_prime_utr length        4237
+% of genome covered by gene                  38.5
+% of genome covered by mrna                  48.6
+% of genome covered by cds                   2.0
+% of genome covered by exon                  5.9
+% of genome covered by five_prime_utr        2.2
+% of genome covered by three_prime_utr       1.8
+% of genome covered by intron from cds       39.7
+% of genome covered by intron from exon      42.7
+% of genome covered by intron from five_prime_utr2.6
+% of genome covered by intron from three_prime_utr0.3
+Longest gene                                 1435864
+Longest mrna                                 1435864
+Longest cds                                  56316
+Longest exon                                 1277572
+Longest five_prime_utr                       1277552
+Longest three_prime_utr                      880453
+Longest cds piece                            21219
+Longest five_prime_utr piece                 1277552
+Longest three_prime_utr piece                880453
+Longest intron into cds part                 568493
+Longest intron into exon part                568493
+Longest intron into five_prime_utr part      148570
+Longest intron into three_prime_utr part     131318
+Shortest gene                                153
+Shortest mrna                                153
+Shortest cds                                 120
+Shortest exon                                1
+Shortest five_prime_utr                      1
+Shortest three_prime_utr                     1
+Shortest cds piece                           1
+Shortest five_prime_utr piece                1
+Shortest three_prime_utr piece               1
+Shortest intron into cds part                11
+Shortest intron into exon part               11
+Shortest intron into five_prime_utr part     20
+Shortest intron into three_prime_utr part    23
+
+Re-compute mrna without isoforms asked. We remove shortest isoforms if any
+
+Number of gene                               26730
+Number of mrna                               26730
+Number of mrnas with utr both sides          8936
+Number of mrnas with at least one utr        12039
+Number of cds                                26730
+Number of exon                               200833
+Number of five_prime_utr                     10329
+Number of three_prime_utr                    10646
+Number of exon in cds                        196026
+Number of exon in five_prime_utr             14098
+Number of exon in three_prime_utr            11612
+Number of intron in cds                      169296
+Number of intron in exon                     174103
+Number of intron in five_prime_utr           3769
+Number of intron in three_prime_utr          966
+Number gene overlapping                      607
+Number of single exon gene                   4666
+Number of single exon mrna                   4666
+mean mrnas per gene                          1.0
+mean cdss per mrna                           1.0
+mean exons per mrna                          7.5
+mean five_prime_utrs per mrna                0.4
+mean three_prime_utrs per mrna               0.4
+mean exons per cds                           7.3
+mean exons per five_prime_utr                1.4
+mean exons per three_prime_utr               1.1
+mean introns in cdss per mrna                6.3
+mean introns in exons per mrna               6.5
+mean introns in five_prime_utrs per mrna     0.1
+mean introns in three_prime_utrs per mrna    0.0
+Total gene length                            755952801
+Total mrna length                            755952801
+Total cds length                             33770319
+Total exon length                            53791319
+Total five_prime_utr length                  7988006
+Total three_prime_utr length                 12032994
+Total intron length per cds                  662303609
+Total intron length per exon                 702161482
+Total intron length per five_prime_utr       34979876
+Total intron length per three_prime_utr      4230035
+mean gene length                             28281
+mean mrna length                             28281
+mean cds length                              1263
+mean exon length                             267
+mean five_prime_utr length                   773
+mean three_prime_utr length                  1130
+mean cds piece length                        172
+mean five_prime_utr piece length             566
+mean three_prime_utr piece length            1036
+mean intron in cds length                    3912
+mean intron in exon length                   4033
+mean intron in five_prime_utr length         9280
+mean intron in three_prime_utr length        4378
+% of genome covered by gene                  38.5
+% of genome covered by mrna                  38.5
+% of genome covered by cds                   1.7
+% of genome covered by exon                  2.7
+% of genome covered by five_prime_utr        0.4
+% of genome covered by three_prime_utr       0.6
+% of genome covered by intron from cds       33.7
+% of genome covered by intron from exon      35.7
+% of genome covered by intron from five_prime_utr1.8
+% of genome covered by intron from three_prime_utr0.2
+Longest gene                                 1435864
+Longest mrna                                 1435864
+Longest cds                                  56316
+Longest exon                                 269555
+Longest five_prime_utr                       260897
+Longest three_prime_utr                      267284
+Longest cds piece                            21219
+Longest five_prime_utr piece                 260897
+Longest three_prime_utr piece                267284
+Longest intron into cds part                 568493
+Longest intron into exon part                568493
+Longest intron into five_prime_utr part      148570
+Longest intron into three_prime_utr part     118900
+Shortest gene                                153
+Shortest mrna                                153
+Shortest cds                                 120
+Shortest exon                                1
+Shortest five_prime_utr                      1
+Shortest three_prime_utr                     1
+Shortest cds piece                           1
+Shortest five_prime_utr piece                1
+Shortest three_prime_utr piece               1
+Shortest intron into cds part                11
+Shortest intron into exon part               11
+Shortest intron into five_prime_utr part     20
+Shortest intron into three_prime_utr part    23
+
+--------------------------------------------------------------------------------
+
+Compute trna with isoforms if any
+
+Number of gene                               427
+Number of trna                               427
+Number of exon                               427
+Number gene overlapping                      0
+Number of single exon gene                   427
+Number of single exon trna                   427
+mean trnas per gene                          1.0
+mean exons per trna                          1.0
+Total gene length                            32740
+Total trna length                            32740
+Total exon length                            32740
+mean gene length                             76
+mean trna length                             76
+mean exon length                             76
+% of genome covered by gene                  0.0
+% of genome covered by trna                  0.0
+% of genome covered by exon                  0.0
+Longest gene                                 140
+Longest trna                                 140
+Longest exon                                 140
+Shortest gene                                66
+Shortest trna                                66
+Shortest exon                                66
+
+Re-compute trna without isoforms asked. We remove shortest isoforms if any
+
+Number of gene                               427
+Number of trna                               427
+Number of exon                               427
+Number gene overlapping                      0
+Number of single exon gene                   427
+Number of single exon trna                   427
+mean trnas per gene                          1.0
+mean exons per trna                          1.0
+Total gene length                            32740
+Total trna length                            32740
+Total exon length                            32740
+mean gene length                             76
+mean trna length                             76
+mean exon length                             76
+% of genome covered by gene                  0.0
+% of genome covered by trna                  0.0
+% of genome covered by exon                  0.0
+Longest gene                                 140
+Longest trna                                 140
+Longest exon                                 140
+Shortest gene                                66
+Shortest trna                                66
+Shortest exon                                66
+
+--------------------------------------------------------------------------------
+

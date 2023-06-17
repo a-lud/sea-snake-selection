@@ -1,0 +1,19 @@
+# BUSCO version is: 5.3.2 
+# The lineage dataset is: tetrapoda_odb10 (Creation date: 2021-02-19, number of genomes: 38, number of BUSCOs: 5310)
+# Summarized benchmarking in BUSCO notation for file /home/a1645424/al/analyses/repeat-sea-snakes/results/hydrophis_ornatus-garvin/hydrophis_ornatus-garvin.fa.hardMasked
+# BUSCO was run in mode: genome
+# Gene predictor used: metaeuk
+
+	***** Results: *****
+
+	C:94.8%[S:94.1%,D:0.7%],F:1.2%,M:4.0%,n:5310	   
+	5033	Complete BUSCOs (C)			   
+	4996	Complete and single-copy BUSCOs (S)	   
+	37	Complete and duplicated BUSCOs (D)	   
+	63	Fragmented BUSCOs (F)			   
+	214	Missing BUSCOs (M)			   
+	5310	Total BUSCO groups searched		   
+
+Dependencies and versions:
+	hmmsearch: 3.1
+	metaeuk: 5.34c21f2
