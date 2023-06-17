@@ -1,0 +1,5 @@
+#NEXUS
+[ See gene_concordance.cf.stat for branch annotation meanings. This file is best viewed in FigTree. ]
+begin trees;
+  tree tree_1 = (hydrophis_curtus_AG,(((hydrophis_major,hydrophis_ornatus):0.1517200555[&gCF="24.98",gCF/gDF1/gDF2/gDFP="24.98/11.07/9.8/54.15",gCF_N="2322",gCF_N/gDF1_N/gDF2_N/gDFP_N="2322/1029/911/5034",gDF1="11.07",gDF1_N="1029",gDF2="9.8",gDF2_N="911",gDFP="54.15",gDFP_N="5034",gN="9296",label="100.0"],(hydrophis_cyanocinctus,hydrophis_elegans):0.0612750349[&gCF="21.55",gCF/gDF1/gDF2/gDFP="21.55/10.26/15.82/52.37",gCF_N="2004",gCF_N/gDF1_N/gDF2_N/gDFP_N="2004/954/1471/4870",gDF1="10.26",gDF1_N="954",gDF2="15.82",gDF2_N="1471",gDFP="52.37",gDFP_N="4870",gN="9299",label="20.0"]):0.2055076435[&gCF="29.72",gCF/gDF1/gDF2/gDFP="29.72/7.75/10.5/52.03",gCF_N="2764",gCF_N/gDF1_N/gDF2_N/gDFP_N="2764/721/976/4838",gDF1="7.75",gDF1_N="721",gDF2="10.5",gDF2_N="976",gDFP="52.03",gDFP_N="4838",gN="9299",label="100.0"],hydrophis_curtus):0.0000000000):0.0000000000;
+end;
