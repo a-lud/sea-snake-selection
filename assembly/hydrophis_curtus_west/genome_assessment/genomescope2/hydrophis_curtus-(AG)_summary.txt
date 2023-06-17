@@ -1,0 +1,15 @@
+GenomeScope version 2.0
+input file = SRR16961055.kmc.histo
+output directory = ../genomescope-SRR16961055
+p = 2
+k = 31
+name prefix = hydrophis_curtus (AG)
+
+property                      min               max               
+Homozygous (aa)               99.7615%          99.7791%          
+Heterozygous (ab)             0.220935%         0.238496%         
+Genome Haploid Length         1,924,805,186 bp  1,927,540,422 bp  
+Genome Repeat Length          685,194,677 bp    686,168,369 bp    
+Genome Unique Length          1,239,610,509 bp  1,241,372,052 bp  
+Model Fit                     66.7646%          98.7789%          
+Read Error Rate               0.057765%         0.057765%         

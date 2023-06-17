@@ -1,0 +1,30 @@
+# BUSCO version is: 5.4.7 
+# The lineage dataset is: tetrapoda_odb10 (Creation date: 2021-02-19, number of genomes: 38, number of BUSCOs: 5310)
+# Summarized benchmarking in BUSCO notation for file /directflow/KCCGGenometechTemp/projects/jilham/seasnakes/flye_728_v2/assembly.fasta
+# BUSCO was run in mode: euk_genome_met
+# Gene predictor used: metaeuk
+
+	***** Results: *****
+
+	C:93.5%[S:91.6%,D:1.9%],F:2.0%,M:4.5%,n:5310	   
+	4963	Complete BUSCOs (C)			   
+	4864	Complete and single-copy BUSCOs (S)	   
+	99	Complete and duplicated BUSCOs (D)	   
+	108	Fragmented BUSCOs (F)			   
+	239	Missing BUSCOs (M)			   
+	5310	Total BUSCO groups searched		   
+
+Assembly Statistics:
+	3208	Number of scaffolds
+	3275	Number of contigs
+	1998326624	Total length
+	0.000%	Percent gaps
+	11 MB	Scaffold N50
+	10 MB	Contigs N50
+
+
+Dependencies and versions:
+	hmmsearch: 3.1
+	bbtools: 39.01
+	metaeuk: 6.a5d39d9
+	busco: 5.4.7
