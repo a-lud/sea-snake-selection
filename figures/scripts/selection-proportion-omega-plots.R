@@ -15,7 +15,7 @@ options(scipen = 999)
 # Import PAML and BUSTED-PH results
 marine.psg <- read_lines(here('selection','results','results-PSGs','PSGs-marine.txt'))
 paml <- read_csv(
-  file = here('figures','supplementary','table-x-selection-paml-branch-site-alternate-model-fit.csv'),
+  file = here('tables', 'table-x-selection-paml-branch-site-alternate-model-fit.csv'),
   col_names = TRUE,
   col_types = cols()
 ) |>
@@ -39,7 +39,7 @@ paml <- read_csv(
   )
 
 busted <- read_csv(
-  file = here('figures','supplementary','table-x-selection-bustedph-unconstrained-model-fit.csv'),
+  file = here('tables','table-x-selection-bustedph-unconstrained-model-fit.csv'),
   col_names = TRUE,
   col_types = cols()
 ) |>
@@ -69,18 +69,20 @@ busted <- read_csv(
 
 # ------------------------------------------------------------------------------------------------ #
 # Plot: BUSTED-PH proportion of sites and avg. omega in each rate category.
-busted.prop <- busted |>
-  filter(measure == 'Proportion') |>
+busted.prop.psg <- busted |>
+  filter(measure == 'Proportion', condition == 'PSG') |>
   ggplot(
     aes(
       x = category,
       y = values,
+      # colour = partition,
       fill = partition
     )
   ) +
-  geom_boxplot() +
+  geom_boxplot(alpha = 0.3, linewidth = 1) +
   scale_y_continuous(expand = expansion(mult = 0.01), labels = scales::unit_format(unit = "%")) +
-  scale_fill_manual(values = RColorBrewer::brewer.pal(n = 12, 'Set3')[c(5,6)]) +
+  # scale_colour_manual(values = c('#264653', '#e9c46a')) +
+  scale_fill_manual(values = c('#264653', '#e9c46a')) +
   labs(
     y = 'Percentage of sites'
   ) +
@@ -90,18 +92,57 @@ busted.prop <- busted |>
   theme_bw() +
   theme(
     # Axis text
-    axis.text = element_text(size = 14),
+    axis.text = element_text(size = 18),
     axis.text.x = element_blank(),
 
     # Axis title
-    axis.title = element_text(size = 16, face = 'bold'),
+    axis.title = element_text(size = 20, face = 'bold'),
     axis.title.x = element_blank(),
+    axis.ticks.x = element_blank(),
 
     # legend to None as this will be handled by PAML plot above
     legend.position = 'none',
 
     # Strip text
-    strip.text = element_text(size = 16, face = 'bold')
+    strip.text = element_text(size = 20, face = 'bold'),
+    strip.background = element_rect(fill = '#66c2a5'),
+  )
+
+busted.prop.nonpsg <- busted |>
+  filter(measure == 'Proportion', condition != 'PSG') |>
+  ggplot(
+    aes(
+      x = category,
+      y = values,
+      fill = partition,
+      # colour = partition
+    )
+  ) +
+  geom_boxplot(alpha = 0.3, linewidth = 1) +
+  scale_y_continuous(expand = expansion(mult = 0.01), labels = scales::unit_format(unit = "%")) +
+  scale_fill_manual(values = c('#264653', '#e9c46a')) +
+  labs(
+    y = 'Percentage of sites'
+  ) +
+  facet_wrap(
+    . ~ condition
+  ) +
+  theme_bw() +
+  theme(
+    # Axis text
+    # axis.text = element_text(size = 14),
+    axis.text = element_blank(),
+
+    # Axis title
+    axis.title = element_blank(),
+    axis.title.x = element_blank(),
+    axis.ticks = element_blank(),
+
+    # legend to None as this will be handled by PAML plot above
+    legend.position = 'none',
+
+    # Strip text
+    strip.text = element_text(size = 18, face = 'bold')
   )
 
 # Filter out outliers in each direction - only a few and drastically skew the plot
@@ -114,16 +155,17 @@ busted.omega <- busted |>
       fill = partition
     )
   ) +
-  geom_boxplot() +
+  geom_boxplot(alpha = 0.3, linewidth = 1) +
   labs(
     x = '\u03C9-rate-category',
     y = 'Omega (\u03C9)',
     fill = 'Partition'
   ) +
-  scale_fill_manual(values = RColorBrewer::brewer.pal(n = 12, 'Set3')[c(5,6)]) +
+  scale_fill_manual(values = c('#264653', '#e9c46a')) +
   scale_y_log10(
     breaks = c(0.001, 0.01, 0.1, 1, 10, 100),
-    expand = expansion(mult = 0.01)
+    expand = expansion(mult = 0.01),
+    labels = c('0.001', '0.01', '0.1', '1', '10', '100')
   ) +
   facet_wrap(
     ~ condition
@@ -131,31 +173,37 @@ busted.omega <- busted |>
   theme_bw() +
   theme(
     # Axis text
-    axis.text = element_text(size = 14),
+    axis.text = element_text(size = 18),
 
     # Axis title
-    axis.title = element_text(size = 16, face = 'bold'),
+    axis.title = element_text(size = 20, face = 'bold'),
 
     # Legend
     legend.title = element_blank(),
-    legend.text = element_text(size = 14),
+    legend.text = element_text(size = 18),
     legend.position = 'bottom',
 
     # Strip text
     strip.background = element_blank(),
-    strip.text = element_blank()
+    strip.text = element_blank(),
+
+    # spacing between facets
+    panel.spacing = unit(1, 'lines')
   )
 
-
-ragg::agg_png(
-  filename = here('figures','supplementary','figure-x-selection-bustedph-prop-omega.png'),
-  width = 1000,
-  height = 1000,
-  scaling = 1.2
+# ragg::agg_png(
+#   filename = here('figures','manuscript','figure-x-selection-bustedph-prop-omega.png'),
+#   width = 1000,
+#   height = 1000,
+#   scaling = 1.1
+# )
+grDevices::cairo_pdf(
+  filename = here('figures', 'manuscript', 'figure-x-selection-bustedph-prop-omega.pdf'),
+  width = 10,
+  height = 10
 )
-busted.prop / busted.omega
+(busted.prop.psg  + busted.prop.nonpsg) / busted.omega
 invisible(dev.off())
-
 
 # ------------------------------------------------------------------------------------------------ #
 # Plot: PAML proportion of sites and avg. omega in each rate category. NOTE: PAML doesn't separate
@@ -174,9 +222,9 @@ paml.prop <- paml |>
       fill = condition
     )
   ) +
-  geom_boxplot() +
+  geom_boxplot(alpha = 0.3, linewidth = 1) +
   scale_y_continuous(expand = expansion(mult = 0.01), labels = scales::unit_format(unit = "%")) +
-  scale_fill_manual(values = RColorBrewer::brewer.pal(n = 12, 'Set3')[c(1,4)]) +
+  scale_fill_manual(values = c('#264653', '#e9c46a')) +
   labs(
     y = 'Percentage of sites'
   ) +
@@ -205,12 +253,12 @@ paml.omega.psg <- paml |>
       fill = partition
     )
   ) +
-  geom_boxplot() +
+  geom_boxplot(alpha = 0.3, linewidth = 1) +
   labs(
     x = '\u03C9-rate-category',
     y = 'Omega (\u03C9)',
   ) +
-  scale_fill_manual(values = RColorBrewer::brewer.pal(n = 12, 'Set3')[c(5,6)]) +
+  scale_fill_manual(values = c('#264653', '#e9c46a')) +
   scale_y_log10(
     breaks = c(0.001, 0.01, 0.1, 1,10, 100, 500),
     expand = expansion(mult = 0.01)
@@ -234,7 +282,7 @@ paml.omega.psg <- paml |>
 
     # Strip
     strip.text = element_text(size = 16, face = 'bold'),
-    strip.background = element_rect(fill = RColorBrewer::brewer.pal(n = 12, 'Set3')[1])
+    strip.background = element_rect(fill = '#4faf48')
   )
 
 paml.omega.nonpsg <- paml |>
@@ -247,12 +295,12 @@ paml.omega.nonpsg <- paml |>
       fill = partition
     )
   ) +
-  geom_boxplot() +
+  geom_boxplot(alpha = 0.3, linewidth = 1) +
   labs(
     x = '\u03C9-rate-category',
     y = 'Omega (\u03C9)',
   ) +
-  scale_fill_manual(values = RColorBrewer::brewer.pal(n = 12, 'Set3')[c(5,6)]) +
+  scale_fill_manual(values = c('#264653', '#e9c46a')) +
   scale_y_log10(
     breaks = c(0.001, 0.01, 0.1, 1,10, 100, 500),
     expand = expansion(mult = 0.01)
@@ -277,8 +325,8 @@ paml.omega.nonpsg <- paml |>
     legend.position = 'bottom',
 
     # Strip
-    strip.text = element_text(size = 16, face = 'bold'),
-    strip.background = element_rect(fill = RColorBrewer::brewer.pal(n = 12, 'Set3')[4])
+    strip.text = element_text(size = 16, face = 'bold')
+    # strip.background = element_rect(fill = RColorBrewer::brewer.pal(n = 12, 'Set3')[4])
   )
 
 # Manually make an x-axis label that spans all plots
@@ -287,11 +335,10 @@ x.lab <- ggplot(data.frame(l = '\u03C9-rate-category', x = 1, y = 1)) +
   theme_void() +
   coord_cartesian(clip = "off")
 
-ragg::agg_png(
-  filename = here('figures','supplementary','figure-x-selection-paml-prop-omega.png'),
-  width = 1000,
-  height = 1000,
-  scaling = 1.2
+grDevices::cairo_pdf(
+  filename = here('figures','supplementary','figure-x-selection-paml-prop-omega.pdf'),
+  width = 10,
+  height = 10
 )
 (paml.prop / (paml.omega.psg + paml.omega.nonpsg)) / x.lab +
   plot_layout(guides = 'collect', heights = c(1,1,0.1)) &

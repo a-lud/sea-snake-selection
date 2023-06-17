@@ -8,8 +8,10 @@
 
 # ------------------------------------------------------------------------------------------------ #
 # Libraries
-library(tidyverse)
-library(here)
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(here)
+})
 
 # ------------------------------------------------------------------------------------------------ #
 # Load FAI files
@@ -30,11 +32,11 @@ fai.chr <- fs::dir_ls(
       sample == 'hydrophis_major-haplotype2' ~ 'Hydrophis major (haplotype 2)',
       sample == 'hydrophis_elegans-garvin' ~ 'Hydrophis elegans',
       sample == 'hydrophis_ornatus-garvin' ~ 'Hydrophis ornatus',
-      sample == 'hydrophis_curtus-garvin' ~ 'Hydrophis curtus'
+      sample == 'hydrophis_curtus-garvin' ~ 'Hydrophis curtus (West)'
     ),
     sample = factor(sample, levels = c(
       'Hydrophis major', 'Hydrophis major (haplotype 1)', 'Hydrophis major (haplotype 2)',
-      'Hydrophis elegans', 'Hydrophis ornatus', 'Hydrophis curtus'
+      'Hydrophis ornatus', 'Hydrophis curtus (West)', 'Hydrophis elegans'
     )),
     type = 'Chromosome/Scaffold'
   ) |>
@@ -52,7 +54,6 @@ fai.chr <- fs::dir_ls(
   ) |>
   ungroup()
 
-# Note: I don't have access to the contig data for H. ornatus/curtus
 fai.contig <- fs::dir_ls(
   path = here('data', 'genomes', 'contigs'),
   glob = '*.fai'
@@ -69,7 +70,13 @@ fai.contig <- fs::dir_ls(
       sample == 'hydrophis_major-haplotype1' ~ 'Hydrophis major (haplotype 1)',
       sample == 'hydrophis_major-haplotype2' ~ 'Hydrophis major (haplotype 2)',
       sample == 'hydrophis_elegans' ~ 'Hydrophis elegans',
+      sample == 'hydrophis_ornatus-garvin' ~ 'Hydrophis ornatus',
+      sample == 'hydrophis_curtus-garvin' ~ 'Hydrophis curtus (West)'
     ),
+    sample = factor(sample, levels = c(
+      'Hydrophis major', 'Hydrophis major (haplotype 1)', 'Hydrophis major (haplotype 2)',
+      'Hydrophis ornatus', 'Hydrophis curtus (West)', 'Hydrophis elegans'
+    )),
     type = 'Contig'
   ) |>
   select(
@@ -94,11 +101,10 @@ fai <- fai.chr |>
 
 # ------------------------------------------------------------------------------------------------ #
 # Nx plot
-png(
-  filename = here('figures','supplementary','figure-x-genome-Nx.png'),
-  width = 1000,
-  height = 1000,
-  units = 'px'
+grDevices::cairo_pdf(
+  filename = here('figures','supplementary','figure-x-genome-Nx.pdf'),
+  width = 12,
+  height = 12
 )
 fai |>
   ggplot(
@@ -132,14 +138,14 @@ fai |>
   theme_bw() +
   theme(
     # Axis titles
-    axis.title = element_text(size = 16, face = 'bold'),
+    axis.title = element_text(size = 20, face = 'bold'),
 
     # Axis text
-    axis.text = element_text(size = 14),
+    axis.text = element_text(size = 18),
 
     # Legend
-    legend.title = element_text(size = 16, face = 'bold'),
-    legend.text = element_text(size = 14, face = 'italic'),
-    legend.position = c(0.86, 0.85)
+    legend.title = element_text(size = 20, face = 'bold'),
+    legend.text = element_text(size = 18, face = 'italic'),
+    legend.position = c(0.75, 0.85)
   )
 invisible(dev.off())

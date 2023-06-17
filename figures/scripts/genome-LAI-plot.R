@@ -6,9 +6,11 @@
 
 # ------------------------------------------------------------------------------------------------ #
 # Libraries
-library(tidyverse)
-library(scales)
-library(here)
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(scales)
+  library(here)
+})
 
 # ------------------------------------------------------------------------------------------------ #
 # Sequences to keep for each snake - taking top 50 longest sequences in non-chromosomal samples
@@ -66,7 +68,7 @@ lai.seqs <- lai %>%
     sample = case_when(
       sample == 'hydrophis_major' ~ 'Hydrophis major',
       sample == 'hydrophis_ornatus-garvin' ~ 'Hydrophis ornatus',
-      sample == 'hydrophis_curtus-garvin' ~ 'Hydrophis curtus (AG)',
+      sample == 'hydrophis_curtus-garvin' ~ 'Hydrophis curtus (West)',
       sample == 'hydrophis_elegans' ~ 'Hydrophis elegans'
     )
   )
@@ -77,7 +79,7 @@ plt <- lai.seqs %>%
   split(., .$sample) %>%
   iwalk(~{
 
-    if (.y %in% c('Hydrophis major', 'Hydrophis ornatus', 'Hydrophis curtus (AG)')) {
+    if (.y %in% c('Hydrophis major', 'Hydrophis ornatus', 'Hydrophis curtus (West)')) {
       x.label <- '\nChromosome position (Mb)'
       lvls <- c(paste0(rep('chr', 15), 1:15), 'chrZ')
       nr <- 4
@@ -130,17 +132,16 @@ plt <- lai.seqs %>%
       )
 
     # Save PNG
-    ragg::agg_png(
-      filename = here('figures','supplementary', glue::glue('figure-x-LAI-{.y}.png')),
-      width = 1000,
-      height = 1000,
-      units = 'px'
+    grDevices::cairo_pdf(
+      filename = here('figures','supplementary', glue::glue('figure-x-LAI-{.y}.pdf')),
+      width = 12,
+      height = 12
     )
     print(fig)
     invisible(dev.off())
   })
 
- # ------------------------------------------------------------------------------------------------ #
+# ------------------------------------------------------------------------------------------------ #
 # Whole genome table
 write_csv(
   lai.whole_genome,

@@ -22,7 +22,7 @@ suppressPackageStartupMessages({
 
 # ------------------------------------------------------------------------------------------------ #
 # Parameterise
-my_ouput <- here('figures', 'supplementary', 'figure-x-busco-hydrophis-elegans-genome.png')
+my_ouput <- here('figures', 'supplementary', 'figure-x-busco-hydrophis-elegans-genome.pdf')
 my_width <- 30
 my_height <- 15
 my_unit <- "cm"
@@ -217,11 +217,10 @@ for (i in rev(1:length(lvls)) ) {
 
 # ------------------------------------------------------------------------------------------------ #
 # Save plot to file
-png(
+grDevices::cairo_pdf(
   filename = my_ouput,
-  width = 800,
-  height = 800,
-  units = 'px',
+  width = 10,
+  height = 10,
 )
 fig
 invisible(dev.off())

@@ -22,7 +22,7 @@ suppressPackageStartupMessages({
 
 # ------------------------------------------------------------------------------------------------ #
 # Parameterise
-my_ouput <- here('figures', 'supplementary', 'figure-x-busco-hydrophis-major-genome.png')
+my_ouput <- here('figures', 'supplementary', 'figure-x-busco-hydrophis-major-genome.pdf')
 my_width <- 30
 my_height <- 15
 my_unit <- "cm"
@@ -62,17 +62,18 @@ n <- n %>%
   sub('hap1', "Haplotype 1", .) %>%
   sub('hap2', 'Haplotype 2', .) %>%
   sub('p_ctg', 'Primary', .) %>%
-  sub('contig-(.*)', '\\1 (contig)', .) %>%
-  sub('scaffolds-(.*)', '\\1 (scaffold)', .) %>%
-  sub('chromosome-(.*)', '\\1 (chromosome)', .)
+  sub('contig-(.*)', 'hifiasm (\\1)', .) %>%
+  sub('scaffolds-(.*)', 'pin_hic (\\1)', .) %>%
+  sub('chromosome-(.*)', 'TGS-GapCloser (\\1)', .) %>%
+  sub('Haplotype ', 'Hap-', .)
 
 names(files) <- n
 
 # Set levels
 lvls <- c(
-  "Primary (chromosome)", "Haplotype 1 (chromosome)", "Haplotype 2 (chromosome)",
-  "Primary (scaffold)", "Haplotype 1 (scaffold)","Haplotype 2 (scaffold)",
-  'Primary (contig)', 'Haplotype 1 (contig)', 'Haplotype 2 (contig)'
+  "TGS-GapCloser (Primary)", "TGS-GapCloser (Hap-1)", "TGS-GapCloser (Hap-2)",
+  "pin_hic (Primary)", "pin_hic (Hap-1)", "pin_hic (Hap-2)",
+  "hifiasm (Primary)", "hifiasm (Hap-1)", "hifiasm (Hap-2)"
 )
 
 # Parse text into a table
@@ -230,11 +231,10 @@ for (i in rev(1:length(lvls)) ) {
 
 # ------------------------------------------------------------------------------------------------ #
 # Save plot to file
-png(
+grDevices::cairo_pdf(
   filename = my_ouput,
-  width = 800,
-  height = 800,
-  units = 'px',
+  width = 10,
+  height = 10
 )
 fig
 invisible(dev.off())

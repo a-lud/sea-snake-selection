@@ -22,7 +22,7 @@ suppressPackageStartupMessages({
 
 # ------------------------------------------------------------------------------------------------ #
 # Parameterise
-my_ouput <- here('figures', 'supplementary', 'figure-x-busco-hard-mask.png')
+my_ouput <- here('figures', 'supplementary', 'figure-x-busco-hard-mask.pdf')
 my_width <- 30
 my_height <- 15
 my_unit <- "cm"
@@ -44,12 +44,11 @@ labsize = 1
 # ------------------------------------------------------------------------------------------------ #
 # Load files
 files <- dir_ls(
-  path = here('data','busco','genomes','hardmasked'),
+  path = here('data','busco','genomes','hardmask-RM'),
   glob = '*.txt',
   recurse = TRUE
 ) %>%
-  as.character() |>
-  extract(2:5)
+  as.character()
 
 files <- files[str_detect(string = files, 'short_summary.specific')] %>%
   set_names(sub('.+_odb10.(.*).txt', '\\1', basename(.)))
@@ -164,7 +163,7 @@ fig <- dat %>%
     legend.position = "top", legend.title = element_blank(),
     legend.text = element_text(
       family=my_family,
-      size = 14 #rel(1.2) * my_size_ratio
+      size = 14
     ),
 
     # Panel
@@ -177,12 +176,12 @@ fig <- dat %>%
       family = my_family,
       face = 'italic',
       colour = "black",
-      size = 14 #rel(1.66) * my_size_ratio
+      size = 14
     ),
     axis.text.x = element_text(
       family=my_family,
       colour = "black",
-      size = 14 #rel(1.66) * my_size_ratio
+      size = 14
     ),
 
     # Axis lines (x and y)
@@ -230,11 +229,10 @@ for (i in rev(1:length(lvls)) ) {
 
 # ------------------------------------------------------------------------------------------------ #
 # Save plot to file
-png(
+grDevices::cairo_pdf(
   filename = my_ouput,
-  width = 800,
-  height = 800,
-  units = 'px',
+  width = 10,
+  height = 10,
 )
 fig
 invisible(dev.off())

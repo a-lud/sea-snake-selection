@@ -62,12 +62,12 @@ input <- tibble(
 ) |>
   mutate(
     # Positively selected genes
-    MarinePSG = orthogroups %in% psg.marine,
+    PSG = orthogroups %in% psg.marine,
 
     # RELAX results
     Intensification = orthogroups %in% relax.sig.intense,
     Relaxation = orthogroups %in% relax.sig.relax,
-    RelaxInsignificant = orthogroups %in% relax.insignif,
+    Insignificant = orthogroups %in% relax.insignif,
 
     # Classify orthogroups that are shared/psgs in terrestrial
     grouping = case_when(
@@ -78,26 +78,31 @@ input <- tibble(
   )
 
 # Save UpSet plot
-ragg::agg_png(
-  filename = here('figures', 'manuscript', 'figure-x-upset.png'),
-  width = 1000,
-  height = 1000,
-  units = 'px',
-  # scaling = 144
+# ragg::agg_png(
+#   filename = here('figures', 'manuscript', 'figure-x-upset.png'),
+#   width = 2000,
+#   height = 500,
+#   units = 'px',
+#   # scaling = 0.8
+# )
+grDevices::cairo_pdf(
+  filename = here('figures','manuscript','upset.pdf'),
+  height = 10,
+  width = 15
 )
 upset(
   # General parameters
   input,
-  c('RelaxInsignificant', 'Intensification', 'Relaxation', 'MarinePSG'),
+  c('Insignificant', 'Intensification', 'Relaxation', 'PSG'),
   name = 'Gene set intersections',
-  min_size = 10,
-  group_by = 'sets',
+  # group_by = 'sets',
   stripes = 'white',
   sort_sets = FALSE,
 
   # Height/Width ratios between components
-  width_ratio=0.2,
-  height_ratio = 0.7,
+  min_size = 10,
+  width_ratio=0.5,
+  # height_ratio = 0.7,
 
   # Intersection matrix
   matrix = (
@@ -105,7 +110,7 @@ upset(
       geom = geom_point(size = 5),
       segment = geom_segment(
         linewidth = 1.5,
-        linetype = 'dotted'
+        # linetype = 'dotted'
       ),
       outline_color = list(
         active = 'black',
@@ -114,87 +119,80 @@ upset(
     )
   ),
 
+  # Manually set intersections
+  intersections = list(
+    c('PSG', 'Relaxation'),
+    c('PSG', 'Intensification'),
+    c('PSG', 'Insignificant'),
+    'Relaxation',
+    'Intensification',
+    'Insignificant'
+  ),
+
+  # Intersection size bar plot
+  base_annotations = list(
+    'Intersection size' = intersection_size(
+      fill = 'grey80',
+      colour = 'black',
+      counts = TRUE,
+      text = list(size = 6, fontface = 'bold', vjust = -0.8))
+  ),
+
   # Parameters: Set
   set_sizes = upset_set_size(
     geom = geom_bar(
       colour = 'black',
-      # width = 0.8,
+      width = 0.8,
       alpha = 0.7
-    )
-  ),
+    ),
+  ) +
+    ylab('Gene set sizes') +
+    geom_text(
+      aes(label = after_stat(count)),
+      colour = 'white',
+      fontface = 'bold',
+      hjust = 1.2,
+      stat = 'count',
+      size = 7,
+      position=position_stack(vjust=1)
+    ),
 
   # Colour grouped sets
   queries = list(
     # Colour 'set size' bars
-    upset_query(set = 'MarinePSG', fill = '#277da1'),
-    upset_query(set = 'Intensification', fill = '#dc2f02'),
-    upset_query(set = 'Relaxation', fill = '#00a896'),
-    upset_query(set = 'RelaxInsignificant', fill = '#22333b'),
+    upset_query(set = 'PSG', fill = '#4eaf49'),
+    upset_query(set = 'Intensification', fill = '#fb807280'),
+    upset_query(set = 'Relaxation', fill = '#80b1d380'),
+    upset_query(set = 'Insignificant', fill = '#22333b80'),
 
     # Colour circles in matrix
-    upset_query(group = 'MarinePSG', color = '#277da1'),
-    upset_query(group = 'Intensification', color = '#dc2f02'),
-    upset_query(group = 'Relaxation', color = '#00a896'),
-    upset_query(group = 'RelaxInsignificant', color = '#22333b')
+    upset_query(intersect = c('PSG', 'Relaxation'), color = '#4eaf49'),
+    upset_query(intersect = c('PSG', 'Intensification'), color = '#4eaf49'),
+    upset_query(intersect = c('PSG', 'Insignificant'), color = '#4eaf49'),
+    upset_query(intersect = 'Relaxation', color = '#80b1d3'),
+    upset_query(intersect = 'Intensification', color = '#fb8072'),
+    upset_query(intersect = 'Insignificant', color = '#22333b')
   ),
 
   # Parameters: Intersection bar-plot (top)
   sort_intersections_by=c('degree'),
 
-  base_annotations = list(
-    'Intersection size' = intersection_size(
-      color = 'black',
-      counts = TRUE,
-      alpha = 0.7,
-      mapping = aes(fill = grouping)
-    ) +
-      scale_fill_manual(
-        values = c(
-          'Shared' = '#2a9d8f',
-          'Terrestrial' = '#ffb703'
-        )
-      ) +
-      labs(
-        fill = 'PSG sets'
-      )
-  ),
-
   # Themes: Adjust for each plot component
   themes = upset_modify_themes(
     list(
       'Intersection size' = theme(
-        axis.text = element_text(size = 14),
-        axis.title = element_text(size = 20, face = 'bold'),
-        legend.title = element_text(size = 16, face = 'bold'),
-        legend.text = element_text(size = 14)
+        axis.text = element_text(size = 22),
+        axis.title = element_text(size = 25, face = 'bold')
       ),
       'intersections_matrix' = theme(
-        axis.title = element_text(size = 18, face = 'bold'),
-        axis.text = element_text(size = 14)
+        axis.title = element_text(size = 25, face = 'bold'),
+        axis.text = element_text(size = 22)
       ),
       'overall_sizes' = theme(
-        axis.title = element_text(size = 18, face = 'bold'),
-        axis.text.x = element_text(size = 14, angle = 45)
+        axis.title = element_text(size = 25, face = 'bold'),
+        axis.text.x = element_text(size = 22, angle = 45, vjust = 0.5)
       )
     )
   )
 )
-dev.off()
-
-# ------------------------------------------------------------------------------------------------ #
-# Get GO terms for the 20 relaxed marine-PSGs
-# read_csv(
-#   file = here('orthologs/ortholog-annotation/results/ortholog-annotation/orthologs-13.csv'),
-#   col_names = TRUE,
-#   col_types = cols()
-# ) |>
-#   filter(orthogroup %in% (relax.sig.relax[relax.sig.relax %in% psg.marine]))|>
-#   pull(GO) |>
-#   str_split(' ') |>
-#   unlist() |>
-#   unique() |>
-#   write_lines(here('selection/'))
-#
-# options(scipen = 999)
-# relax |>
-#   filter(orthogroup %in% relax.sig.relax[relax.sig.relax %in% psg.marine]) |>View()
+invisible(dev.off())

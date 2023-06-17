@@ -8,8 +8,10 @@
 
 # ------------------------------------------------------------------------------------------------ #
 # Libraries
-library(tidyverse)
-library(here)
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(here)
+})
 
 # ------------------------------------------------------------------------------------------------ #
 # Read in FAI files
@@ -30,7 +32,7 @@ fai.chr <- fs::dir_ls(
       sample == 'hydrophis_major-haplotype2' ~ 'Hydrophis major (haplotype 2)',
       sample == 'hydrophis_elegans-garvin' ~ 'Hydrophis elegans',
       sample == 'hydrophis_ornatus-garvin' ~ 'Hydrophis ornatus',
-      sample == 'hydrophis_curtus-garvin' ~ 'Hydrophis curtus'
+      sample == 'hydrophis_curtus-garvin' ~ 'Hydrophis curtus (West)'
     )
   ) |>
   select(
@@ -45,7 +47,7 @@ fai.chr <- fs::dir_ls(
     csum = cumsum(length),
     sample = factor(sample, levels = c(
       'Hydrophis major', 'Hydrophis major (haplotype 1)', 'Hydrophis major (haplotype 2)',
-      'Hydrophis elegans', 'Hydrophis ornatus', 'Hydrophis curtus'
+      'Hydrophis ornatus', 'Hydrophis curtus (West)', 'Hydrophis elegans'
     )),
     type = 'Chromosome/Scaffold'
   ) |>
@@ -68,6 +70,8 @@ fai.contig <- fs::dir_ls(
       sample == 'hydrophis_major-haplotype1' ~ 'Hydrophis major (haplotype 1)',
       sample == 'hydrophis_major-haplotype2' ~ 'Hydrophis major (haplotype 2)',
       sample == 'hydrophis_elegans' ~ 'Hydrophis elegans',
+      sample == 'hydrophis_ornatus-garvin' ~ 'Hydrophis ornatus',
+      sample == 'hydrophis_curtus-garvin' ~ 'Hydrophis curtus (West)'
     )
   ) |>
   select(
@@ -82,7 +86,7 @@ fai.contig <- fs::dir_ls(
     csum = cumsum(length),
     sample = factor(sample, levels = c(
       'Hydrophis major', 'Hydrophis major (haplotype 1)', 'Hydrophis major (haplotype 2)',
-      'Hydrophis elegans'
+      'Hydrophis ornatus', 'Hydrophis curtus (West)','Hydrophis elegans'
     )),
     type = 'Contig'
   ) |>
@@ -96,11 +100,10 @@ fai <- fai.chr |>
 
 # ------------------------------------------------------------------------------------------------ #
 # Cumulative length distribution (limited to the first 1000 sequences)
-png(
-  filename = here('figures','supplementary','figure-x-genome-cumulative-length.png'),
-  width = 800,
-  height = 900,
-  units = 'px'
+grDevices::cairo_pdf(
+  filename = here('figures','supplementary','figure-x-genome-cumulative-length.pdf'),
+    width = 11,
+    height = 12,
 )
 fai |>
   filter(idx <= 1000) |>
@@ -117,8 +120,8 @@ fai |>
     alpha = 0.6
   ) +
   labs(
-    x = 'Sequence index',
-    y = 'Cumulative sequence length (Gbp)',
+    x = '\nSequence index',
+    y = 'Cumulative sequence length (Gbp)\n',
     colour = 'Genome Assembly',
     linetype = 'Assembly Stage'
   ) +
@@ -131,14 +134,14 @@ fai |>
   theme_bw() +
   theme(
     # Axis titles
-    axis.title = element_text(size = 16, face = 'bold'),
+    axis.title = element_text(size = 20, face = 'bold'),
 
     # Axis text
-    axis.text = element_text(size = 14),
+    axis.text = element_text(size = 18),
 
     # Legend
-    legend.title = element_text(size = 16, face = 'bold'),
-    legend.text = element_text(size = 14, face = 'italic'),
+    legend.title = element_text(size = 20, face = 'bold'),
+    legend.text = element_text(size = 18, face = 'italic'),
     legend.position = c(0.78, 0.17)
   )
 invisible(dev.off())

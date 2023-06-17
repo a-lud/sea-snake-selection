@@ -58,13 +58,12 @@ ltr.times <- gff.tibble |>
 # ------------------------------------------------------------------------------------------------ #
 # Histogram plots where x-axis is the insertion time in Mya and Y axis is the count of elements
 options(scipen = 999)
-png(
-  filename = 'figures/supplementary/figure-x-repeats-ltr-insertion.png',
-  width = 800,
-  height = 1000,
-  units = 'px'
+pdf(
+  file = 'figures/manuscript/figure-x-repeats-ltr-insertion.pdf',
+  width = 8,
+  height = 8
 )
-ltr.times |>
+plt <- ltr.times |>
   ggplot(
     aes(
       x = Time,
@@ -73,32 +72,47 @@ ltr.times |>
   ) +
   geom_histogram(
     bins = 50,
-    alpha = 0.8,
+    alpha = 0.5,
     position = 'identity'
+  )
+
+binwidth <- layer_data(plt) %>% mutate(w=xmax-xmin) %>% pull(w) %>% median
+
+plt +
+  stat_bin(
+    aes(y = after_stat(count)),
+    bins = 50,
+    geom = 'step',
+    # position = 'identity',
+    linewidth = 1.4,
+    position=position_nudge(x=-0.5*binwidth)
   ) +
   scale_x_continuous(
-    labels = scales::label_number(suffix = 'M', scale = 1e-6),
+    labels = scales::label_number(scale = 1e-6),
     breaks = seq(0,15e6, 2.5e6),
   ) +
   scale_y_continuous(expand = c(0.01,0)) +
-  scale_fill_manual(values = rev(ggpomological:::pomological_palette[c(1,2,4)])) +
+  scale_fill_manual(values = c('#edae49', '#d1495b', '#00798c')) +
   labs(
-    x = 'Insertion age (Mya)',
-    y = 'Count'
+    x = '\nInsertion age (Mya)',
+    y = 'Repeats (count)\n',
+    fill = ''
   ) +
-  theme_bw() +
-  facet_wrap(. ~ sample,  nrow = 2) +
+  theme_minimal() +
+  facet_wrap(~sample) +
   theme(
     # Axis titles/text
-    axis.text = element_text(size = 14),
-    axis.title = element_text(size = 16, face = 'bold'),
+    axis.text = element_text(size = 18),
+    axis.title = element_text(size = 20, face = 'bold'),
 
     # Legend
-    legend.title = element_text(size = 16, face = 'bold'),
-    legend.text = element_text(size = 14),
-    legend.position = c(0.92, 0.95),
+    legend.title = element_text(size = 20, face = 'bold'),
+    legend.text = element_text(size = 18),
+    legend.position = 'bottom',
+    # legend.position = c(0.92, 0.90),
 
     # Strip text
-    strip.text = element_text(size = 14, face = 'bold.italic')
+    strip.text = element_text(size = 20, face = 'bold.italic')
   )
-invisible(dev.off())
+ invisible(dev.off())
+
