@@ -111,6 +111,61 @@ panther.human.sig <- parsePanther(here('go-enrichment', 'results', 'panther'), g
   mutate(Ontology = str_extract(Ontology, 'BP|CC|MF'))
 
 # ------------------------------------------------------------------------------------------------ #
+# Unique genes to each specific GO term
+tmp.all <- panther.human.sig |>
+  mutate(grouping = ifelse(level == 0, GO, NA_character_)) |>
+  fill(grouping,.direction =  'down') |>
+  group_by(grouping) |>
+  summarise(unq = paste(Genes, collapse = ' ')) |>
+  ungroup() |>
+  mutate(unq = str_split(unq, ' '))
+
+tmp.spec <- panther.human.sig |>
+  filter(level == 0) |>
+  mutate(grouping = ifelse(level == 0, GO, NA_character_)) |>
+  fill(grouping,.direction =  'down') |>
+  group_by(grouping) |>
+  summarise(unq = paste(Genes, collapse = ' ')) |>
+  ungroup() |>
+  mutate(unq = str_split(unq, ' '))
+
+df.all <- map(tmp.all$grouping, \(go) {
+  genes <- tmp.all |> filter(grouping == go) |> pull(unq) |> unlist()
+
+  remaining <- tmp.all |>
+    filter(grouping != go) |>
+    pull(unq) |>
+    unlist() |>
+    unique()
+
+  tibble(
+    GO = go,
+    all_levels = paste0(genes[! genes %in% remaining], collapse = ' ')
+  ) |>
+    mutate(all_levels = ifelse(all_levels == '', NA_character_, all_levels))
+}) |>
+  list_rbind()
+
+map(tmp.spec$grouping, \(go) {
+  genes <- tmp.spec |> filter(grouping == go) |> pull(unq) |> unlist()
+
+  remaining <- tmp.spec |>
+    filter(grouping != go) |>
+    pull(unq) |>
+    unlist() |>
+    unique()
+
+  tibble(
+    GO = go,
+    level_0 = paste0(genes[! genes %in% remaining], collapse = ' ')
+  ) |>
+    mutate(level_0 = ifelse(level_0 == '', NA_character_, level_0))
+}) |>
+  list_rbind()
+
+
+panther.human.sig |> left_join(df.spec) |> left_join(df.all)
+# ------------------------------------------------------------------------------------------------ #
 # Export GO terms for REVIGO - top level (most specific) only
 panther.human.sig |>
   filter(level == 0) |>
