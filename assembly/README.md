@@ -28,8 +28,8 @@ Alastair Ludington
 # 1 Introduction
 
 This repository contains the scripts and (some) output files from the
-assembly and repeat annotation of the genomes *H. major*, *H. ornatus*,
-*H. curtus (West)* and *H. elegans*.
+assembly and repeat annotation of the *H. major*, *H. ornatus*, *H.
+curtus (West)* and *H. elegans* genomes.
 
 # 2 Assembly: *Hydrophis major*
 
