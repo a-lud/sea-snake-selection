@@ -418,7 +418,9 @@ purge_haplotigs purge -g "${ASM}" -c "${OUT}/coverage_stats.csv"
 Finally, the contig assemblies were scaffolded using the program
 [Juicer](https://github.com/aidenlab/juicer). *Juicer* is a Hi-C
 analysis pipeline that starts with Fastq files and generates Hi-C
-contact matrices from the data.
+contact matrices from the data. These contact matrices (`.hic` files)
+were then loaded into *JBAT* and manually curated to form the chromosome
+sequences.
 
 ``` bash
 # idk
@@ -436,10 +438,10 @@ contact matrices from the data.
 - [hydrophis_ornatus/genome_assessment](https://github.com/a-lud/sea-snake-selection/tree/main/assembly/hydrophis_ornatus/genome_assessment)
 - [hydrophis_curtus_west/genome_assessment](https://github.com/a-lud/sea-snake-selection/tree/main/assembly/hydrophis_curtus_west/genome_assessment)
 
-Similar to above, the same genome assessment techniques were used:
+Similar to *H. major*, the same genome assessment techniques were used:
 *GenomeScope2*, *BUSCO*, *Merqury* and *QUAST*. The scripts used to run
-these programs can be found in the directory listed above, with some of
-the relevant outputs found in the `Outdir` link.
+these programs can be found in the directories listed above, with some
+of the relevant outputs found in the `Outdir` links.
 
 # 5 Repeat Annotation
 
