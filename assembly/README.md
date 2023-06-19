@@ -564,9 +564,9 @@ the command below:
 ``` bash
 # 05-lai-p_ctg.sh
 LAI \
-  -genome "${EDTADIR}/hydmaj-p_ctg-v1.fna.mod" \
-  -intact "${EDTADIR}/hydmaj-p_ctg-v1.fna.mod.EDTA.raw/LTR/hydmaj-p_ctg-v1.fna.mod.pass.list" \
-  -all "${EDTADIR}/hydmaj-p_ctg-v1.fna.mod.EDTA.anno/hydmaj-p_ctg-v1.fna.mod.out" \
+  -genome "${EDTADIR}/genome.fa.mod" \
+  -intact "${EDTADIR}/genome.fa.mod.EDTA.raw/LTR/genome.fa.mod.pass.list" \
+  -all "${EDTADIR}/genome.fa.mod.EDTA.anno/genome.fa.mod.out" \
   -t ${SLURM_CPUS_PER_TASK}
 ```
 

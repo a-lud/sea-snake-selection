@@ -1,15 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=LAI
-#SBATCH -p batch
-#SBATCH -N 1
-#SBATCH -n 1
-#SBATCH -c 40
-#SBATCH --ntasks-per-core=1
-#SBATCH --time=72:00:00
-#SBATCH --mem=80GB
-#SBATCH -o /home/a1645424/hpcfs/hydmaj-genome/repeats/slurm/%x_%j.log
-#SBATCH --mail-type=FAIL
-#SBATCH --mail-user=alastair.ludington@adelaide.edu.au
+#SBATCH ...
 
 # Directories ---
 DIR='/home/a1645424/hpcfs/hydmaj-genome/repeats'

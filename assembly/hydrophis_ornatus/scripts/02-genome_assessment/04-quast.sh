@@ -1,15 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=quast
-#SBATCH -p batch
-#SBATCH -N 1
-#SBATCH -n 1
-#SBATCH -c 20
-#SBATCH -a 1-2
-#SBATCH --time=02:00:00
-#SBATCH --mem=20GB
-#SBATCH -o /hpcfs/users/a1645424/analysis/quast/scripts/joblogs/%x_%a_%A_%j.log
-#SBATCH --mail-type=FAIL
-#SBATCH --mail-user=alastair.ludington@adelaide.edu.au
+#SBATCH ...
 
 DIR='/hpcfs/users/a1645424/analysis/quast'
 GENOMES="${DIR}/genomes"

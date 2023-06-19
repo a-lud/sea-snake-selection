@@ -1,16 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=all
-#SBATCH -p batch
-#SBATCH -N 1
-#SBATCH -n 1
-#SBATCH -c 8
-#SBATCH -a 1-2
-#SBATCH --ntasks-per-core=1
-#SBATCH --time=04:00:00
-#SBATCH --mem=20GB
-#SBATCH -o /hpcfs/users/a1645424/analysis/repeat-sea-snakes/scripts/joblogs/%x_%a_%A_%j.log
-#SBATCH --mail-type=FAIL
-#SBATCH --mail-user=alastair.ludington@adelaide.edu.au
+#SBATCH ...
 
 # NOTE: I've edited the EDTA.pl script to not run the RAW step.
 # All this script does is generate some intermediate files that need to be made

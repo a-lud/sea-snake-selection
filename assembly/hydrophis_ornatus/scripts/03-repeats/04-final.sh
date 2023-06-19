@@ -1,16 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=final
-#SBATCH -p batch
-#SBATCH -N 1
-#SBATCH -n 1
-#SBATCH -c 40
-#SBATCH -a 1-2
-#SBATCH --ntasks-per-core=1
-#SBATCH --time=72:00:00
-#SBATCH --mem=50GB
-#SBATCH -o /hpcfs/users/a1645424/analysis/repeat-sea-snakes/scripts/joblogs/%x_%a_%A_%j.log
-#SBATCH --mail-type=FAIL
-#SBATCH --mail-user=alastair.ludington@adelaide.edu.au
+#SBATCH ...
 
 GENOMES="/hpcfs/users/a1645424/analysis/repeat-sea-snakes/genomes"
 CDS='/hpcfs/users/a1645424/analysis/repeat-sea-snakes/cds'

@@ -1,15 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=EDTA-filter
-#SBATCH -p batch
-#SBATCH -N 1
-#SBATCH -n 1
-#SBATCH -c 40
-#SBATCH --ntasks-per-core=1
-#SBATCH --time=72:00:00
-#SBATCH --mem=80GB
-#SBATCH -o /home/a1645424/hpcfs/hydmaj-genome/repeats/slurm/%x_%j.log
-#SBATCH --mail-type=FAIL
-#SBATCH --mail-user=alastair.ludington@adelaide.edu.au
+#SBATCH ...
 
 ASM='/home/a1645424/hpcfs/hydmaj-genome/hydmaj-chromosomes/hydmaj-p_ctg-v1.fna'
 CDS='/home/a1645424/hpcfs/hydmaj-genome/repeats/cds/notechis_scutatus.fna'

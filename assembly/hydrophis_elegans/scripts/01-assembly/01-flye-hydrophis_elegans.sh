@@ -1,15 +1,5 @@
 #!/usr/bin/env bash
-#PBS -P xl04
-#PBS -q hugemem
-#PBS -l walltime=48:00:00
-#PBS -l storage=gdata/xl04+scratch/xl04
-#PBS -l mem=700GB
-#PBS -l ncpus=48
-#PBS -M alastair.ludington@adelaide.edu.au
-#PBS -m a
-#PBS -N flye
-#PBS -o /g/data/xl04/al4518/garvin/scripts/joblog/flye-hydrophis_elegans.log
-#PBS -j oe
+#PBS ...
 
 # Directories ---
 DIR='/home/566/al4518/al/garvin'
