@@ -1,19 +1,26 @@
-#!/usr/bin/env bash
+#!/bin/bash
+#$ -S /bin/bash
 
-DIR=$(pwd)
-ASM="${DIR}/flye/hydrophis_ornatus/assembly.fasta"
-READS="${DIR}/data/illumina-hydrophis_ornatus.fofn"
-BAM="${DIR}/data/bam"
-OUT="${DIR}/hypo"
 
-mkdir -p "${OUT}/hydrophis_ornatus"
+# arg1: path reference assembly file.
+# arg2: path to text file containg the path to illummina libraries
+# arg3: path to illumina alignment
+# arg4: path to ont alignment to assembly
+# arg5: illumina coverage
+# arg6: path to output file
+# arg7: genome size
 
-hypo \
-  --reads-short "@${READS}" \
-  --draft "${ASM}" \
-  --bam-sr "${BAM}/hydrophis_ornatus-sr.bam" \
-  --coverage-short 60 \
-  --size-ref '2g' \
-  --bam-lr "${BAM}/hydrophis_ornatus-lr.bam" \
-  --output "${OUT}/hydrophis_ornatus.fasta" \
-  --threads 30
+REF=${1}
+THREADS=64
+
+/usr/bin/time -v hypo \
+--draft $REF \
+--reads-short @${2} \
+--size-ref ${7} \
+--coverage-short ${5} \
+--bam-sr ${3} \
+--bam-lr ${4} \
+-p 32 \
+--threads $THREADS \
+-o ${6}/polished.fasta \
+--intermed
