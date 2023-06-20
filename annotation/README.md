@@ -1,57 +1,39 @@
 Gene Annotation
 ================
 Alastair Ludington
-2023-03-14
+2023-06-20
 
-- <a href="#1-introduction" id="toc-1-introduction">1 Introduction</a>
-- <a href="#2-de-novo-annotation" id="toc-2-de-novo-annotation">2 De novo
-  Annotation</a>
-  - <a href="#preparation" id="toc-preparation">Preparation</a>
-    - <a href="#curated-snake-protein-evidence"
-      id="toc-curated-snake-protein-evidence">Curated snake protein
-      evidence</a>
-    - <a href="#liftoff-of-ncbi-annotations-to-snake-genomes"
-      id="toc-liftoff-of-ncbi-annotations-to-snake-genomes">Liftoff of NCBI
-      annotations to snake genomes</a>
-    - <a href="#metaeuk-easy-predict" id="toc-metaeuk-easy-predict">MetaEuk
-      easy-predict</a>
-    - <a href="#summary" id="toc-summary">Summary</a>
-  - <a href="#funannotate" id="toc-funannotate">Funannotate</a>
-    - <a href="#funannotate-train" id="toc-funannotate-train">Funannotate
-      Train</a>
-    - <a href="#funannotate-predict" id="toc-funannotate-predict">Funannotate
-      Predict</a>
-    - <a href="#funannotate-update" id="toc-funannotate-update">Funannotate
-      Update</a>
-    - <a href="#funannotate-annotate"
-      id="toc-funannotate-annotate">Funannotate Annotate</a>
-- <a href="#3-lift-over-annotation" id="toc-3-lift-over-annotation">3
-  Lift-over annotation</a>
-  - <a href="#liftoff" id="toc-liftoff">Liftoff</a>
-- <a href="#4-summary" id="toc-4-summary">4 Summary</a>
+- [1 Introduction](#1-introduction)
+- [2 *De novo* Annotation](#2-de-novo-annotation)
+  - [Preparation](#preparation)
+    - [RefSeq annotations to *Hydrophis*
+      genomes](#refseq-annotations-to-hydrophis-genomes)
+    - [Curated snake protein evidence](#curated-snake-protein-evidence)
+    - [MetaEuk easy-predict](#metaeuk-easy-predict)
+    - [Preparation summary](#preparation-summary)
+  - [Funannotate](#funannotate)
+    - [Funannotate Train](#funannotate-train)
+    - [Funannotate Predict](#funannotate-predict)
+    - [Funannotate Update](#funannotate-update)
+    - [Funannotate Annotate](#funannotate-annotate)
+- [3 Lift-over annotation](#3-lift-over-annotation)
 
 # 1 Introduction
 
-This repository houses the scripts used for protein coding gene
-annotation in *Hydrophis major* and other sea snakes found in the paper.
-The methods below were applied (almost identically) to all snakes that I
-manually annotated. The actual scripts responsible for annotating each
-snake can be found in their respective directories. As such, this
-*README* acts as a guide to the annotation process, showing generalised
-command calls for reader.
+This sub-directory contains the resources relating to gene annotation.
 
 The *de novo* annotated snakes include:
 
 - *Hydrophis major* - New to this study.
-- *Hydrophis curtus* - Previously published ([Li et al.,
+- *Hydrophis curtus (East)* - Previously published ([Li et al.,
   2021](https://academic.oup.com/mbe/article/38/11/4867/6329831)) but no
-  NCBI annotation available.
+  RefSeq annotation.
 - *Hydrophis cyanocinctus* - Previously published ([Li et al.,
   2021](https://academic.oup.com/mbe/article/38/11/4867/6329831)) but no
-  NCBI annotation available.
+  RefSeq annotation.
 
-Snakes that did not have sufficient data to be annotated *de novo*, but
-were annotated using lift-over software include:
+The [Liftoff](https://github.com/agshumate/Liftoff) annotated snakes
+are:
 
 - *Hydrophis elegans* - New to this study.
 - *Hydrophis ornatus* - New to this study
@@ -59,84 +41,54 @@ were annotated using lift-over software include:
 
 The methods for each of the annotation approaches are detailed below
 
-# 2 De novo Annotation
+# 2 *De novo* Annotation
 
 The *de novo* annotation process involved three distinct approaches that
 were integrated to form a final annotation.
 
-1.  Homology-based annotation methods
-2.  *De novo* annotation methods
-3.  Transcriptome data
+1.  Homology-based annotation
+2.  *De novo* annotation
+3.  Transcriptomic evidence
 
-Nearly all of the annotation process was managed by the software
-[Funannotate (v1.8.11)](https://github.com/nextgenusfs/funannotate).
-This tool essentially provides a series of wrapper scripts that automate
-the use of many standard gene-annotation tools/methods that users
-typically want to run.
+For *de novo* annotation, we used the annotation pipeline [Funannotate
+(v1.8.11)](https://github.com/nextgenusfs/funannotate). Like many
+prediction pipelines, it integrates the annotation sources listed above
+and forms a non-redundant set of gene models.
+
+The *de novo* annotation steps below relate to *H. major*, *H. curtus
+(East)* and *H. cyanocinctus*. Please note that I ran the first two
+stages of the *Funannotate* pipeline twice for *H. major*: once on the
+soft-masked genome and once on the standard assembly. I did this to
+maximise gene prediction, but also becuse I had the time and resources.
+I was not able to do this for *H. curtus (East)* or *H. cyanocinctus*.
 
 ## Preparation
 
-Prior to running the `Funannotate` pipeline, a few additional input
-files were generated. These inputs are used by `Funannotate` in the
-`predict` stage of the pipeline. Below, I outline what these files are
-and how they were generated.
+Prior to running the `Funannotate` pipeline, we generated additional
+lines of gene evidence.
 
-### Curated snake protein evidence
+### RefSeq annotations to *Hydrophis* genomes
 
-**Script:**
-[00-mmseqs2-cluster-snake-proteins.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/scripts/hydrophis_major/00-mmseqs2-cluster-snake-proteins.sh)  
+**Scripts:**
+[00-liftoff-genomes-to-hmaj.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/scripts-general/00-liftoff-genomes-to-snakes.sh)
+/
+[liftoff-to-evm.R](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/scripts-general/liftoff-to-evm.R)  
 **Outdir:** Too large to upload
 
-Protein sequences from a range of NCBI-annotated snakes ( [Notechis
+[Liftoff](https://github.com/agshumate/Liftoff) was used to lift RefSeq
+annotations to each of the three *Hydrophis* snakes (RefSeq samples
+included: [Notechis
 scutatus](https://www.ncbi.nlm.nih.gov/genome/?term=Notechis%20scutatus),
 [Pseudonaja
 textilis](https://www.ncbi.nlm.nih.gov/genome/?term=pseudonaja+textilis),
 [Naja
 naja](https://www.ncbi.nlm.nih.gov/data-hub/genome/GCA_009733165.1/),
 [Protobothrops
-mucrosquamatus](https://www.ncbi.nlm.nih.gov/genome/?term=Protobothrops+mucrosquamatus)
-and [Thamnophis
-elegans](https://www.ncbi.nlm.nih.gov/genome/?term=thamnophis+elegans) )
-were concatenated into a single FASTA file. The software [MMseqs2
-(v13.45111)](https://github.com/soedinglab/MMseqs2) was then used to
-generate a non-redundant set of representative sequences. This was
-achieved using the `easy-cluster` argument, which uses a cascade
-clustering algorithm.
-
-The script used to generate the representative protein sequences is
-`00-mmseqs2-cluster-snake-proteins.sh` which is found in the
-`scripts/hydrophis_major` directory. These same curated proteins were
-used for the other snakes that we annotated.
-
-``` bash
-# Reduce the protein set down to a 'representative', non-redundant set
-mmseqs easy-cluster \
-    "${PROT}/snake-proteins.faa" \
-    "${PROT}/snake-proteins-clustered" \
-    "${PROT}/mmtemp" \
-    --min-seq-id 0.9 \
-    -c 0.9 \
-    --cluster-reassign \
-    --threads "${PBS_NCPUS}"
-```
-
-The representative sequences generated by this step are used as protein
-evidence in the actual annotation pipeline.
-
-### Liftoff of NCBI annotations to snake genomes
-
-**Scripts:**
-[00-liftoff-genomes-to-hmaj.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/scripts/hydrophis_major/00-liftoff-genomes-to-hmaj.sh)
-/
-[liftoff-to-evm.R](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/scripts/hydrophis_major/liftoff-to-evm.R)  
-**Outdir:** Too large to upload
-
-As an additional line of evidence, [Liftoff
-(v1.6.3)](https://github.com/agshumate/Liftoff) was used to lift
-annotations from the NCBI snakes listed above, along with [Anolis
-Carolinensis](https://www.ncbi.nlm.nih.gov/genome/?term=Anolis+carolinensis),
-to the genomes of interest. These annotations were then processed to be
-[EVM (v1.1.1)](http://evidencemodeler.github.io/) compatible.
+mucrosquamatus](https://www.ncbi.nlm.nih.gov/genome/?term=Protobothrops+mucrosquamatus),
+[Thamnophis
+elegans](https://www.ncbi.nlm.nih.gov/genome/?term=thamnophis+elegans)
+and [Anolis
+Carolinensis](https://www.ncbi.nlm.nih.gov/genome/?term=Anolis+carolinensis)).
 
 ``` bash
 # NCBI annotated samples
@@ -170,33 +122,56 @@ for SAMPLE in ${SMP}; do
 done
 ```
 
-These output files, which are `EVM` compatible *GFF3* files, were then
-used as `OTHER` evidence to `EVM` during the formation of the
-non-redundant gene set.
+The lifted annotations for each *Hydrophis* snake was used as `OTHER`
+evidence during *Funannotate predict*.
+
+### Curated snake protein evidence
+
+**Script:**
+[00-mmseqs2-cluster-snake-proteins.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/scripts-general/00-mmseqs2-cluster-snake-proteins.sh)  
+**Outdir:** Too large to upload
+
+Next, protein squences from the RefSeq samples above, plus the
+lifted-over annotations and the
+[UniProt-SwissProt](https://www.uniprot.org/) curated protein database
+were pooled together and passed to
+[MMseqs2](https://github.com/soedinglab/MMseqs2) to generate a
+non-redundant set of representative protein sequences. This was achieved
+using the `easy-cluster` argument, which uses a cascade clustering
+algorithm.
+
+``` bash
+# Reduce the protein set down to a 'representative', non-redundant set
+mmseqs easy-cluster \
+    "${PROT}/snake-proteins.faa" \
+    "${PROT}/snake-proteins-clustered" \
+    "${PROT}/mmtemp" \
+    --min-seq-id 0.9 \
+    -c 0.9 \
+    --cluster-reassign \
+    --threads "${PBS_NCPUS}"
+```
+
+These representative proteins were passed as protein evidence to
+*Funannotate predict*.
 
 ### MetaEuk easy-predict
 
 **Scripts:**
-[00-metaeuk-easypredict](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/scripts/hydrophis_major/00-metaeuk-easypredict.sh)
+[00-metaeuk-easypredict](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/scripts-general/00-metaeuk-easypredict.sh)
 /
-[metaeuk-to-evm.R](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/scripts/hydrophis_major/metaeuk-to-evm.R)  
+[metaeuk-to-evm.R](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/scripts-general/metaeuk-to-evm.R)  
 **Outdir:** Too large to upload
 
-The final external gene evidence we generated was homlogy-based gene
-predictions using [MetaEuk
-(v6.a5d39d9)](https://github.com/soedinglab/metaeuk#easy-predict-workflow).
-The curated snake proteins generated by `MMseqs2`, along with the
-[UniProt (SwissProt)](https://www.uniprot.org/) protein database were
-provided as input to `MetaEuk easy-predict`. `Easy-predict` annotations
-were generated for each of the three snakes. The `easy-predict` program
-incorporates the following `MetaEuk` modules into a single step:
-*predictexons*, *reduceredundancy* and *unitesetstofasta*. The output
-was again edited to be `EVM` compatible.
+Finally, we generated external homology-based gene models using
+[MetaEuk](https://github.com/soedinglab/metaeuk#easy-predict-workflow).
+The curated snake proteins and SwissProt database were each provided to
+MetaEuk easy-predict\` module for each of the three snakes.
 
 ``` bash
 # Predict gene models based on protein homology
 metaeuk easy-predict \
-    reference.fa \
+    genome.fa \
     proteins.fa \
     "${OUT}/metaeuk-predictions" \
     "${OUT}" \
@@ -207,22 +182,17 @@ metaeuk easy-predict \
     --remove-tmp-files
 ```
 
-### Summary
+### Preparation summary
 
-To summarise the preparation steps, there are three main outputs that
-have been generated, where each output type may have multiple files
-associated with it.
+To summarise, we generated three additional sources of gene evidence for
+each snakes:
 
-1.  A non-redundant set of snake protein sequences generated by
-    `MMseqs2`
-2.  `EVM` compatible *GFF3* files generated by lifting NCBI gene
-    annotations to the species of interest using `Liftoff`
-3.  `EVM` compatible *GFF3* files generated by predicting gene structure
-    from protein homology using `MetaEuk` relative to the species of
-    interest
+1.  A non-redundant set of protein sequences generated by `MMseqs2`
+2.  *Liftoff* annotations that are `EVM` compatible
+3.  *MetaEuk* `easy-predict` annotations that are EVM\` compatible
 
-Each of these outputs are used in the actual annotation pipeline
-outlined below.
+These external sources of gene evidence were used as inputs to
+*Funannotate* (see below)
 
 ## Funannotate
 
@@ -233,40 +203,27 @@ together in a single pipeline. The beauty of `Funannotate` is that it
 automates a lot of the annoying, manual processes that users normally
 have to deal with.
 
-There are four main stages to `Funannotate`. These are:
-
-1.  Train
-2.  Predict
-3.  Update
-4.  Annotate
-
-I’ll go through each of them below, using the *H. major* scripts in the
-examples. See the scripts directory for the scripts for the other
-snakes.
+There are four main stages to `Funannotate` which are: *Train*,
+*Predict*, *Update*, *Annotate*. Below is a summary of each stage.
 
 ### Funannotate Train
 
-**Script:**
-[01-train.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/scripts/hydrophis_major/01-train.sh)
-/
-[01-train-no-mask](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/scripts/hydrophis_major/01-train-no-mask.sh)  
-**Outdir:** Too large to upload
+**Scripts:**
 
-The `train` module is a wrapper around [Genome Guided Trinity
-(v2.8.5)](https://github.com/trinityrnaseq/trinityrnaseq/wiki/Genome-Guided-Trinity-Transcriptome-Assembly)
-and [PASA (v2.4.1)](https://github.com/PASApipeline/PASApipeline/wiki).
-This stage is responsible for generating the inputs for the `predict`
-module, but doesn’t actually run any ‘training’ (the name is a bit
-confusing in that regard).
+- [01-train.sh (Hydrophis
+  major)](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/hydrophis_major/scripts/01-train.sh)
+- [01-train-hydrophis_curtus.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/hydrophis_curtus-east/scripts/01-train-hydrophis_curtus.sh)
+- [01-train-hydrophis_cyanocinctus.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/hydrophis_cyanocinctus/scripts/01-train-hydrophis_cyanocinctus.sh)
 
-The training module was run twice for *H. major* but only once for *H.
-curtus* and *H. cyanocinctus*. Training was run on both the unmasked and
-soft-masked genome of *H. major*. This was done as I had the time, but
-was not feasible for the other two snakes. As such training was only run
-on the soft-masked genomes of *H. curtus* and *H. cyanocinctus*.
+**Outdir:** Raw outputs not uploaded due to file size limits
 
-This stage takse the RNA-seq as input, along with a maximum intron
-length value (used to simplify RNA-seq spliced alignment).
+*Funannotate train* is essentially a wrapper around [Genome Guided
+Trinity](https://github.com/trinityrnaseq/trinityrnaseq/wiki/Genome-Guided-Trinity-Transcriptome-Assembly)
+and [PASA](https://github.com/PASApipeline/PASApipeline/wiki). RNA-seq
+data is used as input and is first asembled into transcripts by
+*Trinity* before *PASA* is used to generate transcript-derived gene
+models. As the RNA-seq data has already been QC’d, I didn’t run the
+included *Trimmomatic* step.
 
 ``` bash
 # Generate a range of useful data from the RNA-seq
@@ -284,39 +241,34 @@ singularity exec "${CONTAINER}/funannotate-v1.8.11.sif" funannotate train \
 ### Funannotate Predict
 
 **Script:**
-[02-predict.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/scripts/hydrophis_major/02-predict.sh)
-/
-[02-predict-no-mask.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/scripts/hydrophis_major/02-predict-no-mask.sh)  
-**Outdir:** Too large to upload
 
-The `predict` module does most of the work in the `Funannotate`
-pipeline. It is responsible for predicting gene models using a range of
-tools and approaches. At this stage, the pipeline does the following:
+- [02-predict.sh (H.
+  major)](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/hydrophis_major/scripts/02-predict.sh)
+- [02-predict-hydrophis_curtus.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/hydrophis_curtus-east/scripts/02-predict-hydrophis_curtus.sh)
+- [02-predict-hydrophis_cyanocinctus](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/hydrophis_cyanocinctus/scripts/02-predict-hydrophis_cyanocinctus.sh)
 
-- Parse the outputs generated by `train` and train the *de novo*
-  prediction tools:
-  - [AUGUSTUS (v3.3.2)](https://github.com/Gaius-Augustus/Augustus)
-  - [SNAP (v2006-07-28)](https://github.com/KorfLab/SNAP)
-  - [GeneMark (v4.69)](http://exon.gatech.edu/GeneMark/)
-  - [GlimmerHMM (v3.0.4)](https://ccb.jhu.edu/software/glimmerhmm/)
-- Run the trained *de novo* gene prediction tools.
-- Align protein sequences to the reference genome using [Exonerate
-  (v2.4.0)](https://www.ebi.ac.uk/about/vertebrate-genomics/software/exonerate)
-  (`MMseqs2` curated set).
+**Outdir:** Raw outputs not uploaded due to file size limits
+
+*Funannotate predict* does nearly all of the gene prediction. The
+*predict* module performs the following tasks:
+
+- Parse the outputs generated by *Funannotate train* and train the *de
+  novo* prediction tools:
+  - [AUGUSTUS](https://github.com/Gaius-Augustus/Augustus)
+  - [SNAP](https://github.com/KorfLab/SNAP)
+  - [GeneMark](http://exon.gatech.edu/GeneMark/)
+  - [GlimmerHMM](https://ccb.jhu.edu/software/glimmerhmm/)
+- Run each of the trained *de novo* gene prediction tools.
+- Align protein sequences to the reference genome using
+  [Exonerate](https://www.ebi.ac.uk/about/vertebrate-genomics/software/exonerate)
+  (curated proteins and SwissProt).
 - Generate a non-redundant set of gene predictions by integrating all
-  sources of evidence gene-prediction evidence.
-  - *De novo* gene model predictions (`AUGUSTUS`, `SNAP`, `GeneMark`,
-    `GlimmerHMM`)
-  - Homology gene models (`Exonerate` protein alignments)
-  - Transcript gene models (`PASA` gene models)
-  - Other forms of evidence (`MetaEuk` and `Liftoff` inputs generated
-    earlier)
-
-Similar to the training stage above, the `predict` module was run on
-both the unmasked and soft-masked *H. major* genome, but only on the
-soft-masked genome of the *H. curtus* and *H. cyanocinctus* samples. The
-output from this step is a set of non-redundant gene predictions
-generated by `EVM`.
+  sources of evidence:
+  - *De novo* gene model predictions (*AUGUSTUS*, *SNAP*, *GeneMark*,
+    *GlimmerHMM*)
+  - Homology gene models (*Exonerate* protein alignments)
+  - Transcript gene models (*PASA* gene models)
+  - Other forms of evidence (*MetaEuk* and *Liftoff* gene evidence)
 
 ``` bash
 # Predict gene models using a range of tools
@@ -337,19 +289,28 @@ singularity exec "${CONTAINER}/funannotate-v1.8.11.sif" funannotate predict \
     --force
 ```
 
+This stage of the annotation pipeline returns a non-redundant set of
+gene models which have been formed by considering all sources of
+evidence.
+
 ### Funannotate Update
 
 **Script:**
-[03-update.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/scripts/hydrophis_major/03-update.sh)  
-**Outdir:** Too large to upload
 
-This module updates the predicted gene modules using the RNA-seq data
-and `PASA` models. Specifically, the pipeline involves comparing
-predicted gene models to the `Trinity` transcripts assembled into gene
-loci by `PASA`, correcting 5’ and 3’ UTR regions and intron/exon
-structure. High confidence gene models are then selected based on their
-expression, which is quantified using the software [Kallisto
-(v0.46.1)](https://pachterlab.github.io/kallisto/about).
+- [03-update.sh (H.
+  major)](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/hydrophis_major/scripts/03-update.sh)
+- [03-update-hydrophis_curtus.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/hydrophis_curtus-east/scripts/03-update-hydrophis_curtus.sh)
+- [03-update-hydrophis_cyanocinctus.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/hydrophis_cyanocinctus/scripts/03-update-hydrophis_cyanocinctus.sh)
+
+**Outdir:** Raw outputs not uploaded due to file size limits
+
+*Funannotate update* is used to update the structure of the predicted
+gene set. Specifically, the pipeline runs two rounds of *PASA*,
+comparing the predicted gene models to the *PASA* gene models,
+correcting 5’- and 3’-UTR regions, along with intron/exon boundaries.
+Genes that pass the update stages are then filtered based on their
+expression profile using
+[Kallisto](https://pachterlab.github.io/kallisto/about).
 
 ``` bash
 # Update command to improve gene model accuracy
@@ -361,23 +322,34 @@ singularity exec ${CONTAINER}/funannotate-v1.8.11.sif funannotate update \
 ### Funannotate Annotate
 
 **Script:**
-[04-emapper.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/scripts/hydrophis_major/04-emapper.sh)
-/
-[05-ips5.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/scripts/hydrophis_major/05-ips5.sh)
-/
-[06-annotate-no-mask.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/scripts/hydrophis_major/06-annotate-no-mask.sh)  
-**Outdir:** Too large to upload
 
-The next step of the `Funannotate` pipeline is to add functional
-annotations to the updated gene models. `Funannotate` is able to
-integrate multiple sources of information to form a singular functional
-annotation. We ran the following two tools manually and passed their
-outputs to `Funannotate annotate`.
+- [04-emapper.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/hydrophis_major/scripts/04-emapper.sh)
+  /
+  [05-ips5.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/hydrophis_major/scripts/05-ips5.sh)
+  /
+  [06-annotate-no-mask.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/hydrophis_major/scripts/06-annotate-no-mask.sh)
+- [04-emapper-hydrophis_curtus.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/hydrophis_curtus-east/scripts/04-emapper-hydrophis_curtus.sh)
+  /
+  [05-ips5-hydrophis_curtus.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/hydrophis_curtus-east/scripts/05-ips5-hydrophis_curtus.sh)
+  /
+  [06-annotate-hydrophis_curtus.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/hydrophis_curtus-east/scripts/06-annotate-hydrophis_curtus.sh)
+- [04-emapper-hydrophis_cyanocinctus.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/hydrophis_cyanocinctus/scripts/04-emapper-hydrophis_cyanocinctus.sh)
+  /
+  [05-ips5-hydrophis_cyanocinctus.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/hydrophis_cyanocinctus/scripts/05-ips5-hydrophis_cyanocinctus.sh)
+  /
+  [06-annotate-hydrophis_cyanocinctus.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/hydrophis_cyanocinctus/scripts/06-annotate-hydrophis_cyanocinctus.sh)
 
-The first source of annotation came from mapping the predicted gene
-sequences to the [eggNOG v(5.0)](http://eggnog5.embl.de/#/app/home)
-database using [eggnog-mapper
-(v2.1.9)](https://github.com/eggnogdb/eggnog-mapper).
+**Outdir:** Raw outputs not uploaded due to file size limits
+
+The last stage of the pipeline is assigning functional annotations to
+each gene (where possible). This is handled by *Funannotate annotate*.
+Functional annotations were assigned to genes by first screening the
+predicted protein sequences against functional databases.
+
+The first functional database we screened against was the
+[eggNOG](http://eggnog5.embl.de/#/app/home) database. Proteins were
+aligned to the database using the accessory tool
+[eggnog-mapper](https://github.com/eggnogdb/eggnog-mapper).
 
 ``` bash
 # Map the protein sequences to the EggNOG v5 database
@@ -387,19 +359,19 @@ emapper.py \
     --itype 'proteins' \
     --pident 80 \
     --query_cover 80 \
-    --output 'Hydrophis_major-emapper' \
+    --output 'genome-emapper' \
     --output_dir "${OUT}"
 ```
 
-[InterPro (v5.57-90.0)](https://github.com/ebi-pf-team/interproscan) was
-also used to functionally annotate predicted gene sequences by searching
-all default homology databases.
+Next, we screened the proteins against
+[InterPro](https://github.com/ebi-pf-team/interproscan), using all the
+default databases included in the distribution.
 
 ``` bash
 # Annotate the updated protein sequences using IPS and its default databases
 "${IPS}/interproscan.sh" \
     --cpu "${SLURM_CPUS_PER_TASK}" \
-    --output-file-base "${OUT}/Hydrophis_major" \
+    --output-file-base "${OUT}/genome" \
     --disable-precalc \
     --goterms \
     --input "${PROT}" \
@@ -407,15 +379,14 @@ all default homology databases.
     --pathways
 ```
 
-The final stage of the `Funannotate` pipeline was then run using the
-command below, passing both sources of functional annotation. The
-`annotate` step assigns gene names/symbols, *GO Terms* and other
-functional domains to each gene, where applicable.
+After running *EggNOG-mapper* and *InterProScan*, we passed their
+outputs to *Funannotate annotate* to aggregate the functional terms and
+build the final annotated gene set.
 
 ``` bash
 # Annotate updated protein coding gene models
 singularity exec "${CONTAINER}/funannotate-v1.8.11.sif" funannotate annotate \
-    -i '/g/data/xl04/al4518/hydmaj-genome/funannotate/annotation-funannotate-no-mask' \
+    -i "path \
     --cpus "${PBS_NCPUS}" \
     --eggnog "${EGG}" \
     --iprscan "${IPS}" \
@@ -427,32 +398,26 @@ singularity exec "${CONTAINER}/funannotate-v1.8.11.sif" funannotate annotate \
 
 # 3 Lift-over annotation
 
-For lift-over methods, the software [Liftoff
-(v1.6.3)](https://github.com/agshumate/Liftoff) was used to lift-over
-the *H. major* gene annotations to the following snakes:
+**Scripts:**
 
-- *Hydrophis elegans*
-- *Hydrophis ornatus*
-- *Hydrophis curtus (AG)*
+- [liftoff-to-genomes.sh](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/hydrophis_ornatus/scripts/liftoff-to-genomes.sh)
 
-The *H. major* annotations were used as the reference gene-set as they
-had the highest `BUSCO` score of closely related *Hydrophis* snakes.
+NOTE: The same script has been copied into each snakes `script`
+directory. A single SLURM array job annotated each snake at once.
 
-## Liftoff
+**Outdir:** Raw outputs not uploaded due to file size limits
 
-**Script:**
-[liftoff-to-genomes](https://github.com/a-lud/sea-snake-selection/blob/main/annotation/scripts/othersnakes-liftoff/liftoff-to-genomes.sh)
-
-As stated in the introduction, the software [Liftoff
-(v1.6.3)](https://github.com/agshumate/Liftoff) was used to annotate the
-three sea snakes listed above. `Liftoff` is a relatively simple tool to
-use, simply requiring a target genome that is annotated (*H. major*) and
-a subject genome to lift the annotation to.
+As there was not RNA-seq data for *H. ornatus*, *H. curtus (West)* and
+*H. elegans* (from the same sample that was assembled), we chose to lift
+gene annotations from *H. major* to each of these snakes. The *H. major*
+genome had the highest *BUSCO* score of the *de novo* annotated snakes,
+and were evolutionarily closer than any RefSeq annotated snakes. We used
+the program [Liftoff](https://github.com/agshumate/Liftoff) to do this.
 
 ``` bash
 liftoff \
-    "${QRY_ASM}" \                # Lift annotations to
-    "${TGT_ASM}" \                # Lift annotations from
+    "${QRY_ASM}" \
+    "${TGT_ASM}" \
     -g "${TGT_GFF}" \
     -o "${OUT}/${BN}/${BN}.gff3" \
     -u "${OUT}/${BN}/${BN}-unmapped.txt" \
@@ -461,12 +426,3 @@ liftoff \
     -p "${SLURM_CPUS_PER_TASK}" \
     -polish
 ```
-
-# 4 Summary
-
-This document details both the *de novo* and lift-over methods used to
-annotate the new and existing sea snakes for this study. The relevant
-scripts for each annotation approach can be found in the `scripts`
-directory. Most scripts are numbered by the order that they should be
-run, and should be intuitive enough to figure out given this document
-and their order of execution.
