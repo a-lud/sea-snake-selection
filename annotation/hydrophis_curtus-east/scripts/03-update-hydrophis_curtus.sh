@@ -1,16 +1,5 @@
 #!/usr/bin/env bash
-#PBS -P xl04
-#PBS -q normal
-#PBS -l walltime=48:00:00
-#PBS -l storage=gdata/xl04+scratch/xl04
-#PBS -l mem=50GB
-#PBS -l ncpus=16
-#PBS -M alastair.ludington@adelaide.edu.au
-#PBS -m a
-#PBS -l wd
-#PBS -N update
-#PBS -o /g/data/xl04/al4518/annotation/scripts/joblogs/funannotate-update-hydrophis_curtus.log
-#PBS -j oe
+#PBS ...
 
 # Variables
 CONTAINER='/g/data/xl04/al4518/containers'

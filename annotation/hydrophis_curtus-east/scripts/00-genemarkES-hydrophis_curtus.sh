@@ -1,16 +1,5 @@
 #!/usr/bin/env bash
-#PBS -P xl04
-#PBS -q normal
-#PBS -l walltime=48:00:00
-#PBS -l storage=gdata/xl04+scratch/xl04
-#PBS -l mem=20GB
-#PBS -l ncpus=48
-#PBS -l wd
-#PBS -M alastair.ludington@adelaide.edu.au
-#PBS -m a
-#PBS -N HC-genemark
-#PBS -o /g/data/xl04/al4518/annotation/scripts/joblogs/genemark-es-hydrophis_curtus.log
-#PBS -j oe
+#PBS ...
 
 # GeneMark
 export PATH=$PATH:'/home/566/al4518/al/software/gmes_linux_64'

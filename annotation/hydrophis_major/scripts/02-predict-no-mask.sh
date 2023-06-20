@@ -1,16 +1,5 @@
 #!/usr/bin/env bash
-#PBS -P xl04
-#PBS -q hugemem
-#PBS -l walltime=16:00:00
-#PBS -l storage=gdata/xl04+scratch/xl04
-#PBS -l mem=400GB
-#PBS -l ncpus=48
-#PBS -l wd
-#PBS -M alastair.ludington@adelaide.edu.au
-#PBS -m a
-#PBS -N Predict-nm
-#PBS -o /g/data/xl04/al4518/hydmaj-genome/funannotate/scripts/joblogs/funannotate-predict-no-mask.log
-#PBS -j oe
+#PBS ...
 
 # Modules/Software
 module load singularity

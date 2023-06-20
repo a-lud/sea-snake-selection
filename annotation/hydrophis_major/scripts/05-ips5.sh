@@ -1,15 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=ips5
-#SBATCH -p batch
-#SBATCH -N 1
-#SBATCH -n 1
-#SBATCH -c 20
-#SBATCH --ntasks-per-core=1
-#SBATCH --time=72:00:00
-#SBATCH --mem=30GB
-#SBATCH -o /hpcfs/users/a1645424/hydmaj-genome/funannotate/scripts/joblogs/%x_%j.log
-#SBATCH --mail-type=FAIL
-#SBATCH --mail-user=alastair.ludington@adelaide.edu.au
+#SBATCH ...
 
 # Directories
 PROT='/hpcfs/users/a1645424/hydmaj-genome/funannotate/annotation-funannotate-no-mask/update_results/Hydrophis_major_nm.proteins.fa'

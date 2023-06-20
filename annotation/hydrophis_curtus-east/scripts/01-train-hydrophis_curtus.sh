@@ -1,16 +1,5 @@
 #!/usr/bin/env bash
-#PBS -P xl04
-#PBS -q normal
-#PBS -l walltime=48:00:00
-#PBS -l storage=gdata/xl04+scratch/xl04
-#PBS -l mem=190GB
-#PBS -l ncpus=48
-#PBS -l wd
-#PBS -M alastair.ludington@adelaide.edu.au
-#PBS -m a
-#PBS -N Hcur-Train
-#PBS -o /home/566/al4518/al/annotation/scripts/joblogs/funannotate-train-hydrophis_curtus.log
-#PBS -j oe
+#PBS ...
 
 # Modules/Software
 module load singularity

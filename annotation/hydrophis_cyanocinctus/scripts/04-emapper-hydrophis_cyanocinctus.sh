@@ -1,16 +1,5 @@
 #!/usr/bin/env bash
-#PBS -P xl04
-#PBS -q normal
-#PBS -l walltime=06:00:00
-#PBS -l storage=gdata/xl04+scratch/xl04
-#PBS -l mem=30GB
-#PBS -l ncpus=30
-#PBS -M alastair.ludington@adelaide.edu.au
-#PBS -m a
-#PBS -l wd
-#PBS -N Hcy-emapper
-#PBS -o /g/data/xl04/al4518/annotation/scripts/joblogs/emapper-hydrophis_curtus.log
-#PBS -j oe
+#PBS ...
 
 # Directories
 PROT='/g/data/xl04/al4518/annotation/hydrophis_cyanocinctus/annotation-funannotate/update_results/Hydrophis_cyanocinctus.proteins.fa'
