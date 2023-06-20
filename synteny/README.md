@@ -1,190 +1,207 @@
 GO Term over-representation
 ================
 Alastair Ludington
-2023-04-11
+2023-06-20
 
-- <a href="#1-introduction" id="toc-1-introduction">1 Introduction</a>
-- <a href="#2-prepare-genome-files" id="toc-2-prepare-genome-files">2
-  Prepare genome files</a>
-  - <a href="#subset-genome-fasta-files-for-chromosome-sequences"
-    id="toc-subset-genome-fasta-files-for-chromosome-sequences">Subset
-    genome FASTA files for chromosome sequences</a>
-  - <a href="#rename-chromosome-sequences"
-    id="toc-rename-chromosome-sequences">Rename chromosome sequences</a>
-  - <a href="#subset-gff3-files-for-chromosome-sequences-only"
-    id="toc-subset-gff3-files-for-chromosome-sequences-only">Subset GFF3
-    files for chromosome sequences only</a>
-- <a href="#3-mcscan" id="toc-3-mcscan">3 MCscan</a>
-  - <a href="#initial-alignment" id="toc-initial-alignment">Initial
-    alignment</a>
-  - <a href="#oritent-inverted-chromosomes"
-    id="toc-oritent-inverted-chromosomes">Oritent inverted chromosomes</a>
-  - <a href="#lift-over-gene-annotations"
-    id="toc-lift-over-gene-annotations">Lift-over gene annotations</a>
-  - <a href="#final-alignments" id="toc-final-alignments">Final
-    alignments</a>
+- [1 Introduction](#1-introduction)
+- [2 MCscan: Genomic synteny](#2-mcscan-genomic-synteny)
+  - [Data preparation](#data-preparation)
+  - [Initial alignments](#initial-alignments)
+  - [Orient chromosome sequences](#orient-chromosome-sequences)
+  - [Lift genes to adapted genomes](#lift-genes-to-adapted-genomes)
+  - [MCscan](#mcscan)
+- [3 Syri: Synteny and structural
+  variations](#3-syri-synteny-and-structural-variations)
 
 # 1 Introduction
 
-We used the program
-[MCscan](https://github.com/tanghaibao/jcvi/wiki/MCscan-(Python-version))
-to align chromosome sequences between the five chromosome scale sea
-snake assemblies. This program is quick and easy to use, and is capable
-of generating informative ribbon plots that show the synteny between
-pairwise comparisons.
+As *Hydrophis* is a rapidly radiation species, we were interested in
+investigating the overall level of synteny between the chromosome-scale
+genome assemblies. We used two separate methods to explore both
+broad-scale homology, as well as structural variants (SVs) between
+genome-pairs.
 
-Here I’ll detail each stage of the synteny pipeline that we implemented
-to compare overall genome synteny between the five sea snakes.
+# 2 MCscan: Genomic synteny
 
-# 2 Prepare genome files
+The first approach we used involved running the program [MCscan
+(Python)](https://github.com/tanghaibao/jcvi/wiki/MCscan-(Python-version))
+between pairs of *Hydrophis* snakes. *MCscan* aligns the coding
+sequences (CDS) of a pair of genomes to identify orthologous genes. The
+coordinates of these orthologs between the pair of genomes act as
+syntenyic-anchors, and can be visualised as a ribbon plot. We performed
+comparisons between pairs of *Hydrophis* snakes and outgroup *Thamnophis
+elegans* to investigate the overall level of similarity within
+*Hydrophis* and how much they differ to a terrestrial outgroup in *T.
+elegans*.
 
-The program uses genome FASTA files and genome GFF3 annotation files as
-input. Typically, a genome assembly has a number of unplaced scaffolds
-which, unless they have some specific interest, are typically something
-we can ignore. Therefore, we performed some curation of the input files
-prior to aligning them.
+## Data preparation
 
-## Subset genome FASTA files for chromosome sequences
+**Scripts:**
+[mcscan/scripts](https://github.com/a-lud/sea-snake-selection/tree/main/synteny/mcscan/scripts)
+(scripts 1-3 are involved in data preparation)  
+**Outdir:** Not uploaded as they were intermediate genome files that are
+large
 
-**Script:**
-[01-subset-genomes.sh](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/scripts/01-subset-genomes.sh)  
-**Outdir:** Too large to upload
+*MCscan* was only run on chromosomal sequences. These were subset from
+each assembly FASTA using the program
+[seqkit](https://github.com/shenwei356/seqkit).
 
-We have specifically chosen to look at only genomes that have chromosome
-sequences to simplify the visualisation and analysis of sea snake
-synteny. We used the program [seqkit
-subseq](https://github.com/shenwei356/seqkit) to keep only chromosome
-sequences from each sample.
+``` bash
+# 01-subset-genomes.sh
+seqkit head -n <n chromosomes> genome.fa > genome-chr.fa
+```
 
-## Rename chromosome sequences
+The genomes were then renamed to use chromosome identifiers rather than
+file specific IDs.
 
-**Script:**
-[02-rename-headers.sh](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/scripts/02-rename-headers.sh)  
-**Outdir:** Too large to upload
+``` bash
+# 02-rename-headers.sh
+for TSV in "${RENAME}/"*.rename; do
+    BN=$(basename "${TSV%.*}")
+    REF="${GENOMES}/${BN}-chr.fa"
 
-While not totally necessary, we decided to rename chromosome sequences
-in each sample to be consistent across all samples. As such, we chose to
-label chromosomes using the `chr` prefix.
+    # Rename
+    echo -e "[seqkit] Rename headers"
+    seqkit replace -p '(.*)$' -r '{kv}' -k "${TSV}" -o "${OUT}/${BN}.fa" "${REF}"
+done
+```
 
-For NCBI samples *H. cyanocinctus* and *H. curtus*, I used the
-chromosome ID mapping tables found on NCBI for each sample. NCBI labels
-chromosomes by length - e.g. longest chromosome is chromosome-1 and so
-on. The Z-chromosome is the fifth largest chromosome in sea snakes, and
-as such is skipped in the NCBI labelling scheme. Consequently, the
-`chr5` header is not used in the two NCBI sample FASTAs.
+Gene annotation files were also edited to use these new names (see
+[03-subset-gff3.R](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/mcscan/scripts/03-subset-gff3.R)).
 
-All other snakes are labelled by length, accounting for the Z-chromosome
-being the fifth largest - i.e. the `chr5` header is found in all other
-snake assemblies.
-
-## Subset GFF3 files for chromosome sequences only
-
-**Script:**
-[03-subset-gff3.R](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/scripts/03-subset-gff3.R)  
-**Outdir:** Too large to upload
-
-As we’ve limited our analysis to chromosome sequences only, we have to
-filter the GFF3 files for only chromosome sequences, which was done in
-`R`. The majority of genes in each sample are found on the chromosome
-sequences, meaning there is little gene loss/impact on alignment quality
-by doing this.
-
-# 3 MCscan
-
-`MCscan` is a tool for generating synteny alignments between pairs of
-genomes. Below are all the processes relating to the actual alignment of
-genomes using this program.
-
-## Initial alignment
+## Initial alignments
 
 **Script:**
-[04-mcscan.sh](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/scripts/04-mcscan.sh)  
+[04-mcscan-initial.sh](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/mcscan/scripts/04-mcscan-initial.sh)  
 **Outdir:**
-[results/mcscan-results-initial](https://github.com/a-lud/sea-snake-selection/tree/main/synteny/results/mcscan-results-initial)
+[mcscan/results/mcscan-results-initial](https://github.com/a-lud/sea-snake-selection/tree/main/synteny/mcscan/results/mcscan-results-initial)
 
-An initial alignment was generated between pairs of snakes to get an
-indication of overall alignment, along with which sequences needed to be
-reverse complemented. Chromosome sequences are often assembled in
-reverse orientation between samples. This results in the whole
-chromosome looking inverted, when in reality, if we simply reverse
-complement one of the sequences in the pair, we’ll end up with a 1:1
-alignment.
+An initial run of *MCscan* as used to orient chromosomes between the
+snakes. This first alignment was also informative for identifying
+chromosome sequences that had been assembled in the reverse orientation
+relative to the other snakes.
 
-Running `MCscan` involves the following steps:
+First, we extracted the protein coding sequences from each genome using
+[AGAT](https://github.com/NBISweden/AGAT) and then converted the GFF3
+files to BED format using the [JCVI](https://github.com/tanghaibao/jcvi)
+library.
 
-- Extracting gene coding sequences using
-  [AGAT](https://github.com/NBISweden/AGAT)
-- Convert GFF3 files to BED format using
-  [JCVI](https://github.com/tanghaibao/jcvi/wiki/MCscan-(Python-version))
-  (`jcvi.formats.gff bed`)
-- Align genomes using `LAST` (`jcvi.compara.catalog ortholog`)
-- Create simplified alignment anchor files for visualisation
-  (`jcvi.compara.synteny screen`)
-- Plot the alignments
+``` bash
+# 1. Extract CDS sequences
+for ASM in "${GENOMES}/"*.fa; do
+    BN=$(basename "${ASM%.*}")
+    if [[ ! -f "${BN}.cds" ]]; then
+        GFF="${DIR}/gffs/clean-gff3/${BN}.gff3"
 
-The initial alignments were used to identify which sequences needed
-manual orientation due to opposite chromosomal strands being assembled.
+        agat_sp_extract_sequences.pl \
+            --clean_final_stop \
+            --clean_internal_stop \
+            --fasta "${ASM}" \
+            --gff "${GFF}" \
+            --output "${BN}.cds" \
+            --type cds
 
-![Figure
-1](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/results/mcscan-results-initial/karyotype.png)
+        # 2. Convert GFF3 to BED
+        python3 -m jcvi.formats.gff bed --type=mRNA --key=ID "${GFF}" -o "${BN}.bed"
+    fi
+done
+```
 
-In the figure above, we can see a number of aligned chromosomes have
-‘bowtie’ shapes. This is where the whole chromosome is inverted in the
-pairwise alignment.
+Coding sequences were then aligned between genome pairs using the
+*MCscan* pipeline, which is detailed below:
 
-## Oritent inverted chromosomes
+``` bash
+# Align CDS between pairs - H. ornatus to H. major as an example
+python3 -m jcvi.compara.catalog ortholog \
+    --cpus="${SLURM_CPUS_PER_TASK}" \
+    --no_strip_names \
+    --notex \
+    'hydrophis_ornatus' 'hydrophis_major'
+   
+# Adapt the anchors files
+python3 -m jcvi.compara.synteny screen --minspan=30 --simple hydrophis_ornatus.hydrophis_major.anchors hydrophis_ornatus.hydrophis_major.anchors.new
 
-**Script:**
-[05-orient.sh](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/scripts/05-orient.sh)  
+# Generate the karyotype plot
+python -m jcvi.graphics.karyotype --chrstyle=roundrect --basepair --outfile=karyotype-initial.png --figsize=10x8 --dpi=500 --format=png seqids layout
+```
+
+This resulted in the following alignment
+
+![](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/mcscan/results/mcscan-results-initial/karyotype-initial.png)
+
+## Orient chromosome sequences
+
+**Scripts:**
+[05-orient.sh](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/mcscan/scripts/06-liftoff.sh)  
 **Outdir:** Too large to upload
 
-Chromosome sequences that were totally inverted between aligned samples
-were reverse complemented to improve figure clarity. As mentioned above,
-when chromosomes align 1:1 but are fully inverted, it typically is an
-indication that different strands of the same chromosome were assembled
-in each sample. As such, reverse complementing one of the strands will
-result in a more accurate representation of the homology between the
-sequences.
+The output from the initial alignment was then used to guide which
+sequences in each snake needed to be reverse complemented. Sequences
+were reverse complemented if their entire length was reversed relative
+to the syntenic sequences in the other genomes.
 
-Using the initial ribbon plot generated by `MCscan` above,
-fully-inverted chromosomes were identified for each pairwise comparison
-and were corrected. The correction pipeline involved:
+``` bash
+# Reverse the sequences 
+samtools faidx \
+    -o "${TD}/${BN}.revComp" \
+    --reverse-complement \
+    --mark-strand no \
+    "${FA}" \
+    ${CHR}        # Variable with the sequence-IDs to reverse
 
-- Visually identifying which chromosomes were inverted
-- Reverse complementing the sequences in one of the samples
-  (`samtools faidx --reverse-complement`)
-- Merging the reversed sequences with the rest of the chromosome
-  sequences that did not need to be reverse-complemented
+# Remove the reversed sequences from the original genome file
+seqkit grep \
+    --invert-match \
+    -f "${TD}/${BN}.ids" \
+    -o "${TD}/${BN}.normal" \
+    "${FA}"
 
-## Lift-over gene annotations
+# Combine the reversed sequences with the remaining sequences
+cat "${TD}/${BN}.normal" "${TD}/${BN}.revComp" |
+  seqkit sort -N -o "${OUT}/${BN}.fa"
+```
+
+## Lift genes to adapted genomes
 
 **Script:**
-[06-liftoff.sh](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/scripts/06-liftoff.sh)  
+[06-liftoff.sh](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/mcscan/scripts/06-liftoff.sh)  
 **Outdir:** Too large to upload
 
-Following manual orientation of chromosome sequences, gene annotations
-needed to be lifted over to the new assemblies. This is so the gene
-coordinates in the GFF3 files are correct for the reverse-complemented
-chromosomes.
+As chromsome sequences were reversed, we opted to lift gene annotations
+to the adapted references. This was done using the tool
+[Liftoff](https://github.com/agshumate/Liftoff).
 
-To do this, we used the tool
-[Liftoff](https://github.com/agshumate/Liftoff) to lift the original
-annotations over to the new assemblies.
+``` bash
+liftoff \
+    "${QASM}" \
+    "${TASM}" \
+    -g "${TGFF}" \
+    -o "${OUT}/${BN}/${BN}.gff3" \
+    -u "${OUT}/${BN}/${BN}-unmapped.txt" \
+    -exclude_partial \
+    -dir "${OUT}/${BN}/intermediates" \
+    -p "${SLURM_CPUS_PER_TASK}" \
+    -polish
+```
 
-## Final alignments
+## MCscan
 
 **Script:**
-[07-mcscan-oriented.sh](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/scripts/07-mcscan-oriented.sh)  
+[07-mcscan-oriented.sh](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/mcscan/scripts/07-mcscan-oriented.sh)  
 **Outdir:**
-[results/mcscan-results-oriented](https://github.com/a-lud/sea-snake-selection/tree/main/synteny/results/mcscan-results-oriented)
+[mcscan/results/mcscan-results-oriented](https://github.com/a-lud/sea-snake-selection/tree/main/synteny/mcscan/results/mcscan-results-oriented)
 
-With chromosome orientations corrected and gene annotations lifted over,
-we re-ran the `MCscan` alignment pipeline with the updated data to
-generate the final figure.
+Finally, the *MCscan* pipeline (see [Initial
+alignments](#initial-alignments)) was re-run, this time with the updated
+genomes. This resulted in the following (colours are edited in).
 
-![Figure
-2](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/results/mcscan-results-oriented/karyotype.png)
+![](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/mcscan/results/mcscan-results-oriented/karyotype-edited.png)
 
-In the figure above, we can see that the ‘bowtie’ alignments from the
-first figure are no more. This is thanks to getting the chromosome
-sequences into the correct orientation.
+# 3 Syri: Synteny and structural variations
+
+[Syri](https://github.com/schneebergerlab/syri) is another tool used for
+investigating not only genomic synteny, but also structural variations
+(SVs) between pairs of genomes. We used this tool to investigate overall
+homology within *Hydrophis* (*T. elegans* was not included in this
+analysis due to its evolutionary distance), as well as identify regions
+of significant structural variation.
