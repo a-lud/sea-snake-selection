@@ -171,7 +171,8 @@ networks using an alignment-free approach.
 
 **Script:**
 [04-sans-serif.sh](https://github.com/a-lud/sea-snake-selection/blob/main/phylogenetics/scripts/04-sans-serif.sh)  
-**Outdir:** Raw results too large to upload
+**Outdir:**
+[results/sans-serif](https://github.com/a-lud/sea-snake-selection/tree/main/phylogenetics/results/sans-serif)
 
 *SANS serif* is an alignment- and reference-free method that uses common
 sub-sequences shared between the provided genomes to infer weighted
