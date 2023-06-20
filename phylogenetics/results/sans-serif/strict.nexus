@@ -1,0 +1,43 @@
+#nexus
+
+BEGIN Taxa;
+DIMENSIONS ntax=7;
+TAXLABELS
+[1] 'aipysurus_laevis-garvin' 
+[2] 'hydrophis_curtus-garvin' 
+[3] 'hydrophis_curtus-ncbi' 
+[4] 'hydrophis_cyanocinctus-ncbi' 
+[5] 'hydrophis_elegans-garvin' 
+[6] 'hydrophis_major' 
+[7] 'hydrophis_ornatus-garvin' 
+;
+END; [Taxa]
+
+
+
+BEGIN Splits;
+DIMENSIONS ntax=7 nsplits=11;
+MATRIX
+[1, size=1]	484528000.0	1,
+[2, size=2]	16684700.0	1 6,
+[3, size=3]	5016280.0	1 6 7,
+[4, size=1]	59097400.0	6,
+[5, size=1]	51987800.0	7,
+[6, size=1]	50803300.0	4,
+[7, size=2]	7621820.0	4 5,
+[8, size=1]	49479300.0	5,
+[9, size=1]	42516600.0	3,
+[10, size=1]	41311600.0	2,
+[11, size=2]	10110800.0	2 3,
+
+;
+END; [Splits]
+BEGIN st_Assumptions;
+uptodate;
+splitstransform=EqualAngle UseWeights = true RunConvexHull = true DaylightIterations = 0
+OptimizeBoxesIterations = 0 SpringEmbedderIterations = 0;
+SplitsPostProcess filter=none;
+ exclude  no missing;
+autolayoutnodelabels;
+END; [st_Assumptions]
+
