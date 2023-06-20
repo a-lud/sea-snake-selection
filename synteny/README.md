@@ -1,7 +1,7 @@
-GO Term over-representation
+Genomic synteny between chromosome-scale assemblies
 ================
 Alastair Ludington
-2023-06-20
+2023-06-21
 
 - [1 Introduction](#1-introduction)
 - [2 MCscan: Genomic synteny](#2-mcscan-genomic-synteny)
@@ -12,6 +12,9 @@ Alastair Ludington
   - [MCscan](#mcscan)
 - [3 Syri: Synteny and structural
   variations](#3-syri-synteny-and-structural-variations)
+  - [Prepare genomes](#prepare-genomes)
+  - [Align genome pairs](#align-genome-pairs)
+  - [Syri](#syri)
 
 # 1 Introduction
 
@@ -205,3 +208,110 @@ investigating not only genomic synteny, but also structural variations
 homology within *Hydrophis* (*T. elegans* was not included in this
 analysis due to its evolutionary distance), as well as identify regions
 of significant structural variation.
+
+Similar to *MCscan*, *Syri* relies on cascading pairwise comparisons.
+I.e. genome A is aligned to genome B; genome B is aligned to genome C …
+and so on. Using this approach, all snakes can then be compared to each
+other as they all share a common reference.
+
+## Prepare genomes
+
+**Script:**
+[01-prep-genomes-syri.sh](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/syri/scripts/01-prep-genomes-syri.sh)  
+**Outdir:** Not uploaded due to file size/being intermediate FASTA files
+
+*Syri* requires homologous chromosomes to have identical identifiers. As
+we’d already run *MCscan*, we had identified the homologous chromosomes.
+We opted to use *H. ornatus* as the ‘anchoring’ reference file (genome
+at the top) and relabelled the chromosomes headers in each of the other
+*Hydrophis* snakes to match *H. ornatus*.
+
+This process involved concatenating chromosome sequences together,
+separating the joined chromosomes by stretches of 10,000 N’s. The
+chromsomes that needed to be adjusted are listed in the script above.
+I’ve included the workflow for a pair of *H. ornatus* chromosomes that
+needed to be joined below (chromosomes 6 and 14):
+
+``` bash
+# 1. Exract sequences that need to be concatenated
+seqkit grep -p 'chr6' -o "${OUT}/hydrophis_ornatus-tmp1.fa" "${GENOMES}/hydrophis_ornatus.fa"
+seqkit grep -p 'chr14' -o "${OUT}/hydrophis_ornatus-tmp2.fa" "${GENOMES}/hydrophis_ornatus.fa"
+
+# 2. Append 10,000 N's to the end of the 5' chromosome
+printf 'N%.0s' {1..10000} >> "${OUT}/hydrophis_ornatus-tmp1.fa"
+
+# 3. Make the identifier of the chromosome that is being appended match the target
+sed -i 's/chr14/chr6/' "${OUT}/hydrophis_ornatus-tmp2.fa"
+
+# 4. Merge the sequences and sort by length
+seqkit concat "${OUT}/hydrophis_ornatus-tmp1.fa" "${OUT}/hydrophis_ornatus-tmp2.fa" >> "${OUT}/hydrophis_ornatus-tmp.fa"
+seqkit sort -N -o "${OUT}/hydrophis_ornatus.fa" "${OUT}/hydrophis_ornatus-tmp.fa"
+```
+
+This process was repeated for all other snakes that needed chromsomes
+merged.
+
+## Align genome pairs
+
+**Script:**
+[02-align-genomes.sh](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/syri/scripts/02-align-genomes.sh)
+
+Like *MCscan*, *Syri* is a reference-guided comparison tool. Therefore,
+each genome comparison involved aligning one genome to the other
+(i.e. not reference free like Progressive Cactus). We used
+[Minimap2](https://github.com/lh3/minimap2) to align each genome pair
+using the recommended parameters by the *Syri* developers.
+
+``` bash
+# Aligning H. major to H. ornatus
+minimap2 \
+  --eqx \
+  -2 \
+  -L \
+  -t 32 \
+  -ax asm5 \
+  -o "${OUT}/ornatus_major.sam" \
+  "${OUT}/hydrophis_ornatus.fa" "${OUT}/hydrophis_major.fa"
+```
+
+## Syri
+
+**Script:**
+[03-syri.sh](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/syri/scripts/03-syri.sh)
+/
+[04-structural-rearrangements.R](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/syri/scripts/04-structural-rearrangements.R)
+
+After all the genomes had been aligned to each other we then ran *Syri*.
+
+``` bash
+# H. ornatus - H. major example
+syri \
+  -c ornatus_major.sam \
+  -r hydrophis_ornatus.fa \
+  -q hydrophis_major.fa \
+  -F S \
+  --prefix ornatus_major. \
+  --dir ${DIR}/syri \
+  --nc 14
+```
+
+This process generates a TSV file detailing all the structural
+rearrangements between the two genomes.
+
+``` tsv
+# 'chr_ref' 'start_ref' 'end_ref' 'seq_ref' 'seq_qry' 'chr_qry' 'start_qry' 'end_qry'
+# 'uniqueID' 'parentID' 'annotation_type' 'copy_status'
+chr1    1   225 -   -   -   -   -   NOTAL1  -   NOTAL   -
+chr1    226 897213  -   -   chr1    4599076 5458716 INVTR1460   -   INVTR   -
+chr1    226 7352    -   -   chr1    5458716 5451562 INVTRAL17234    INVTR1460   INVTRAL -
+chr1    296 296 T   A   chr1    5458646 5458646 SNP15956    INVTR1460   SNP -
+chr1    609 609 T   C   chr1    5458333 5458333 SNP15957    INVTR1460   SNP -
+chr1    843 843 T   C   chr1    5458099 5458099 SNP15958    INVTR1460   SNP -
+chr1    881 881 T   C   chr1    5458061 5458061 SNP15959    INVTR1460   SNP -
+chr1    899 899 A   G   chr1    5458043 5458043 SNP15960    INVTR1460   SNP -
+chr1    1128    1130    TTA T   chr1    5457814 5457814 DEL15961    INVTR1460   DEL -
+chr1    1136    1136    A   G   chr1    5457808 5457808 SNP15962    INVTR1460   SNP -
+```
+
+These output files were then processed to generate the final summary
+table used in the manuscript.
