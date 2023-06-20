@@ -279,7 +279,9 @@ minimap2 \
 **Script:**
 [03-syri.sh](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/syri/scripts/03-syri.sh)
 /
-[04-structural-rearrangements.R](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/syri/scripts/04-structural-rearrangements.R)
+[04-structural-rearrangements.R](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/syri/scripts/04-structural-rearrangements.R)  
+**Outdir:**
+[syri/results/syri](https://github.com/a-lud/sea-snake-selection/tree/main/synteny/syri/results/syri)
 
 After all the genomes had been aligned to each other we then ran *Syri*.
 
@@ -315,3 +317,5 @@ chr1    1136    1136    A   G   chr1    5457808 5457808 SNP15962    INVTR1460   
 
 These output files were then processed to generate the final summary
 table used in the manuscript.
+
+![](https://github.com/a-lud/sea-snake-selection/blob/main/synteny/syri/results/syri/hydrophis-synteny.png)
