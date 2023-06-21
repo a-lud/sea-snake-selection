@@ -334,10 +334,11 @@ specifying two internal polishing iterations.
 
 ``` bash
 flye \
-  --nano-hq "${SEQ}/${FQ}" \
+  --nano-raw "${SEQ}/${FQ}" \
   --out-dir "${OUT}" \
   --threads "${NCPUS}" \
-  -i 2
+  --iterations 2 \
+  --trestle
 ```
 
 ## Polish
