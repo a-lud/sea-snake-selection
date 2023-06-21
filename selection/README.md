@@ -1,43 +1,30 @@
 Selection Testing
 ================
 Alastair Ludington
-2023-03-15
+2023-06-21
 
-- <a href="#1-introduction" id="toc-1-introduction">1 Introduction</a>
-- <a href="#2-selection-testing-software"
-  id="toc-2-selection-testing-software">2 Selection testing software</a>
-- <a href="#3-selection-testing-models"
-  id="toc-3-selection-testing-models">3 Selection testing models</a>
-  - <a href="#paml" id="toc-paml">PAML</a>
-    - <a href="#codeml-branch-site-test-of-positive-selection"
-      id="toc-codeml-branch-site-test-of-positive-selection">Codeml:
-      Branch-Site test of positive selection</a>
-    - <a href="#codeml-drop-out-test-of-positive-selection-using-site-models"
-      id="toc-codeml-drop-out-test-of-positive-selection-using-site-models">Codeml:
-      Drop-out test of positive selection using Site models</a>
-  - <a href="#hyphy" id="toc-hyphy">HyPhy</a>
-    - <a href="#busted-ph-testing-trait-association-with-positive-selection"
-      id="toc-busted-ph-testing-trait-association-with-positive-selection">BUSTED-PH:
-      Testing trait association with positive selection</a>
-    - <a href="#relax-formal-test-for-selective-regime"
-      id="toc-relax-formal-test-for-selective-regime">RELAX: Formal test for
-      selective regime</a>
-- <a href="#4-data-processing" id="toc-4-data-processing">4 Data
-  processing</a>
-  - <a href="#step-1-selection-testing"
-    id="toc-step-1-selection-testing">Step 1: Selection testing</a>
-    - <a href="#codeml-pipeline" id="toc-codeml-pipeline">Codeml pipeline</a>
-    - <a href="#hyphy-analyses-pipeline"
-      id="toc-hyphy-analyses-pipeline">Hyphy-analyses pipeline</a>
-    - <a href="#hyphy-pipeline" id="toc-hyphy-pipeline">Hyphy pipeline</a>
-  - <a href="#step-2-parse-selection-results"
-    id="toc-step-2-parse-selection-results">Step 2: Parse selection
-    results</a>
-  - <a href="#step-3-identifying-candidate-psgs"
-    id="toc-step-3-identifying-candidate-psgs">Step 3: Identifying candidate
-    PSGs</a>
-  - <a href="#step-4-selection-intensity"
-    id="toc-step-4-selection-intensity">Step 4: Selection intensity</a>
+- [1 Introduction](#1-introduction)
+- [2 Selection testing software](#2-selection-testing-software)
+- [3 Selection testing models](#3-selection-testing-models)
+  - [PAML](#paml)
+    - [Codeml: Branch-Site test of positive
+      selection](#codeml-branch-site-test-of-positive-selection)
+    - [Codeml: Drop-out test of positive selection using Site
+      models](#codeml-drop-out-test-of-positive-selection-using-site-models)
+  - [HyPhy](#hyphy)
+    - [BUSTED-PH: Testing trait association with positive
+      selection](#busted-ph-testing-trait-association-with-positive-selection)
+    - [RELAX: Formal test for selective
+      regime](#relax-formal-test-for-selective-regime)
+- [4 Data processing](#4-data-processing)
+  - [Step 1: Selection testing](#step-1-selection-testing)
+    - [Codeml pipeline](#codeml-pipeline)
+    - [Hyphy-analyses pipeline](#hyphy-analyses-pipeline)
+    - [Hyphy pipeline](#hyphy-pipeline)
+  - [Step 2: Parse selection results](#step-2-parse-selection-results)
+  - [Step 3: Identifying candidate
+    PSGs](#step-3-identifying-candidate-psgs)
+  - [Step 4: Selection intensity](#step-4-selection-intensity)
 
 # 1 Introduction
 
@@ -403,10 +390,10 @@ of the list correspond to the keys in the JSON files.
 
 ``` r
 # Load all JSON files
-jsons.bustedph.13 <- loadJsons(dir = here('selection', 'results', 'hyphy', 'busted-ph'))
+jsons.bustedph <- loadJsons(dir = here('selection', 'results', 'hyphy', 'busted-ph'))
 
 # Parse BUSTED-PH results
-bustedph.13 <- parseBustedPh(jsons = jsons.bustedph.13)
+bustedph <- parseBustedPh(jsons = jsons.bustedph)
 
 # BUSTED-PH list object: Each key matches the keys found in the BUSTED-PH JSON outputs
 # List of 3
@@ -452,7 +439,7 @@ selection with respect to the phenotype of interest.
 **Outputs:**
 [results/results-selection-intensification](https://github.com/a-lud/sea-snake-selection/tree/main/selection/results/results-selection-intensification)
 
-As described in [section 3](#RELAX-Formal-test-for-selective-regime)
+As described in [section 3](#relax-formal-test-for-selective-regime)
 above, selection intensity was measured by running the program `RELAX`
 from the `HyPhy` package. The `RELAX` program was run with the
 *Hydrophis* snakes marked as *test* and Terrestrial snakes marked as
@@ -461,7 +448,7 @@ from the `HyPhy` package. The `RELAX` program was run with the
 Results were parsed using the custom parsing tools I’ve written that can
 be found in the `scripts` directory. The `RELAX` object looks similar to
 the example shown in [*Step 2: Parse selection
-results*](#Step-2-Parse-selection-results), with the contents of the
+results*](#step-2-Parse-selection-results), with the contents of the
 tables being different to the example above.
 
 *Hydrophis* PSGs were intersected with the `RELAX` results to obtain
