@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
-DIR=$(pwd)
-READS="${DIR}/data/nanopore-hydrophis_ornatus.fastq.gz"
-ASM="${DIR}/hypo/hydrophis_ornatus/hydrophis_ornatus.fasta"
-OUT="${DIR}/purge_haplotigs/hydrophis_ornatus"
-
-mkdir -p "${OUT}"
-
 # Step 1: Align Nanopore to genome
-minimap2 -t 4 -ax map-ont "${ASM}" "${READS}" --secondary=no |
-  samtools sort -m 1G -o "${OUT}/hydrophis_ornatus-lr.bam"
+  # arg1: path to reference assembly
+  # arg2: name of reference assempbly file
+  # arg3: path to ont reads file
+  # arg4: prefix of alignment file
+  REF=${1}/${2}
+  READS=${3}
+minimap2 -t 32 --MD -ax map-ont --secondary=no $REF $READS > ${1}/${4}.sam 
+  samtools sort -@ 32 ${1}/${4}.sam -o ${1}/${4}.bam
+  samtools index ${1}/${4}.bam
 
 # Step 2: Coverage histogram
-purge_haplotigs hist -t 30 -b "${OUT}/hydrophis_ornatus-lr.bam" -g "${ASM}"
+purge_haplotigs hist -t 30 -b ${1}/${4}.bam -g "${ASM}"
 
 # Step 3: Contig coverage stats (mark suspect contigs)
 purge_haplotigs cov -i aligned.bam.genecov -l ... -m ... -h ... -o "${OUT}/coverage_stats.csv"
