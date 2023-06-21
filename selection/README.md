@@ -447,9 +447,8 @@ from the `HyPhy` package. The `RELAX` program was run with the
 
 Results were parsed using the custom parsing tools I’ve written that can
 be found in the `scripts` directory. The `RELAX` object looks similar to
-the example shown in [*Step 2: Parse selection
-results*](#step-2-parse-selection-results), with the contents of the
-tables being different to the example above.
+the example shown in Step 2 above, with the contents of the tables being
+different to the example above.
 
 *Hydrophis* PSGs were intersected with the `RELAX` results to obtain
 their respective selection-intensity parameter value (*k*). These
