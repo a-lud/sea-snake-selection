@@ -28,7 +28,11 @@ while the `figure` and `tables` directories contain the figures and tables that
 are found in the manuscript.
 
 A few of the analyses listed above make use of custom Nextflow workflows that can be found [here][nf].
-Specific details about the Nextflow workflows can be found at the [wiki][wiki] page.
+Specific details about the Nextflow workflows can be found at the [wiki][wiki] page. Some custom tools
+are also used for processing some output data which can be found here:
+
+- [AnnotateOrthologs][anno]
+- [EteTools][etetool]
 
 I've tried to be as detailed as possible, however this is a large project and it's difficult to
 include everything. Many auxilliary files from analyses are included in this directory, however
@@ -48,3 +52,5 @@ down to include their main function calls rather than include additional informa
 [tab]: https://github.com/a-lud/sea-snake-selection/tree/main/tables
 [nf]: https://github.com/a-lud/nf-pipelines
 [wiki]: https://github.com/a-lud/nf-pipelines/wiki
+[anno]: https://github.com/a-lud/annotateOrthologs
+[etetool]: https://github.com/a-lud/eteTools
