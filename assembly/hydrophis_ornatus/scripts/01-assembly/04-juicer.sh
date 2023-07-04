@@ -1,4 +1,5 @@
 
+# directory structure must be set out, as specified in https://github.com/aidenlab/juicer
 #arg1: genomeID
 #arg2: fasta file
 
