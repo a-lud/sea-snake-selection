@@ -1,6 +1,3 @@
-#!/bin/bash
-#$ -S /bin/bash
-
 #arg1: path to ONT reads
 #arg2: path to output directory
 READS=${1}
