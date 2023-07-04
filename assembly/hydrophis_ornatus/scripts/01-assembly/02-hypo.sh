@@ -1,7 +1,3 @@
-#!/bin/bash
-#$ -S /bin/bash
-
-
 # arg1: path reference assembly file.
 # arg2: path to text file containg the path to illummina libraries
 # arg3: path to illumina alignment
