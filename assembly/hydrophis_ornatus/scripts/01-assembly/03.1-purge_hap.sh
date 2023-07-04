@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 # Step 1: Align Nanopore to genome
   # arg1: path to reference assembly
   # arg2: name of reference assempbly file
