@@ -39,6 +39,12 @@ include everything. Many auxilliary files from analyses are included in this dir
 some files are too large and could not be uploaded. Additionally, some scripts have been edited
 down to include their main function calls rather than include additional information that is not relevant.
 
+## Publication
+
+Ludington, A.J., Hammond, J.M., Breen, J. et al. New chromosome-scale genomes provide insights into marine adaptations of sea snakes (Hydrophis: Elapidae). BMC Biol 21, 284 (2023). https://doi.org/10.1186/s12915-023-01772-2
+
+Please cite the paper if you find any of the code/work helpful.
+
 [asm]: https://github.com/a-lud/sea-snake-selection/tree/main/assembly
 [ann]: https://github.com/a-lud/sea-snake-selection/tree/main/annotation
 [phy]: https://github.com/a-lud/sea-snake-selection/tree/main/phylogenetics
